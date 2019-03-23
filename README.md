@@ -2,7 +2,10 @@
 
 MVC application to administer fantasy football league.
 
-### Prerequisites
+## Status
+[![Build status](https://johnwatson484.visualstudio.com/John%20D%20Watson/_apis/build/status/Dream%20League)](https://johnwatson484.visualstudio.com/John%20D%20Watson/_build/latest?definitionId=6)
+
+## Prerequisites
 
 Visual Studio
 SQL Server
