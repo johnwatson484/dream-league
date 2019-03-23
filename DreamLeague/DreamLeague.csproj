@@ -500,7 +500,7 @@
     <Content Include="Downloads\Sealed Bid Form Initial.doc" />
     <Content Include="Downloads\Sealed Bid Form.doc" />
     <Content Include="Downloads\Team Sheet.xls" />
-    <Content Include="email.config" />
+    <None Include="email.config" />
     <None Include="Properties\PublishProfiles\Azure.pubxml" />
     <None Include="Properties\PublishProfiles\Magnus.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
