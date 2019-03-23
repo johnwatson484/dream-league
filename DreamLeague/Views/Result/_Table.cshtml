@@ -1,0 +1,73 @@
+﻿@model DreamLeague.ViewModels.Table
+
+<table class="table table-hover small">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TableRows[0].Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TableRows[0].Manager)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TableRows[0].Played)
+        </th>
+        <th class="no-mobile">
+            @Html.DisplayNameFor(model => model.TableRows[0].Won)
+        </th>
+        <th class="no-mobile">
+            @Html.DisplayNameFor(model => model.TableRows[0].Drawn)
+        </th>
+        <th class="no-mobile">
+            @Html.DisplayNameFor(model => model.TableRows[0].Lost)
+        </th>
+        <th class="no-mobile">
+            @Html.DisplayNameFor(model => model.TableRows[0].GF)
+        </th>
+        <th class="no-mobile">
+            @Html.DisplayNameFor(model => model.TableRows[0].GA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TableRows[0].GD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TableRows[0].Points)
+        </th>
+    </tr>
+    @foreach (var tableRow in Model.TableRows)
+    {
+        <tr>
+            <td class="position-td">
+                @Html.DisplayFor(modelItem => tableRow.Position)
+            </td>
+            <td>
+                @Html.ActionLink(tableRow.Manager, "Details", "Manager", new { id = tableRow.ManagerId }, null)
+                @Html.HiddenFor(modelItem => tableRow.ManagerId, new { @class = "manager-id-row" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tableRow.Played)
+            </td>
+            <td class="no-mobile">
+                @Html.DisplayFor(modelItem => tableRow.Won)
+            </td>
+            <td class="no-mobile">
+                @Html.DisplayFor(modelItem => tableRow.Drawn)
+            </td>
+            <td class="no-mobile">
+                @Html.DisplayFor(modelItem => tableRow.Lost)
+            </td>
+            <td class="no-mobile">
+                @Html.DisplayFor(modelItem => tableRow.GF)
+            </td>
+            <td class="no-mobile">
+                @Html.DisplayFor(modelItem => tableRow.GA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tableRow.GD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => tableRow.Points)
+            </td>
+        </tr>
+    }
+</table>
+

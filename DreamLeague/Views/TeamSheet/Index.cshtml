@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DreamLeague.Models.Manager>
+
+@{
+    ViewBag.Title = "Team Sheet";
+}
+
+<h2>Current Team Sheets</h2>
+
+@{ int cnt = 0;}
+
+<div class="row small">
+    @foreach (var manager in Model)
+    {
+        if(cnt++ % 2 == 0)
+        {
+            @:</div><div class="row small">
+        }
+        <div class="col-lg-6">
+            <div class="well">
+                <div class="form-horizontal">
+
+                    <fieldset>
+                        <Legend>@Html.DisplayFor(modelItem => manager.Name)</Legend>                        
+
+                        @foreach (var goalkeeper in manager.GoalKeepers.OrderBy(x=>x.Substitute).ThenBy(x=>x.Team.Name))
+                        {
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                    GK
+                                </div>
+                                <div class="col-xs-9">
+                                    @Html.ActionLink(goalkeeper.Team.Name, "Details", "Team", new { id = goalkeeper.TeamId }, null)
+
+                                    @if (goalkeeper.Substitute)
+                                    {
+                                        @: (sub)
+                                    }
+                                </div>
+                                <div class="col-xs-1">
+                                    @goalkeeper.Team.ConcededGoals
+                                </div>                         
+                            </div>
+                        }
+
+                        @foreach (var player in manager.Players.OrderBy(x => x.Player.Position).ThenBy(x => x.Substitute).ThenBy(x => x.Player.LastNameFirstName))
+                        {
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                    @Html.DisplayFor(modelItem => player.Player.ShortPosition)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Html.ActionLink(player.Player.FullName, "Details", "Player", new { id = player.PlayerId }, null)
+
+                                    - @Html.ActionLink(player.Player.Team.Name, "Details", "Team", new { id = player.Player.TeamId }, null)
+                                                                        
+                                    @if (player.Substitute)
+                                    {
+                                        @: (sub)
+                                    }                                                       
+
+                                </div>
+                                <div class="col-xs-1">
+                                    @player.Player.Scored
+                                </div>
+                            </div>
+                        }
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    }
+</div>

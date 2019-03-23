@@ -1,0 +1,58 @@
+﻿@model DreamLeague.Models.Fixture
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fixture</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AwayManager.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AwayManager.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cup.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cup.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GameWeek.GameWeekId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GameWeek.GameWeekId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeManager.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HomeManager.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Round)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Round)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FixtureId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Downloads";
+}
+
+<h2>Downloads</h2>
+
+<ul>    
+    <li>@Html.ActionLink("Team Sheet", "Download", "Download", new { fileName = "Team Sheet.xls" }, null)</li>
+    <li>@Html.ActionLink("Sealed Bid Form", "Download", "Download", new { fileName = "Sealed Bid Form.doc" }, null)</li>
+    <li>@Html.ActionLink("Sealed Bid Form (First Meeting)", "Download", "Download", new { fileName = "Sealed Bid Form Initial.doc" }, null)</li>
+</ul>
+

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<DreamLeague.ViewModels.CupWeekSummary>
+
+@if (Model.Count() > 0)
+{
+    foreach (var cupWeekSummary in Model.Where(x=>x != null))
+    {
+        <h4>@cupWeekSummary.Cup Results</h4>
+        
+        <table class="table-email small">
+            @foreach (var fixture in cupWeekSummary.Scores)
+                    {
+                <tr>
+                    <td>
+                        @if (cupWeekSummary.Groups.Count() > 0 && fixture.Round == 1)
+                        {
+                            @:Group
+                                    }
+                        else
+                        {
+                            @:R@(fixture.Round)
+                                    }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => fixture.HomeScore.Manager)
+                    </td>
+                    <td>
+                        @fixture.HomeScore.Margin
+                    </td>
+                    <td>
+                        v
+                    </td>
+                    <td>
+                        @fixture.AwayScore.Margin
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => fixture.AwayScore.Manager)
+                    </td>
+                </tr>
+            }
+        </table>
+
+        if (cupWeekSummary.Groups.Count > 0 && cupWeekSummary.GroupCurrent)
+        {
+            <h4>@cupWeekSummary.Cup Groups</h4>
+
+            foreach (var group in cupWeekSummary.Groups)
+            { 
+                <h5>@group.Name</h5>
+
+                <table class="table-email small"style="background-color: #dcdcdc;">
+                    <tr>
+                        <th>
+                            Pos
+                        </th>
+                        <th>
+                            Manager
+                        </th>
+                        <th>
+                            P
+                        </th>
+                        <th>
+                            W
+                        </th>
+                        <th>
+                            D
+                        </th>
+                        <th>
+                            L
+                        </th>
+                        <th>
+                            GF
+                        </th>
+                        <th>
+                            GA
+                        </th>
+                        <th>
+                            GD
+                        </th>
+                        <th>
+                            Pts
+                        </th>
+                    </tr>
+                    @foreach (var tableRow in group.TableRows)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Manager)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Played)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Won)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Drawn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Lost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.GF)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.GA)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.GD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => tableRow.Points)
+                            </td>
+                        </tr>
+                    }
+                </table>                
+            }
+        }
+    }
+}
+

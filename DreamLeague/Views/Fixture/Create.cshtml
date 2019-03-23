@@ -1,0 +1,64 @@
+﻿@model DreamLeague.Models.Fixture
+
+@{
+    ViewBag.Title = "Create Fixture";
+}
+
+<h2>Create Fixture</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model=>model.CupId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Round, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Round, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Round, "", new { @class = "text-danger" })
+            </div>
+        </div>        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HomeManagerId, "HomeManagerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("HomeManagerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HomeManagerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-10 col-md-offset-2">
+            <p><strong>Versus</strong></p>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AwayManagerId, "AwayManagerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AwayManagerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AwayManagerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GameWeekId, "GameWeekId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("GameWeekId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GameWeekId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Cancel", "Details", "Cup", new { id = Model.CupId }, null)
+</div>

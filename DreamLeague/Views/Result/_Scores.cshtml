@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DreamLeague.ViewModels.Score>
+
+<table class="table table-hover">
+    @foreach (var score in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(score.Manager, "Details", "Manager", new { id = score.ManagerId }, null)
+                
+                @if(score.SubstituteGoalKeeper)
+                {
+                    @:*
+                }
+            </td>
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="label @(score.Result == "Won" ? "label-success" : score.Result == "Lost" ? "label-danger" : "label-primary")"><strong>@Html.DisplayFor(modelItem => score.Goals) - @Html.DisplayFor(modelItem => score.Conceded)</strong></span>
+                    </div>
+                </div>
+                @foreach (var scorer in score.Scorers)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <em>
+                                @Html.DisplayFor(modelItem => scorer.Name)
+
+                                @if (scorer.Goals > 1)
+                                {
+                                    @: (@Html.DisplayFor(modelItem => scorer.Goals))
+                                    }
+                            </em>
+                        </div>
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@if (Model.Any(x => x.SubstituteGoalKeeper))
+{
+    <p class="text-muted small">*Substitute goal keeper played.</p>
+}

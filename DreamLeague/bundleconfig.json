@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Content/bootstrap.min.min.css",
+    "inputFiles": [
+      "Content/bootstrap.min.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/bootstrap.min.css",
+    "inputFiles": [
+      "Content/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.validate.date.min.js",
+    "inputFiles": [
+      "Scripts/jquery.validate.date.js"
+    ]
+  }
+]

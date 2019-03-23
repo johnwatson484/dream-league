@@ -1,0 +1,188 @@
+﻿@model DreamLeague.ViewModels.GameWeekSummary
+
+@{
+    Layout = null;
+}
+
+@using DreamLeague.Helpers;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dream League</title>
+    @Html.EmbedCss("~/Content/bootstrap.css")
+    @Html.EmbedCss("~/Content/Site.css")
+
+    <style type="text/css">
+        body, table, td, h3, h4, h5, h6, p {
+            font-family: Arial, Helvetica, sans-serif !important;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container body-content">
+
+        <h3>Dream League Results - @Model.GameWeek.Title</h3>
+        <h4 class="text-muted">@Html.DisplayFor(model => model.GameWeek.Start) - @Html.DisplayFor(model => model.GameWeek.End)</h4>
+
+        <hr />
+
+        @{ Html.RenderAction("_EmailChangeLog", new { gameWeekId = Model.GameWeek.GameWeekId });}
+
+        <h4>Scores</h4>
+
+        <table class="table-email small">
+            @foreach (var score in Model.Scores)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => score.Manager)
+
+                        @if (score.SubstituteGoalKeeper)
+                        {
+                            @:*
+                        }
+                    </td>
+                    <td>
+                        <strong>@Html.DisplayFor(modelItem => score.Goals) - @Html.DisplayFor(modelItem => score.Conceded)</strong>
+
+                        @foreach (var scorer in score.Scorers)
+                        {
+                            <p style="margin:0">
+                                <em>
+                                    @Html.DisplayFor(modelItem => scorer.Name)
+
+                                    @if (scorer.Goals > 1)
+                                    {
+                                        @: (@Html.DisplayFor(modelItem => scorer.Goals))
+                                    }
+                                </em>
+                            </p>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+
+        @if (Model.Scores.Any(x => x.SubstituteGoalKeeper))
+        {
+            <p class="text-muted small">*Substitute goal keeper played.</p>
+        }
+
+        <h4>Table</h4>
+
+        <table class="table-email small" style="background-color: #dcdcdc;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Manager)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Played)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Won)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Drawn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Lost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].GF)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].GA)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].GD)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table.TableRows[0].Points)
+                </th>
+            </tr>
+            @foreach (var tableRow in Model.Table.TableRows)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Manager)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Played)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Won)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Drawn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Lost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.GF)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.GA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.GD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => tableRow.Points)
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <h4>Winners</h4>
+
+        <table class="table-email small">
+            @foreach (var winner in Model.Winners)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => winner)
+                    </td>
+                </tr>
+            }
+
+            @if (Model.JackPotWinners.Count > 0)
+            {
+                <tr>
+                    <th>
+                        <h5>Jackpot</h5>
+                    </th>
+                </tr>
+                foreach (var winner in Model.JackPotWinners)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => winner)
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+        @{ Html.RenderAction("_EmailCup", new { gameWeekId = Model.GameWeek.GameWeekId });}
+
+        <hr />
+
+        <p>For more league statistics and information, visit the Dream League website at <a href="https://dreamleaguefantasyfootball.co.uk/">dreamleaguefantasyfootball.co.uk</a>.</p>
+
+        <footer>
+            <p>Copyright @DateTime.Now.Year - Lynx Magnus</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+﻿@model DreamLeague.Models.History
+
+@{
+    ViewBag.Title = "Delete History";
+}
+
+<h2>Delete History</h2>
+
+<h3>Are you sure you want to delete this history?</h3>
+<div>
+    <h4>History</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Teams)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Teams)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.League1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.League1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.League2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.League2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LeagueCup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LeagueCup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Plate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("All history", "Index")
+        </div>
+    }
+</div>

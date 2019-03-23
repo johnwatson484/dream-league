@@ -1,0 +1,75 @@
+﻿@model DreamLeague.Models.Player
+
+@{
+    ViewBag.Title = "Player Details";
+}
+
+<h2>Player Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamId)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Team.Name, "Details", "Team", new { id = Model.TeamId }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Scored)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Scored)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Current Team")
+        </dt>
+
+        <dd>
+            @if (Model.ManagerPlayers.Count > 0)
+            {
+                @Html.ActionLink(Model.ManagerPlayers.FirstOrDefault().Manager.Name, "Details", "Manager", new { id = Model.ManagerPlayers.FirstOrDefault().ManagerId }, null)
+            }
+            else
+            {
+                <span class="text-success">Available</span>
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PlayerId })@: |
+    }
+    @Html.ActionLink("All players", "Index")
+</p>

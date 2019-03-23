@@ -1,0 +1,52 @@
+﻿@model List<DreamLeague.Models.Player>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Top Goalscorers</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover small">
+            <tr>
+                <th class="no-mobile">
+                    @Html.DisplayName("Pos")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].FullName)
+                </th>
+                <th class="no-mobile">
+                    @Html.DisplayNameFor(model => Model[0].Team)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].ManagerPlayers.FirstOrDefault().Manager)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model[0].Scored)
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td class="no-mobile">
+                        @(i + 1)
+                    </td>
+                    <td>
+                        @Html.ActionLink(Model[i].FullName, "Details", "Player", new { id = Model[i].PlayerId }, null)
+                    </td>
+                    <td class="no-mobile">
+                        @Html.ActionLink(Model[i].Team.Name, "Details", "Team", new { id = Model[i].TeamId }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(Model[i].ManagerPlayers.FirstOrDefault()?.Manager?.Name, "Details", "Manager", new { id = Model[i].ManagerPlayers.FirstOrDefault()?.ManagerId }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].Scored)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

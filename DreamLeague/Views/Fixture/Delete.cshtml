@@ -1,0 +1,63 @@
+﻿@model DreamLeague.Models.Fixture
+
+@{
+    ViewBag.Title = "Delete Fixture";
+}
+
+<h2>Delete Fixture</h2>
+
+<h3>Are you sure you want to delete this fixture?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cup.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cup.Name)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Round)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Round)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HomeManager.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HomeManager.Name)
+        </dd>               
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AwayManager.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AwayManager.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GameWeek.GameWeekId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GameWeek.Number)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Cancel", "Details", "Cup", new { id = Model.CupId }, null)
+        </div>
+    }
+</div>

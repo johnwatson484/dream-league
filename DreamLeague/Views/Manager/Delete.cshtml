@@ -1,0 +1,53 @@
+﻿@model DreamLeague.Models.Manager
+
+@{
+    ViewBag.Title = "Delete Manager";
+}
+
+<h2>Delete Manager</h2>
+
+<h3>Are you sure you want to delete this manager?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Alias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alias)
+        </dd>
+
+        @if (Model.Emails.Count > 0)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Emails)
+            </dt>
+
+            foreach (var email in Model.Emails)
+            {
+                <dd>
+                    @Html.DisplayFor(emailItem => email.Address)
+                </dd>
+            }
+        }
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("All managers", "Index")
+        </div>
+    }
+</div>

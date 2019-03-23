@@ -1,0 +1,67 @@
+﻿@model IEnumerable<DreamLeague.Models.GameWeek>
+
+@{
+    ViewBag.Title = "Game Weeks";
+}
+
+<h2>Game Weeks</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+@if (Model.Count() > 0)
+{
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.End)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Complete)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Complete)
+            </td>
+            <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GameWeekId })@: |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GameWeekId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+}
+else
+{
+    <div class="alert alert-info">
+        New season coming soon...
+    </div>
+}

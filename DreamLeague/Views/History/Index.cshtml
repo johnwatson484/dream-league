@@ -1,0 +1,115 @@
+﻿@model IEnumerable<DreamLeague.Models.History>
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>History</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+@if (Model.Count() > 0)
+{
+
+    <h4>Current Competions</h4>
+
+<table class="table table-hover table-striped small">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Teams)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.League1)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.Cup)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LeagueCup)
+        </th>        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teams)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.League1)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Cup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeagueCup)
+            </td>            
+            <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.HistoryId })@: |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.HistoryId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+    <h4>Defunct Competions</h4>
+<table class="table table-hover table-striped small">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.League2)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.Plate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Where(x=>x.Year >= 1995 && x.Year <= 2006))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.League2)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Plate)
+            </td>
+            <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.HistoryId })@: |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.HistoryId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+}
+else
+{
+    <div class="alert alert-info">
+        No history available.
+    </div>
+}

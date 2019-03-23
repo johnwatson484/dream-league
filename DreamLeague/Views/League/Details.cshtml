@@ -1,0 +1,51 @@
+﻿@model DreamLeague.Models.League
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2>League Details</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rank)
+        </dd>
+
+        @if (Model.Teams.Count > 0)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Teams)
+            </dt>
+
+            foreach (var team in Model.Teams.OrderBy(x => x.Name))
+            {
+                <dd>
+                    @Html.ActionLink(team.Name, "Details", "Team", new { id = team.TeamId }, null)
+                </dd>
+            }
+        }
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.LeagueId })@: |
+    }
+    @Html.ActionLink("All leagues", "Index")
+</p>

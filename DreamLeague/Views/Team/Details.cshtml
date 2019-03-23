@@ -1,0 +1,79 @@
+﻿@model DreamLeague.Models.Team
+
+@{
+    ViewBag.Title = "Team Details";
+}
+
+<h2>Team Details</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Alias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alias)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LeagueId)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.League.Name, "Details", "League", new { id = Model.LeagueId }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Conceded)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConcededGoals)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Current Team")
+        </dt>
+        <dd>
+            @if (Model.ManagerGoalKeepers.Count > 0)
+            {
+                @Html.ActionLink(Model.ManagerGoalKeepers.FirstOrDefault().Manager.Name, "Details", "Manager", new { id = Model.ManagerGoalKeepers.FirstOrDefault().ManagerId }, null)
+            }
+            else
+            {
+                <span class="text-success">Available</span>
+            }
+        </dd>
+
+        @if (Model.Players.Count > 0)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Players)
+            </dt>
+
+            foreach (var player in Model.Players.OrderBy(x => x.Position).ThenBy(x => x.LastNameFirstName))
+            {
+                <dd>
+                    @Html.ActionLink(string.Format("{0} - {1}", player.LastNameFirstName, player.Position), "Details", "Player", new { id = player.PlayerId }, null)
+                </dd>
+            }
+        }
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TeamId })@: |
+    }
+    @Html.ActionLink("All teams", "Index")
+</p>

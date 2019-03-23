@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="norton-safeweb-site-verification" content="srdexmaidrjcoec2hpixejfzygyami1ym2h9sxxke0ayv4p5o9wj4z3gd2ai9-uqnbd78rbhg392f1dudjepqk-qc-qaw9ajriuasgpmx7r35wsep1j91agbt6-3151i" />
+    <meta name="google" content="notranslate" />
+    <title>Dream League</title>
+    @Styles.Render("~/Content/css")
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/images/Ball.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type='text/javascript' src='//cdn.jsdelivr.net/jquery.marquee/1.4.0/jquery.marquee.min.js'></script>
+
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Dream League", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Results <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Results Sheet", "Index", "ResultsSheet")</li>
+                                <li>@Html.ActionLink("Results", "Index", "Result")</li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Results", "Index", "Result")</li>
+                    }
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Team Sheet <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Current Teams", "Index", "TeamSheet")</li>
+                                <li>@Html.ActionLink("Edit Teams", "Edit", "TeamSheet")</li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Team Sheet", "Index", "TeamSheet")</li>
+                    }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Season Data <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Leagues", "Index", "League")</li>
+                            <li>@Html.ActionLink("Teams", "Index", "Team")</li>
+                            <li>@Html.ActionLink("Players", "Index", "Player")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Cups", "Index", "Cup")</li>
+                            <li>@Html.ActionLink("Managers", "Index", "Manager")</li>
+                            <li>@Html.ActionLink("Game Weeks", "Index", "GameWeek")</li>
+                            <li>@Html.ActionLink("Meetings", "Index", "Meeting")</li>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Goals", "Index", "Goal")</li>
+                                <li>@Html.ActionLink("Conceded", "Index", "Concede")</li>
+                            }
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Downloads", "Index", "Download")</li>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("New Season", "Index", "NewSeason")</li>
+                            }
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("History", "Index", "History")</li>
+                </ul>
+                <div class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" id="global-search" class="form-control" placeholder="Search">
+                    </div>
+                </div>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @if (ViewBag.NoNews == null)
+    {
+        <div class="no-mobile">
+            @{Html.RenderAction("_News", "News");}
+        </div>
+    }
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="row">
+            <div class="col-md-10">
+            <p>&copy; @DateTime.Now.Year - Lynx Magnus</p>
+            <address>
+                <strong>Email:</strong>   <a href="mailto:admin@dreamleaguefantasyfootball.co.uk?Subject=Dream League Enquiry" target="_top">admin@dreamleaguefantasyfootball.co.uk</a><br />
+            </address>
+            </div>
+            <div class="col-md-2">
+                <a href='https://play.google.com/store/apps/details?id=dreamleague.mobile&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png' width="160" /></a>
+            </div>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(function () {
+            $('#global-search').autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Home/AutoComplete",
+                        type: "POST",
+                        dataType: "json",
+                        data: { prefix: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    window.location.href = ui.item.val
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-66368319-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

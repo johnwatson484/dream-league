@@ -1,0 +1,285 @@
+﻿@model DreamLeague.ViewModels.ManagerTeamSheet
+
+@{
+    ViewBag.Title = "Team Sheet";
+}
+
+@using DreamLeague.Inputs;
+
+<h2>Update Teams</h2>
+
+@using (Html.BeginForm("Upload", "TeamSheet", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-lg-6 col-sm-6 col-12">
+                <h4>Upload Teamsheet</h4>
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Browse&hellip; <input type="file" name="file" style="display: none;">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly>
+                    <input type="submit" value="Upload" class="btn btn-default" />                                        
+                </div>
+                @if (ViewBag.LastUpload != null)
+                {
+                    <p class="text-muted">Last upload @(ViewBag.LastUpload).</p>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@{ int cnt = 0;}
+
+<div class="row">
+    @foreach (var managerTeam in Model.ManagerTeams)
+            {
+
+        if(cnt++ % 2 == 0)
+        {
+            @:</div><div class="row">
+        }
+        <div class="col-lg-6">
+            <div class="well">
+                <div class="form-horizontal">
+
+                    <fieldset>
+                        <Legend>@Html.DisplayFor(modelItem => managerTeam.ManagerName)</Legend>
+                        @Html.HiddenFor(modelItem => managerTeam.ManagerId, new { @class = "managerTeamId" })
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5>GoalKeepers</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Team Sheet</h5>
+                            </div>
+                        </div>
+
+                        @foreach (var teamGoalKeeperGroup in managerTeam.TeamGoalKeeperGroups)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(modelItem => teamGoalKeeperGroup.TeamGoalKeeperA.Name, new { @class = "form-control input-sm teamsheet-goalkeeper-label", @onClick = "this.select()" })
+                                    @Html.HiddenFor(modelItem => teamGoalKeeperGroup.TeamGoalKeeperA.TeamId, new { @class = "form-control input-sm teamsheet-goalkeeper-id", data_managerId = managerTeam.ManagerId })
+                                </div>
+                                <div class="col-md-1">
+                                    @Html.CheckBoxFor(modelItem => teamGoalKeeperGroup.TeamGoalKeeperA.Substitute, new { @class = "teamsheet-goalkeeper-substitute", @data_teamId = teamGoalKeeperGroup.TeamGoalKeeperA.TeamId })
+                                </div>
+
+                                @if (teamGoalKeeperGroup.TeamGoalKeeperB != null)
+                                {
+                                    <div class="col-md-3">
+                                        <span class="input-sm">
+                                            @Html.DisplayFor(modelItem => teamGoalKeeperGroup.TeamGoalKeeperB.Name)
+
+                                            @if (teamGoalKeeperGroup.TeamGoalKeeperB.Substitute)
+                                            {
+                                                @: (sub)
+                                            }
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5>Players</h5>
+                            </div>
+                        </div>
+
+                        @foreach (var teamPlayerGroup in managerTeam.TeamPlayerGroups)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(modelItem => teamPlayerGroup.TeamPlayerA.Name, new { @class = "form-control input-sm teamsheet-player-label", @onClick = "this.select()" })
+                                    @Html.HiddenFor(modelItem => teamPlayerGroup.TeamPlayerA.PlayerId, new { @class = "form-control input-sm teamsheet-player-id", data_managerId = managerTeam.ManagerId })
+                                </div>
+                                <div class="col-md-1">
+                                    @Html.CheckBoxFor(modelItem => teamPlayerGroup.TeamPlayerA.Substitute, new { @class = "teamsheet-player-substitute", @data_playerId = teamPlayerGroup.TeamPlayerA.PlayerId })
+                                </div>
+
+                                @if (teamPlayerGroup.TeamPlayerB != null)
+                                {
+                                    <div class="col-md-4">
+                                        <span class="input-sm">
+                                            @Html.DisplayFor(modelItem => teamPlayerGroup.TeamPlayerB.Name)
+
+                                            @if (teamPlayerGroup.TeamPlayerB.Substitute)
+                                            {
+                                                @: (sub)
+                                        }
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row" id="save-confirmation" style="display:none">
+    <div class="alert alert-dismissible alert-info col-md-2" style="position: fixed; bottom: 10px; left: 10px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Changes saved.
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.teamsheet-player-label').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Player/AutoComplete",
+                    type: "POST",
+                    dataType: "json",
+                    data: { prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $(this).closest('.form-group').find('.teamsheet-player-id').val(ui.item.val).trigger('change');
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+    $('.teamsheet-player-id').change(function () {
+
+        var managerId = $(this).closest('.form-horizontal').find('.managerTeamId').val();
+
+        var playerIds = [];
+        var playerSubs = [];
+
+        $(this).closest('.form-horizontal').find('.teamsheet-player-id').each(function (i) {
+
+            playerIds[i] = $(this).val();
+
+            if ($(this).closest('.form-group').find('.teamsheet-player-substitute').is(':checked')) {
+                playerSubs.push($(this).val());
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/TeamSheet/EditPlayer",
+            data: { managerId: managerId, playerIds: playerIds, playerSubs: playerSubs },
+            traditional: true,
+            success: function () {
+                $('#save-confirmation').fadeIn(2000);
+                $('#save-confirmation').fadeOut(2000);
+            }
+        });
+    });
+
+    $('.teamsheet-player-label').change(function () {
+        if ($(this).val() == '') {
+            $(this).closest('.form-group').find('.teamsheet-player-id').val(0).trigger('change');
+        }
+    });
+
+    $('.teamsheet-player-substitute').change(function () {
+        $(this).closest('.form-group').find('.teamsheet-player-id').trigger('change');
+    });
+
+    $(function () {
+        $('.teamsheet-goalkeeper-label').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Team/AutoComplete",
+                    type: "POST",
+                    dataType: "json",
+                    data: { prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return item;
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $(this).closest('.form-group').find('.teamsheet-goalkeeper-id').val(ui.item.val).trigger('change');
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+    $('.teamsheet-goalkeeper-id').change(function () {
+
+        var managerId = $(this).closest('.form-horizontal').find('.managerTeamId').val();
+
+        var teamIds = [];
+        var teamSubs = [];
+
+        $(this).closest('.form-horizontal').find('.teamsheet-goalkeeper-id').each(function (i) {
+
+            teamIds[i] = $(this).val();
+
+            if ($(this).closest('.form-group').find('.teamsheet-goalkeeper-substitute').is(':checked')) {
+                teamSubs.push($(this).val());
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/TeamSheet/EditGoalKeeper",
+            data: { managerId: managerId, teamIds: teamIds, teamSubs: teamSubs },
+            traditional: true,
+            success: function () {
+                $('#save-confirmation').fadeIn(2000);
+                $('#save-confirmation').fadeOut(2000);
+            }
+        });
+    });
+
+    $('.teamsheet-goalkeeper-label').change(function () {
+        if ($(this).val() == '') {
+            $(this).closest('.form-group').find('.teamsheet-goalkeeper-id').val(0).trigger('change');
+        }
+    });
+
+    $('.teamsheet-goalkeeper-substitute').change(function () {
+        $(this).closest('.form-group').find('.teamsheet-goalkeeper-id').trigger('change');
+    });
+
+    $(document).on('change', ':file', function () {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+    });
+
+    $(document).ready(function () {
+        $(':file').on('fileselect', function (event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+    });
+
+</script>

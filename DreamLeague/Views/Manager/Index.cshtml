@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DreamLeague.Models.Manager>
+
+@{
+    ViewBag.Title = "Managers";
+}
+
+<h2>Managers</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+@if (Model.Count() > 0)
+{
+    if (User.IsInRole("User"))
+    {
+        <div class="row">
+            <a class="btn btn-primary btn-sm pull-right" href="mailto:@ViewBag.Emails?Subject=Dream League" target="_top">Contact All</a>
+        </div>
+    }
+
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+        <div class="col-md-4">
+            <table class="table" style="margin:0">
+                <tr>
+                    <td style="vertical-align:middle;">
+                        @if (item.AllowImage && item.Image != null)
+                        {
+                            <img class="profile-image profile-image-sm" style="margin-right:10px;" src="data:image;base64,@System.Convert.ToBase64String(item.Image.Image)" />
+                        }
+                        else
+                        {
+                            <img class="profile-image profile-image-sm" style="margin-right:10px;" src="~/Content/images/DefaultProfile.png" />
+                        }
+                        @Html.ActionLink(item.Name, "Details", new { id = item.ManagerId }, new { @style = "white-space:nowrap;" })
+                    </td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <td style="vertical-align:middle;">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ManagerId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ManagerId })
+                        </td>
+                    }
+                </tr>
+            </table>
+        </div>
+        }
+
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        No managers enlisted.
+    </div>
+}

@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNet.Identity
+@using DreamLeague.Extensions;
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(User.Identity.GetName(), "Details", "Manager", routeValues: new { @id = User.Identity.GetManagerId() }, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li style="margin-right:5px;"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { returnUrl = Request.Url.AbsolutePath }, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

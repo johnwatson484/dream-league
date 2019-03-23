@@ -1,0 +1,13 @@
+﻿@model List<DreamLeague.Models.Audit>
+
+@if (Model.Count > 0)
+{
+    <h4>Game Week Updated - Version @ViewBag.Version</h4>
+
+    <ul class="small">
+        @foreach (var audit in Model)
+        {
+            <li>@Html.DisplayFor(modelItem => audit.Description)</li>
+        }
+    </ul>
+}

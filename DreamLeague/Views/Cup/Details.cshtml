@@ -1,0 +1,224 @@
+﻿@model DreamLeague.ViewModels.CupViewModel
+
+@{
+    ViewBag.Title = "Cup Details";
+}
+
+<h2>@Model.Cup.Name</h2>
+
+<div>
+    <hr />
+
+    @if (User.IsInRole("Administrator"))
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Cup.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cup.Name)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cup.HasGroupStage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cup.HasGroupStage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cup.KnockoutLegs)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cup.KnockoutLegs)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cup.FinalLegs)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cup.FinalLegs)
+            </dd>
+        </dl>
+    }
+
+    @if (Model.Groups.Count > 0)
+    {
+        int cnt = 0;
+
+                <div class="row">
+                    @foreach (var group in Model.Groups)
+                    {
+
+                        if (cnt++ % 2 == 0)
+                        {
+                            @:</div><div class="row">
+                        }
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">@group.Group.Name</h3>
+                                </div>
+                                <div class="panel-body group-holder">
+                                    @Html.Partial("~/Views/Result/_Table.cshtml", group.Table)
+
+                                    @Html.Hidden("Advancing", group.Group.TeamsAdvancing, new { @class = "teams-advancing" })
+
+                                    <dl class="dl-horizontal">
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+                                            <dt>@Html.DisplayNameFor(modelItem => group.Group.GroupLegs)</dt>
+                                            <dd>@Html.DisplayFor(modelItem => group.Group.GroupLegs)</dd>
+                                        }
+                                        <dt>@Html.DisplayNameFor(modelItem => group.Group.TeamsAdvancing)</dt>
+                                        <dd>@Html.DisplayFor(modelItem => group.Group.TeamsAdvancing)</dd>
+                                    </dl>
+
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        @Html.ActionLink("Edit", "Edit", "Group", new { id = group.Group.GroupId }, null)@: |
+                                        @Html.ActionLink("Delete", "Delete", "Group", new { id = group.Group.GroupId }, null)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }                    
+                </div>
+            }
+
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#fixtures" data-toggle="tab" aria-expanded="false">Fixtures</a></li>
+                <li><a href="#results" data-toggle="tab" aria-expanded="false">Results</a></li>
+            </ul>
+            <div id="tab-content" class="tab-content">
+                <div class="tab-pane fade active in" id="fixtures">
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <p>
+                            @Html.ActionLink("Create Fixture", "Create", "Fixture", new { cupId = Model.Cup.CupId }, null)
+                        </p>
+                    }
+
+                    @if (Model.Fixtures.Where(x => !x.HasResult).Count() == 0)
+                    {
+                        <div class="alert alert-info">
+                            No scheduled fixtures.
+                        </div>
+                    }
+                    else
+                    {
+                        <table class="table table-hover">
+                            @foreach (var fixture in Model.Fixtures.Where(x => !x.HasResult).OrderBy(x => x.Fixture.GameWeek.Number).ThenBy(x=>x.Round))
+                            {
+                                <tr>
+                                    <td class="no-mobile">
+                                        @fixture.Round
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(fixture.Fixture.HomeManager.Name, "Details", "Manager", new { id = fixture.Fixture.HomeManagerId }, null)
+                                    </td>
+                                    <td>
+                                        v
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(fixture.Fixture.AwayManager.Name, "Details", "Manager", new { id = fixture.Fixture.AwayManagerId }, null)
+                                    </td>
+                                    <td>
+                                        <span class="text-muted">@fixture.Fixture.GameWeek.ShortTitle</span>
+                                    </td>
+                                    <td class="no-mobile">
+                                        <span class="text-muted">@Html.DisplayFor(modelItem => fixture.Fixture.GameWeek.Start)</span>
+                                    </td>
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", "Fixture", new { id = fixture.Fixture.FixtureId }, null) |
+                                            @Html.ActionLink("Delete", "Delete", "Fixture", new { id = fixture.Fixture.FixtureId }, null)
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    }
+                </div>
+                <div class="tab-pane fade" id="results">
+
+                    @if (Model.Fixtures.Where(x => x.HasResult).Count() == 0)
+                    {
+                        <div class="alert alert-info">
+                            No fixtures played.
+                        </div>
+                    }
+                    else
+                    {
+                        <table class="table table-hover">
+                            @foreach (var fixture in Model.Fixtures.Where(x => x.HasResult).OrderByDescending(x=>x.Fixture.GameWeek.Number).ThenBy(x => x.Round))
+                            {
+                                <tr>
+                                    <td class="no-mobile">
+                                        @fixture.Round
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(fixture.Fixture.HomeManager.Name, "Details", "Manager", new { id = fixture.Fixture.HomeManagerId }, null)
+                                    </td>
+                                    <td>
+                                        @fixture.HomeScore
+                                    </td>
+                                    <td>
+                                        v
+                                    </td>
+                                    <td>
+                                        @fixture.AwayScore
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(fixture.Fixture.AwayManager.Name, "Details", "Manager", new { id = fixture.Fixture.AwayManagerId }, null)
+                                    </td>
+                                    <td>
+                                        <span class="text-muted">@fixture.Fixture.GameWeek.ShortTitle</span>
+                                    </td>
+                                    <td class="no-mobile">
+                                        <span class="text-muted">@Html.DisplayFor(modelItem => fixture.Fixture.GameWeek.Start)</span>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Cup.CupId })@: |
+        if (Model.Cup.HasGroupStage)
+        {
+            @Html.ActionLink("Create group", "Create", "Group", new { cupId = Model.Cup.CupId }, null)@: |
+        }
+    }
+    @Html.ActionLink("All cups", "Index")
+</p>
+
+<script>
+    $(function () {
+        $('.group-holder').each(function () {
+            var advancing = $(this).find('.teams-advancing').val();
+
+            $(this).find('.position-td').each(function () {
+
+                if (parseInt($(this).html()) <= parseInt(advancing))
+                    $(this).parent().addClass('success');
+            });
+        });
+    });
+</script>

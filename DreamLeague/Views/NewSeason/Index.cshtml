@@ -1,0 +1,398 @@
+﻿
+@{
+    ViewBag.Title = "New Season";
+}
+
+<h2>Set up new Season</h2>
+
+<div id="accordion">
+
+    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" style="text-decoration:none;">
+        <h3><span class="label label-success">1</span> Clear Results and Team Data</h3>
+    </a>
+    <hr />
+    <div id="collapse1" class="accordion-body collapse">
+        <p>Delete all results and manager team data held for the season.</p>
+
+        <button id="clear-request" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#clear-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting...">Clear Results</button>
+    </div>
+
+    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" style="text-decoration:none;">
+        <h3><span class="label label-success">2</span> Confirm Game Weeks</h3>
+    </a>
+    <hr />
+    <div id="collapse2" class="accordion-body collapse">
+        <p>Select start date and the number of Game Weeks for the new season.</p>
+
+        <div class="form-group">
+            <label class="control-label" for="gameweek-start">Start Date</label>
+            <input type="date" class="form-control" id="gameweek-start">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="gameweek-count">Total Game Weeks</label>
+            <input type="number" class="form-control" id="gameweek-count">
+        </div>
+
+        <button id="gameweek-request" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#gameweek-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating...">Create Game Weeks</button>
+    </div>
+
+    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3" style="text-decoration:none;">
+        <h3><span class="label label-success">3</span> Confirm Managers</h3>
+    </a>
+    <hr />
+
+    <div id="collapse3" class="accordion-body collapse">
+        <p>Update manager records for the new season.</p>
+
+        @Html.ActionLink("All Managers", "Index", "Manager", null, new { @class = "btn btn-primary btn-sm" })
+    </div>
+
+    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4" style="text-decoration:none;">
+        <h3><span class="label label-success">4</span> Confirm Teams</h3>
+    </a>
+    <hr />
+
+    <div id="collapse4" class="accordion-body collapse">
+        <p>Update team records for the new season.</p>
+
+        @Html.ActionLink("All Teams", "Index", "Team", null, new { @class = "btn btn-primary btn-sm" })
+    </div>
+
+    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" style="text-decoration:none;">
+        <h3><span class="label label-success">5</span> Upload Players</h3>
+    </a>
+    <hr />
+
+    <div id="collapse5" class="accordion-body collapse">
+        <p>Upload new season players list to replace current player's list.</p>
+
+        @using (Html.BeginForm("Players", "NewSeason", FormMethod.Post, new { enctype = "multipart/form-data", @id = "frmPlayers" }))
+            {
+            @Html.AntiForgeryToken()
+            <div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary btn-sm">
+                        Browse&hellip; <input type="file" name="file" style="display: none;">
+                    </span>
+                </label>
+                <input type="text" class="form-control input-sm" readonly>
+                <button id="players-request" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#players-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating...">Upload</button>
+            </div>
+
+        }
+    </div>
+
+    <a data-toggle="collapse" data-parent="#accordion" href="#collapse6" style="text-decoration:none;">
+        <h3><span class="label label-success">6</span> Confirm Meetings</h3>
+    </a>
+    <hr />
+
+    <div id="collapse6" class="accordion-body collapse">
+        <p>Select date and location of the first meeting and the number of meetings.</p>
+
+        <p>The first meeting will be created with a start time of 18:30, whilst all subsequent meetings will be scheduled at 19:30 for the first Wednesday of every month at the same location.</p>
+
+        <div class="form-group">
+            <label class="control-label" for="meeting-start">Meeting Date</label>
+            <input type="date" class="form-control" id="meeting-start">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="meeting-location">Location</label>
+            <input type="text" class="form-control" id="meeting-location">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="meeting-lon">Longitude</label>
+            <input type="text" class="form-control" id="meeting-lon">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="meeting-lat">Latitude</label>
+            <input type="text" class="form-control" id="meeting-lat">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="meeting-count">Total Meetings</label>
+            <input type="number" class="form-control" id="meeting-count">
+        </div>
+
+        <div class="btn-group">
+            <button id="meeting-request" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#meeting-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating...">Create Meetings</button>
+            @Html.ActionLink("All Meetings", "Index", "Meeting", null, new { @class = "btn btn-primary btn-sm" })
+        </div>
+    </div>
+</div>
+
+<div class="row" id="message-display" style="display:none">
+    <div class="alert alert-dismissible alert-info col-md-2" style="position: fixed; bottom: 10px; left: 10px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p id="message">@ViewBag.Message</p>
+    </div>
+</div>
+
+<div class="row" id="danger-display" style="display:none">
+    <div class="alert alert-dismissible alert-danger col-md-2" style="position: fixed; bottom: 10px; left: 10px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p id="danger-message">@ViewBag.Warning</p>
+    </div>
+</div>
+
+<div class="modal fade" id="clear-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Clear Results and Team Data?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete all results and team data?</p>
+                <p class="text-danger">You will not be able to undo this action.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="clear" data-dismiss="modal" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="gameweek-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirm Game Weeks?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to create the selected number of game weeks?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="gameweek-submit" data-dismiss="modal" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="meeting-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirm Meetings?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to create the selected number of meetings?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="meeting-submit" data-dismiss="modal" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="players-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Players?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to upload the current list of players, all current players will be deleted?</p>
+                <p class="text-danger">You will not be able to undo this action.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="players-submit" data-dismiss="modal" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>   
+
+    $(function () {
+        if ($("#message").text() != '') {
+            $('#message-display').fadeIn(2000);
+            $('#message-display').fadeOut(2000);
+        }
+    })
+
+    $(function () {
+        if ($("#danger-message").text() != '') {
+            $('#danger-display').fadeIn(2000);
+        }
+    })
+
+    $('#clear').click(function () {
+        $('#clear-request').button('loading');
+        $.ajax({
+            type: "POST",
+            url: "/NewSeason/Clear",
+            traditional: true,
+            success: function () {
+                $('#message').text('All results data deleted');
+                $('#message-display').fadeIn(2000);
+                $('#message-display').fadeOut(2000);
+            },
+            complete: function () {
+                $('#clear-request').button('reset');
+            }
+        });
+    });
+
+    $('#gameweek-submit').click(function () {
+
+        var gameWeekStart = $('#gameweek-start').val();
+        var gameWeekCount = $('#gameweek-count').val();
+
+        if (gameWeekStart == '') {
+            $('#danger-message').text('Invalid Start Date');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        if (gameWeekCount == '' || parseInt(gameWeekCount) < 1) {
+            $('#danger-message').text('Invalid Number of Game Weeks');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        $('#gameweek-request').button('loading');
+        $.ajax({
+            type: "POST",
+            url: "/NewSeason/GameWeeks",
+            data: { startDate: gameWeekStart, total: gameWeekCount },
+            traditional: true,
+            success: function () {
+                $('#gameweek-start').val('');
+                $('#gameweek-count').val('');
+
+                $('#message').text('Game Weeks setup completed.');
+                $('#message-display').fadeIn(2000);
+                $('#message-display').fadeOut(2000);
+            },
+            complete: function () {
+                $('#gameweek-request').button('reset');
+            }
+        });
+    });
+
+    $('#meeting-submit').click(function () {
+
+        var meetingStart = $('#meeting-start').val();
+        var meetingCount = $('#meeting-count').val();
+        var meetingLocation = $('#meeting-location').val();
+        var meetingLon = $('#meeting-lon').val();
+        var meetingLat = $('#meeting-lat').val();
+
+        if (meetingLon == '') {
+            meetingLon = 0;
+        }
+        if (meetingLat == 0) {
+            meetingLat = 0;
+        }
+
+        if (meetingStart == '') {
+            $('#danger-message').text('Invalid Start Date');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        if (meetingCount == '' || parseInt(meetingCount) < 1) {
+            $('#danger-message').text('Invalid Number of Meetings');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        if (meetingLocation == '') {
+            $('#danger-message').text('Invalid Location');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        if (!$.isNumeric(meetingLon)) {
+            $('#danger-message').text('Invalid Longitude');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        if (!$.isNumeric(meetingLat)) {
+            $('#danger-message').text('Invalid Latitude');
+            $('#danger-display').fadeIn(2000);
+            $('#danger-display').fadeOut(2000);
+
+            return;
+        }
+
+        $('#meeting-request').button('loading');
+        $.ajax({
+            type: "POST",
+            url: "/NewSeason/Meetings",
+            data: { startDate: meetingStart, total: meetingCount, location: meetingLocation, lon: meetingLon, lat: meetingLat },
+            traditional: true,
+            success: function () {
+                $('#meeting-start').val('');
+                $('#meeting-count').val('');
+                $('#meeting-location').val('');
+                $('#meeting-lon').val('');
+                $('#meeting-lat').val('');
+
+                $('#message').text('Meeting setup completed.');
+                $('#message-display').fadeIn(2000);
+                $('#message-display').fadeOut(2000);
+            },
+            complete: function () {
+                $('#meeting-request').button('reset');
+            }
+        });
+    });
+
+    $('#players-request').click(function (e) {
+        e.preventDefault();
+    });
+
+    $('#players-submit').click(function () {
+        $('#players-request').button('loading');
+        $('#frmPlayers').submit();
+    });
+
+    $(document).on('change', ':file', function () {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+    });
+
+    $(document).ready(function () {
+        $(':file').on('fileselect', function (event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+    });
+
+</script>

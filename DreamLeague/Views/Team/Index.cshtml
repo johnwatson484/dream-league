@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DreamLeague.Models.Team>
+
+@{
+    ViewBag.Title = "Teams";
+}
+
+<h2>Teams</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeagueId)
+            </th>
+            <th>
+                @Html.DisplayName("Players")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.TeamId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.League.Name)
+                </td>
+                <td>
+                    @item.Players.Count()
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TeamId })@: |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TeamId })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        No teams available.
+    </div>
+}

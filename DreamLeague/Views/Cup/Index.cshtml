@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DreamLeague.Models.Cup>
+
+@{
+    ViewBag.Title = "Cups";
+}
+
+<h2>Cups</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<table class="table">
+    @{ int cnt = 0;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="vertical-align:middle;">
+                @if (cnt++ % 2 == 0)
+                {
+                    <img class="cup-image" style="margin-right:10px;" src="~/Content/images/Cup.png" />
+                }
+                else
+                {
+                    <img class="cup-image" style="margin-right:10px;" src="~/Content/images/LeagueCup.png" />
+                }
+                @Html.ActionLink(item.Name, "Details", new { id = item.CupId })
+            </td>
+            <td style="vertical-align:middle;">
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CupId })@: |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CupId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

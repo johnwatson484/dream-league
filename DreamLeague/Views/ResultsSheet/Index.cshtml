@@ -1,0 +1,273 @@
+﻿@model DreamLeague.ViewModels.ResultsSheet
+
+@{
+    ViewBag.Title = "Results Sheet";
+}
+
+<h2>Results Sheet</h2>
+
+@if (Model.GoalKeepers.Count > 0 && Model.Players.Count > 0)
+{
+
+    using (Html.BeginForm("Index", "ResultsSheet", FormMethod.Post, new { @id = "frm-results" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.Label("Game Week", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownList("GameWeekId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <input type="button" name="submit-request" value="Submit Results" id="submit-request" data-toggle="modal" data-target="#submit-confirm" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+
+        <h4>Goal Keepers</h4>
+        <table class="table table-condensed table-hover small">
+            <tr>
+                <th>
+                    @Html.DisplayName("League")
+                </th>
+                <th>
+                    @Html.DisplayName("Team")
+                </th>
+                <th>
+                    @Html.DisplayName("Substitute")
+                </th>
+                <th>
+                    @Html.DisplayName("Manager")
+                </th>
+                <th width="100px;">
+                    @Html.DisplayName("Conceded")
+                </th>
+                <th width="100px;" class="manager-cup-holder">
+                    @Html.DisplayName("Cup Conceded")
+                </th>
+                <th>
+                    @Html.DisplayName("Substitute Played")
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.GoalKeepers.Count; i++)
+            {
+                @Html.HiddenFor(model => model.GoalKeepers[i].GoalKeeper.ManagerId)
+                @Html.HiddenFor(model => model.GoalKeepers[i].GoalKeeper.TeamId)
+                @Html.HiddenFor(model => model.GoalKeepers[i].GoalKeeper.ManagerGoalKeeperId)
+
+                @Html.HiddenFor(model => model.GoalKeepers[i].Substitute.ManagerId)
+                @Html.HiddenFor(model => model.GoalKeepers[i].Substitute.TeamId)
+                @Html.HiddenFor(model => model.GoalKeepers[i].Substitute.ManagerGoalKeeperId)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.GoalKeepers[i].GoalKeeper.Team.League.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.GoalKeepers[i].GoalKeeper.Team.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.GoalKeepers[i].Substitute.Team.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.GoalKeepers[i].GoalKeeper.Manager.Name)
+                    </td>
+                    <td width="100px;">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number btn-xs minus" data-type="minus" data-field="@Model.GoalKeepers[i].Conceded">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            @Html.TextBoxFor(model => model.GoalKeepers[i].Conceded, new { @type = "text", @onClick = "this.select()", @class = "form-control input-xs", @style = "text-align:center; min-width:50px;" })
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number btn-xs plus" data-type="plus" data-field="@Model.GoalKeepers[i].Conceded">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
+                    <td width="100px;" class="manager-cup-holder">
+                        <div class="input-group manager-cup-@Model.GoalKeepers[i].GoalKeeper.ManagerId manager-cup-input">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number btn-xs minus" data-type="minus" data-field="@Model.GoalKeepers[i].CupConceded">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            @Html.TextBoxFor(model => model.GoalKeepers[i].CupConceded, new { @type = "text", @onClick = "this.select()", @class = "form-control input-xs", @style = "text-align:center; min-width:50px;" })
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number btn-xs plus" data-type="plus" data-field="@Model.GoalKeepers[i].CupConceded">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(model => model.GoalKeepers[i].SubstitutePlayed)
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <h4>Players</h4>
+        <table class="table table-condensed table-hover input-sm">
+            <tr>
+                <th>
+                    @Html.DisplayName("League")
+                </th>
+                <th>
+                    @Html.DisplayName("Team")
+                </th>
+                <th>
+                    @Html.DisplayName("Player")
+                </th>
+                <th>
+                    @Html.DisplayName("Manager")
+                </th>
+                <th width="100px;">
+                    @Html.DisplayName("Goals")
+                </th>
+                <th width="100px;" class="manager-cup-holder">
+                    @Html.DisplayName("Cup Goals")
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.Players.Count; i++)
+            {
+                @Html.HiddenFor(model => model.Players[i].Player.ManagerPlayerId)
+                @Html.HiddenFor(model => model.Players[i].Player.ManagerId)
+                @Html.HiddenFor(model => model.Players[i].Player.PlayerId)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Players[i].Player.Player.Team.League.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Players[i].Player.Player.Team.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Players[i].Player.Player.LastNameFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Players[i].Player.Manager.Name)
+                    </td>
+                    <td width="100px;">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number btn-xs minus" data-type="minus" data-field="@Model.Players[i].Goals">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            @Html.TextBoxFor(model => model.Players[i].Goals, new { @type = "text", @onClick = "this.select()", @class = "form-control input-xs", @style = "text-align:center; min-width:50px;" })
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number btn-xs plus" data-type="plus" data-field="@Model.Players[i].Goals">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
+                    <td width="100px;" class="manager-cup-holder">
+                        <div class="input-group manager-cup-@Model.Players[i].Player.ManagerId manager-cup-input">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number btn-xs minus" data-type="minus" data-field="@Model.Players[i].CupGoals">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            @Html.TextBoxFor(model => model.Players[i].CupGoals, new { @type = "text", @onClick = "this.select()", @class = "form-control input-xs", @style = "text-align:center; min-width:50px;" })
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number btn-xs plus" data-type="plus" data-field="@Model.Players[i].CupGoals">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+}
+else
+{
+    <div class="alert alert-info">
+        Current teams not yet selected...
+    </div>
+}
+
+<div class="modal fade" id="submit-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Submit Results Sheet?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to submit the results sheet?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#GameWeekId').change(function () {
+
+        $('.manager-cup-input').hide();
+        $('.manager-cup-holder').show();
+
+        var gameWeekId = $(this).val();
+
+        var managerCupWeeks = @Html.Raw(Json.Encode(Model.ManagerCupWeeks));
+
+        var z = 0;
+
+        for (i = 0; i < managerCupWeeks.length; i++) {
+            if (managerCupWeeks[i].GameWeekId == gameWeekId) {
+                $('.manager-cup-' + managerCupWeeks[i].ManagerId).fadeIn();
+                z++;
+            }
+        }
+
+        if (z == 0) {
+            $('.manager-cup-holder').hide();
+        }
+
+    });
+
+    $(function () {
+        $('#GameWeekId').change();
+    });
+
+    $('#submit').click(function () {
+        $('#frm-results').submit();
+    });
+
+    $('.plus').click(function (e) {
+        e.preventDefault();
+
+        var input = $(this).closest('td').find('input');
+
+        if (input.val() == '') {
+            value = 0;
+        }
+        else {
+            var value = parseInt(input.val());
+        }
+
+        input.val(value + 1);
+    });
+
+    $('.minus').click(function (e) {
+        e.preventDefault();
+
+        var input = $(this).closest('td').find('input');
+        var value = parseInt(input.val());
+
+        if (value > 0) {
+            input.val(value - 1);
+        }
+    });
+</script>

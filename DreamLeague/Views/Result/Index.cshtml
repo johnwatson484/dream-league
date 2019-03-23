@@ -1,0 +1,203 @@
+﻿@model DreamLeague.ViewModels.GameWeekSummary
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+@{
+    ViewBag.Title = "Results";
+}
+
+@if (Model != null)
+{
+
+    <h2>Game Week @Model.GameWeek.Number Results</h2>
+
+    <h3 class="text-muted">@Html.DisplayFor(model => model.GameWeek.Start) - @Html.DisplayFor(model => model.GameWeek.End)</h3>
+
+    @Html.Hidden("CurrentGameWeekId", Model.GameWeek.GameWeekId)
+
+    <hr />
+
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-md-6">
+            @using (Html.BeginForm("Index", "Result", FormMethod.Get, new { @id = "frmGameWeek" }))
+            {
+                @Html.DropDownList("GameWeekId", null, new { @class = "form-control" })
+            }
+        </div>
+
+        <div class="col-md-5">
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="btn-group pull-right" role="group" style="margin-top:10px;">
+                    <button id="send-request" class="btn btn-success btn-sm" data-toggle="modal" data-target="#send-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Results...">Send Results</button>
+                    <button id="refresh-request" class="btn btn-info btn-sm" data-toggle="modal" data-target="#refresh-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Refreshing...">Refresh</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Scores</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.Partial("~/Views/Result/_Scores.cshtml", Model.Scores)
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Table</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.Partial("~/Views/Result/_Table.cshtml", Model.Table)
+                </div>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Winners</h3>
+                </div>
+                <div class="panel-body">
+                    @Html.Partial("~/Views/Result/_Winners.cshtml", Model.Winners)
+
+                    @if (Model.JackPotWinners.Count > 0)
+                    {
+                        <h4>Jackpot</h4>
+                        @Html.Partial("~/Views/Result/_Winners.cshtml", Model.JackPotWinners)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    { Html.RenderAction("_CupResults", new { gameWeekId = Model.GameWeek.GameWeekId }); }
+
+
+    <div class="modal fade" id="send-confirm" role="dialog" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Send Results?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to email the results to all managers?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="send" data-dismiss="modal" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="refresh-confirm" role="dialog" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Refresh Results?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to refresh results for all confirmed game weeks?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="refresh" data-dismiss="modal" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Results</h2>
+
+    if (User.IsInRole("Administrator"))
+    {
+        <div class="btn-group pull-right" role="group" style="margin-top:10px;">            
+            <button id="refresh-request" class="btn btn-info btn-sm" data-toggle="modal" data-target="#refresh-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Refreshing...">Restore</button>
+        </div>
+    }
+
+    <div class="alert alert-info">
+        New season coming soon...
+    </div>
+}
+
+<div class="modal fade" id="refresh-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Refresh Results?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to refresh results for all confirmed game weeks?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="refresh" data-dismiss="modal" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="email-confirmation" style="display:none">
+    <div class="alert alert-dismissible alert-success col-md-2" style="position: fixed; bottom: 10px; left: 10px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Results sent.
+    </div>
+</div>
+
+<div class="row" id="refresh-confirmation" style="display:none">
+    <div class="alert alert-dismissible alert-success col-md-2" style="position: fixed; bottom: 10px; left: 10px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Results refreshed.
+    </div>
+</div>
+
+<script>
+    $('#GameWeekId').change(function () {
+        $('#frmGameWeek').submit();
+    });
+
+    $('#refresh').click(function () {
+        $('#refresh-request').button('loading');
+        $.ajax({
+            type: "POST",
+            url: "/ResultsSheet/Refresh",
+            traditional: true,
+            success: function () {
+                $('#refresh-confirmation').fadeIn(2000);
+                $('#refresh-confirmation').fadeOut(2000);
+                location.reload();
+            },
+            complete: function () {
+                $('#refresh-request').button('reset');
+            }
+        });
+    });
+
+    $('#send').click(function () {
+        $('#send-request').button('loading');
+        $.ajax({
+            type: "POST",
+            url: "/Email/Send",
+            data: { gameWeekId: $('#CurrentGameWeekId').val() },
+            traditional: true,
+            success: function () {
+                $('#email-confirmation').fadeIn(2000);
+                $('#email-confirmation').fadeOut(2000);
+            },
+            complete: function () {
+                $('#send-request').button('reset');
+            }
+        });
+    });
+</script>

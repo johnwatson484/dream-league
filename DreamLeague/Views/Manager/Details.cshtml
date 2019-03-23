@@ -1,0 +1,297 @@
+﻿@model DreamLeague.ViewModels.ManagerProfile
+@using Microsoft.AspNet.Identity
+@using DreamLeague.Extensions;
+@{
+    ViewBag.Title = Model.Manager.Name;
+}
+
+<h2>@Model.Manager.Name</h2>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="row">
+            @if (Model.Manager.AllowImage && Model.Manager.Image != null)
+            {
+                <img class="profile-image center-block" src="data:image;base64,@System.Convert.ToBase64String(Model.Manager.Image.Image)" />
+            }
+            else
+            {
+                <img class="profile-image center-block" src="~/Content/images/DefaultProfile.png" />
+            }
+        </div>
+        @if (User.IsInRole("User") && (User.Identity.GetManagerId() == Model.Manager.ManagerId.ToString()))
+        {
+            if (Model.Manager.AllowImage)
+            {
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <a id="edit-image" href="#">Edit Image</a>
+                        @if (Model.Manager.Image != null)
+                        {
+                            @:| <a href="#" id="delete-request" data-toggle="modal" data-target="#delete-confirm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting...">Delete Image</a>
+                    }
+                    </div>
+                </div>
+                <div class="row" id="edit-image-input" style="display:none">
+
+                    @using (Html.BeginForm("Upload", "ManagerImage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.Hidden("managerId", Model.Manager.ManagerId)
+
+                        <div class="col-xs-10">
+
+                            <h4>Upload Image</h4>
+
+                            <div class="input-group">
+                                <label class="input-group-btn btn-group-sm">
+                                    <span class="btn btn-primary">
+                                        Browse&hellip; <input type="file" name="file" style="display: none;">
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control input-sm" readonly>
+                            </div>
+                                <button id="upload" class="btn btn-default btn-sm" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Uploading...">Upload</button>
+                        </div>
+                    }
+
+                </div>
+
+            }
+
+            <h4>Account</h4>
+            @Html.ActionLink("Change Password", "ChangePassword", "Manage")
+        }
+        @if (User.IsInRole("User") && Model.Manager.Emails.Count > 0)
+        {
+            <h4>Emails</h4>
+
+            foreach (var email in Model.Manager.Emails)
+            {
+                <p>@email.Address</p>
+            }
+        }
+        @if (Model.GameWeekSummary != null)
+        {
+            <h4>Statistics</h4>
+
+            <p>Average Goals: <strong><span class="text-success">@ViewBag.AverageGoals</span></strong></p>
+            <p>Average Conceded: <strong><span class="text-danger">@ViewBag.AverageConceded</span></strong></p>
+
+            <div class="row">
+                <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Table</h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html.Partial("~/Views/Result/_Table.cshtml", Model.GameWeekSummary.Table)
+                    </div>
+                </div>
+                    </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+        <div class="row small">
+            <div class="col-md-12">
+            <div class="well">
+                <div class="form-horizontal">
+
+                    <fieldset>
+                        <Legend>Current Team</Legend>
+
+                        @foreach (var goalkeeper in Model.Manager.GoalKeepers.OrderBy(x => x.Substitute).ThenBy(x => x.Team.Name))
+                        {
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                    GK
+                                </div>
+                                <div class="col-xs-9">
+                                    @Html.ActionLink(goalkeeper.Team.Name, "Details", "Team", new { id = goalkeeper.TeamId }, null)
+
+                                    @if (goalkeeper.Substitute)
+                                    {
+                                        @: (sub)
+                                    }
+                                </div>
+                                <div class="col-xs-1">
+                                    @goalkeeper.Team.ConcededGoals
+                                </div>
+                            </div>
+                        }
+
+                        @foreach (var player in Model.Manager.Players.OrderBy(x => x.Player.Position).ThenBy(x => x.Substitute).ThenBy(x => x.Player.LastNameFirstName))
+                        {
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                    @Html.DisplayFor(modelItem => player.Player.ShortPosition)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Html.ActionLink(player.Player.FullName, "Details", "Player", new { id = player.PlayerId }, null)
+
+                                    - @Html.ActionLink(player.Player.Team.Name, "Details", "Team", new { id = player.Player.TeamId }, null)
+
+                                    @if (player.Substitute)
+                                    {
+                                        @: (sub)
+                                    }
+
+                                </div>
+                                <div class="col-xs-1">
+                                    @player.Player.Scored
+                                </div>
+                            </div>
+                        }
+                    </fieldset>
+                </div>
+            </div>
+                </div>
+        </div>
+        @if (Model.GameWeekSummary != null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Latest Score - @Model.GameWeekSummary.GameWeek.Title</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            @foreach (var score in Model.GameWeekSummary.Scores.Where(x => x.ManagerId == Model.Manager.ManagerId))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => score.Manager)
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="label @(score.Result == "Won" ? "label-success" : score.Result == "Lost" ? "label-danger" : "label-primary")"><strong>@Html.DisplayFor(modelItem => score.Goals) - @Html.DisplayFor(modelItem => score.Conceded)</strong></span>
+                                            </div>
+                                        </div>
+                                        @foreach (var scorer in score.Scorers)
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <em>
+                                                        @Html.DisplayFor(modelItem => scorer.Name)
+
+                                                        @if (scorer.Goals > 1)
+                                                        {
+                                                            @: (@Html.DisplayFor(modelItem => scorer.Goals))
+                                    }
+                                                    </em>
+                                                </div>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                    </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Form</h3>
+                    </div>
+                    <div class="panel-body">
+                        @foreach (var c in Model.Form.Text)
+                        {
+                            <span class="label @(c == 'W' ? "label-success" : c == 'L' ? "label-danger" : "label-default")"><strong>@Html.DisplayFor(modelItem => c)</strong></span>
+                        }
+                    </div>
+                </div>
+                    </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Manager.ManagerId })@: |
+    }
+    @Html.ActionLink("All managers", "Index")
+</p>
+
+<div class="modal fade" id="delete-confirm" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Profile Picture?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete your profile picture?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="delete" data-dismiss="modal" class="btn btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $('.manager-id-row').each(function () {
+            if ($(this).val() == @Model.Manager.ManagerId)
+            {
+                $(this).closest('tr').addClass('info');
+            }
+        });
+    })
+
+    $('#edit-image').click(function () {
+        $('#edit-image-input').toggle();
+    });
+
+    $(document).on('change', ':file', function () {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+    });
+
+    $(document).ready(function () {
+        $(':file').on('fileselect', function (event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+    });
+
+    $('#delete').click(function () {
+        $('#delete-request').button('loading');
+        $.ajax({
+            type: "POST",
+            url: "/ManagerImage/Delete",
+            data: { managerId: @Model.Manager.ManagerId },
+            traditional: true,
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+
+    $('#upload').click(function () {
+        $('#upload').button('loading');
+    });
+</script>

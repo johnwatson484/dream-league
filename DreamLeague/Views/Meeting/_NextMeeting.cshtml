@@ -1,0 +1,20 @@
+﻿@model DreamLeague.Models.Meeting
+
+@if (Model != null)
+{
+    <h2>Next Meeting</h2>
+    <p>
+        The next meeting is scheduled for <strong>@Html.DisplayFor(model => model.Date)</strong> at <strong>
+            @if (Model.Latitude != 0 && Model.Longitude != 0)
+            {
+                <a href=@Model.Link target="_blank">@Model.Location</a>
+            }
+            else
+            {
+                @Model.Location
+            }
+        </strong>
+    </p>
+
+    <img class="img-responsive img-rounded" src="~/Content/images/Beer.jpeg" />
+}

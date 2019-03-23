@@ -1,0 +1,10 @@
+﻿@model IEnumerable<string>
+
+@foreach (var winner in Model)
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.DisplayFor(modelItem => winner)
+        </div>
+    </div>
+}
