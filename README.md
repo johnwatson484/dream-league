@@ -1,6 +1,6 @@
 # Dream League
 
-MVC application to administer fantasy football league.
+Administer private fantasy football league.
 
 https://www.dreamleaguefantasyfootball.co.uk/
 
