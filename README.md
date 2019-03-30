@@ -1,6 +1,6 @@
 # Dream League
 
-Administer private fantasy football league.
+Private fantasy football league.
 
 https://www.dreamleaguefantasyfootball.co.uk/
 
