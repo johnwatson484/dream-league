@@ -46,12 +46,15 @@ namespace DreamLeague.Controllers
         // GET: Goal
         public ActionResult Index(int? page)
         {
-            var goals = db.Goals.AsNoTracking().Include(g => g.GameWeek).Include(g => g.Manager).Include(g => g.Player).OrderByDescending(x => x.GameWeek.Number).ThenByDescending(x => x.Player.Team.League.Rank).ThenBy(x => x.Player.LastName);
+            var goals = db.Goals.AsNoTracking()
+                .Include(g => g.GameWeek)
+                .Include(g => g.Manager)
+                .Include(g => g.Player)
+                .OrderByDescending(x => x.GameWeek.Number)
+                .ThenByDescending(x => x.Player.Team.League.Rank)
+                .ThenBy(x => x.Player.LastName);
 
-            int pageSize = 50;
-            int pageNumber = (page ?? 1);
-
-            return View(goals.ToPagedList(pageNumber, pageSize));
+            return View(goals.ToPagedList((page ?? 1), 50));
         }
 
         // GET: Goal/Create
@@ -75,16 +78,10 @@ namespace DreamLeague.Controllers
                 goal.ManagerId = managerId;
 
                 db.Goals.Add(goal);
-                var player = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
 
-                if (!goal.Cup)
-                {
-                    auditService.Log("Goal", "Goal Added", User.Identity.Name, string.Format("Goal added for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
-                }
-                else
-                {
-                    auditService.Log("Goal", "Goal Added", User.Identity.Name, string.Format("Cup goal added for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
-                }
+                var player = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
+                auditService.Log("Goal", "Goal Added", User.Identity.Name, string.Format("{0} added for {1} ({2})", !goal.Cup ? "Goal" : "Cup goal", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId); auditService.Log("Goal", "Goal Added", User.Identity.Name, string.Format("Cup goal added for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
+
                 await db.SaveChangesAsync();
 
                 gameWeekSummaryService.Create(goal.GameWeekId);
@@ -116,8 +113,6 @@ namespace DreamLeague.Controllers
         }
 
         // POST: Goal/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "GoalId,PlayerId,GameWeekId")] Goal goal)
@@ -129,15 +124,8 @@ namespace DreamLeague.Controllers
 
                 db.Entry(goal).State = EntityState.Modified;
                 var player = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
+                auditService.Log("Goal", "Goal Updated", User.Identity.Name, string.Format("{0} updated for {1} ({2})", !goal.Cup ? "Goal" : "Cup goal", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
 
-                if (!goal.Cup)
-                {
-                    auditService.Log("Goal", "Goal Updated", User.Identity.Name, string.Format("Goal updated for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
-                }
-                else
-                {
-                    auditService.Log("Goal", "Goal Updated", User.Identity.Name, string.Format("Cup goal updated for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
-                }
                 await db.SaveChangesAsync();
 
                 gameWeekSummaryService.Create(goal.GameWeekId);
@@ -173,15 +161,8 @@ namespace DreamLeague.Controllers
             Goal goal = await db.Goals.FindAsync(id);
             db.Goals.Remove(goal);
             var player = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
+            auditService.Log("Goal", "Goal Deleted", User.Identity.Name, string.Format("{0} removed for {1} ({2})", !goal.Cup ? "Goal" : "Cup goal", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
 
-            if (!goal.Cup)
-            {
-                auditService.Log("Goal", "Goal Deleted", User.Identity.Name, string.Format("Goal removed for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
-            }
-            else
-            {
-                auditService.Log("Goal", "Goal Deleted", User.Identity.Name, string.Format("Cup goal removed for {0} ({1})", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
-            }
             await db.SaveChangesAsync();
 
             gameWeekSummaryService.Create(goal.GameWeekId);

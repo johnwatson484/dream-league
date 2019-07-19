@@ -44,13 +44,16 @@ namespace DreamLeague.Controllers
         // GET: Concede
         public ActionResult Index(int? page)
         {
-            var conceded = db.Conceded.AsNoTracking().Include(c => c.GameWeek).Include(c => c.Manager).Include(c => c.Team).OrderByDescending(x => x.GameWeek.Number).ThenByDescending(x => x.Team.League.Rank).ThenBy(x => x.Team.Name);
+            var conceded = db.Conceded.AsNoTracking()
+                .Include(c => c.GameWeek)
+                .Include(c => c.Manager)
+                .Include(c => c.Team)
+                .OrderByDescending(x => x.GameWeek.Number)
+                .ThenByDescending(x => x.Team.League.Rank)
+                .ThenBy(x => x.Team.Name);
 
-            int pageSize = 50;
-            int pageNumber = (page ?? 1);
-
-            return View(conceded.ToPagedList(pageNumber, pageSize));
-        }       
+            return View(conceded.ToPagedList((page ?? 1), 50));
+        }
 
         // GET: Concede/Create
         public ActionResult Create()
@@ -61,8 +64,6 @@ namespace DreamLeague.Controllers
         }
 
         // POST: Concede/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ConcedeId,TeamId,GameWeekId,ManagerId,Substitute")] Concede concede)
@@ -77,16 +78,10 @@ namespace DreamLeague.Controllers
                 }
 
                 db.Conceded.Add(concede);
-                var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
 
-                if (!concede.Cup)
-                {
-                    auditService.Log("Concede", "Concede Added", User.Identity.Name, string.Format("Goal conceded for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
-                }
-                else
-                {
-                    auditService.Log("Concede", "Concede Added", User.Identity.Name, string.Format("Cup goal conceded for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
-                }
+                var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
+                auditService.Log("Concede", "Concede Added", User.Identity.Name, string.Format("{0} conceded for {1} ({2})", !concede.Cup ? "Goal" : "Cup goal", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
+
                 await db.SaveChangesAsync();
 
                 gameWeekSummaryService.Create(concede.GameWeekId);
@@ -134,18 +129,11 @@ namespace DreamLeague.Controllers
                 }
 
                 db.Entry(concede).State = EntityState.Modified;
-                var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
 
-                if (!concede.Cup)
-                {
-                    auditService.Log("Concede", "Concede Updated", User.Identity.Name, string.Format("Goal conceded updated for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
-                }
-                else
-                {
-                    auditService.Log("Concede", "Concede Updated", User.Identity.Name, string.Format("Cup goal conceded updated for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
-                }
+                var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
+                auditService.Log("Concede", "Concede Updated", User.Identity.Name, string.Format("{0} conceded updated for {1} ({2})", !concede.Cup ? "Goal" : "Cup goal", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
                 await db.SaveChangesAsync();
-                
+
                 gameWeekSummaryService.Create(concede.GameWeekId);
                 cupWeekSummaryService.Create(concede.GameWeekId);
 
@@ -178,18 +166,11 @@ namespace DreamLeague.Controllers
         {
             Concede concede = await db.Conceded.FindAsync(id);
             db.Conceded.Remove(concede);
-            var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
 
-            if (!concede.Cup)
-            {
-                auditService.Log("Concede", "Concede Deleted", User.Identity.Name, string.Format("Goal conceded removed for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
-            }
-            else
-            {
-                auditService.Log("Concede", "Concede Deleted", User.Identity.Name, string.Format("Goal conceded removed for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
-            }
+            var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
+            auditService.Log("Concede", "Concede Deleted", User.Identity.Name, string.Format("{0} conceded removed for {1} ({2})", !concede.Cup ? "Goal" : "Cup goal", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);
             await db.SaveChangesAsync();
-            
+
             gameWeekSummaryService.Create(concede.GameWeekId);
             cupWeekSummaryService.Create(concede.GameWeekId);
 
