@@ -46,9 +46,7 @@ namespace DreamLeague.Controllers
         [HttpPost]
         public JsonResult AutoComplete(string prefix)
         {
-            var result = searchService.Search(prefix);
-
-            var response = result.Select(x => new { label = x.Label, val = x.Url }).ToList();
+            var response = searchService.Search(prefix).Select(x => new { label = x.Label, val = x.Url }).ToList();
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
