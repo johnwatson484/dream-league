@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Models
 {
@@ -24,13 +20,13 @@ namespace DreamLeague.Models
         [ForeignKey("AwayManager")]
         public int AwayManagerId { get; set; }
 
-        [Range(1,10)]
+        [Range(1, 10)]
         public int Round { get; set; }
 
         public virtual Cup Cup { get; set; }
 
         public virtual GameWeek GameWeek { get; set; }
-        
+
         public virtual Manager HomeManager { get; set; }
 
         public virtual Manager AwayManager { get; set; }
@@ -40,7 +36,7 @@ namespace DreamLeague.Models
         public Fixture(int cupId, int? round = null)
         {
             CupId = cupId;
-            Round = round ?? 1;           
+            Round = round ?? 1;
         }
     }
 }

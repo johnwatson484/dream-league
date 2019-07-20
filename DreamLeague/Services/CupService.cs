@@ -1,11 +1,9 @@
 ﻿using DreamLeague.DAL;
 using DreamLeague.Models;
 using DreamLeague.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data.Entity;
+using System.Linq;
 
 namespace DreamLeague.Services
 {
@@ -16,7 +14,7 @@ namespace DreamLeague.Services
 
         public CupService(DreamLeagueContext db, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer)
         {
-            this.db = db;            
+            this.db = db;
             this.cupWeekSerializer = cupWeekSerializer;
         }
 

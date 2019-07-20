@@ -1,15 +1,11 @@
 ﻿using DreamLeague.DAL;
 using DreamLeague.ViewModels;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
-using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using PreMailer.Net;
-using System.Data.Entity;
 
 namespace DreamLeague.Services
 {
@@ -25,21 +21,21 @@ namespace DreamLeague.Services
 
         public void Send(GameWeekSummary gameWeekSummary, ControllerContext context)
         {
-            SmtpClient smtpClient = new SmtpClient();            
+            SmtpClient smtpClient = new SmtpClient();
 
             MailMessage message = new MailMessage();
             message.IsBodyHtml = true;
             message.Subject = string.Format("Dream League Results - Game Week {0}", gameWeekSummary.GameWeek.Number);
 
             message.Body = RenderViewToString(context, "Email", gameWeekSummary);
-            message.Body = PreMailer.Net.PreMailer.MoveCssInline(message.Body, false, stripIdAndClassAttributes:true).Html;
+            message.Body = PreMailer.Net.PreMailer.MoveCssInline(message.Body, false, stripIdAndClassAttributes: true).Html;
 
             var managers = db.Managers.AsNoTracking().Include(x => x.Emails);
 
-            foreach(var manager in managers)
+            foreach (var manager in managers)
             {
-                foreach(var email in manager.Emails)
-                {                    
+                foreach (var email in manager.Emails)
+                {
                     message.To.Add(email.Address);
                 }
             }

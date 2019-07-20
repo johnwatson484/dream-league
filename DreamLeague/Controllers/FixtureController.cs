@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DreamLeague.DAL;
+using DreamLeague.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using DreamLeague.DAL;
-using DreamLeague.Models;
 
 namespace DreamLeague.Controllers
 {
@@ -109,7 +106,7 @@ namespace DreamLeague.Controllers
             var managers = db.Managers.AsNoTracking().OrderBy(x => x.Name);
 
             ViewBag.AwayManagerId = new SelectList(managers, "ManagerId", "Name", fixture.AwayManagerId);
-            ViewBag.GameWeekId = new SelectList(db.GameWeeks.AsNoTracking().OrderBy(x=>x.Number), "GameWeekId", "Details", fixture.GameWeekId);
+            ViewBag.GameWeekId = new SelectList(db.GameWeeks.AsNoTracking().OrderBy(x => x.Number), "GameWeekId", "Details", fixture.GameWeekId);
             ViewBag.HomeManagerId = new SelectList(managers, "ManagerId", "Name", fixture.HomeManagerId);
             return View(fixture);
         }

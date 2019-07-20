@@ -1,8 +1,6 @@
 ﻿using DreamLeague.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace DreamLeague.ViewModels
 {
@@ -26,7 +24,7 @@ namespace DreamLeague.ViewModels
             Groups = groupTables;
             Fixtures = fixtures;
 
-            foreach(var fixture in Fixtures)
+            foreach (var fixture in Fixtures)
             {
                 fixture.SetCupViewModel(this);
             }
@@ -87,7 +85,7 @@ namespace DreamLeague.ViewModels
         {
             Fixture = fixture;
             HomeScore = homeScore;
-            AwayScore = awayScore;            
+            AwayScore = awayScore;
         }
 
         public void SetCupViewModel(CupViewModel cupViewModel)

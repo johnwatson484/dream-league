@@ -48,7 +48,7 @@ namespace DreamLeague.Inputs
         private void DeleteCurrent()
         {
             var players = db.Players;
-            foreach(var player in players)
+            foreach (var player in players)
             {
                 db.Players.Remove(player);
             }
@@ -73,7 +73,7 @@ namespace DreamLeague.Inputs
                         db.Players.Add(newPlayer);
                     }
                 }
-            }           
+            }
         }
 
         private string Unmatched()
@@ -84,7 +84,7 @@ namespace DreamLeague.Inputs
 
             sb.Append("The following teams were not matched: ");
 
-            foreach(var team in unmatchedTeams)
+            foreach (var team in unmatchedTeams)
             {
                 sb.Append(string.Format(" - {0}", team.Key));
             }

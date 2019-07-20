@@ -1,9 +1,7 @@
 ﻿using DreamLeague.DAL;
 using DreamLeague.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Services
 {
@@ -41,7 +39,7 @@ namespace DreamLeague.Services
             List<Search> result = new List<Search>();
 
             var players = db.Players.AsNoTracking().Where(x => x.LastName.StartsWith(prefix) || x.FirstName.StartsWith(prefix));
-            foreach(var player in players)
+            foreach (var player in players)
             {
                 Search search = new Search(player.FullName, "Player", "Details", player.PlayerId.ToString());
                 result.Add(search);

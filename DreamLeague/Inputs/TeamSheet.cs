@@ -1,8 +1,5 @@
 ﻿using DreamLeague.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Inputs
 {
@@ -30,7 +27,7 @@ namespace DreamLeague.Inputs
             Players = new List<TeamSheetPlayer>();
         }
 
-        public TeamSheetTeam(string manager):this()
+        public TeamSheetTeam(string manager) : this()
         {
             Manager = manager;
         }
@@ -44,7 +41,7 @@ namespace DreamLeague.Inputs
 
         public TeamSheetGoalKeeper() { }
 
-        public TeamSheetGoalKeeper(string team, bool substitute = false):this()
+        public TeamSheetGoalKeeper(string team, bool substitute = false) : this()
         {
             Team = team;
             Substitute = substitute;
@@ -61,7 +58,7 @@ namespace DreamLeague.Inputs
 
         public TeamSheetPlayer() { }
 
-        public TeamSheetPlayer(string name, Position position, bool substitute = false):this()
+        public TeamSheetPlayer(string name, Position position, bool substitute = false) : this()
         {
             Name = name;
             Position = position;

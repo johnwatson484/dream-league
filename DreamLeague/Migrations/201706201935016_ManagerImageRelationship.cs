@@ -1,8 +1,7 @@
 namespace DreamLeague.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class ManagerImageRelationship : DbMigration
     {
         public override void Up()
@@ -12,7 +11,7 @@ namespace DreamLeague.Migrations
             DropIndex("dbo.AspNetUsers", new[] { "ManagerId" });
             AddForeignKey("DreamLeague.ManagerImages", "ManagerId", "DreamLeague.Managers", "ManagerId", cascadeDelete: true);
         }
-        
+
         public override void Down()
         {
             DropForeignKey("DreamLeague.ManagerImages", "ManagerId", "DreamLeague.Managers");

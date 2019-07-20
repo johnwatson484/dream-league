@@ -1,12 +1,4 @@
-﻿using DreamLeague.Models;
-using DreamLeague.Services;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
+﻿using DreamLeague.Services;
 using System.Web.Mvc;
 
 namespace DreamLeague.Controllers
@@ -24,7 +16,7 @@ namespace DreamLeague.Controllers
         {
             this.newsService = newsService;
         }
-        
+
         [OutputCache(Duration = 3600, VaryByParam = "none")]
         public ActionResult _News()
         {

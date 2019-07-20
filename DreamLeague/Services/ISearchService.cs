@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using DreamLeague.ViewModels;
+﻿using DreamLeague.ViewModels;
+using System.Collections.Generic;
 
 namespace DreamLeague.Services
 {

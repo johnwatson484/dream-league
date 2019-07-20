@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DreamLeague.DAL;
+using DreamLeague.Models;
+using DreamLeague.ViewModels;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using DreamLeague.DAL;
-using DreamLeague.Models;
-using DreamLeague.ViewModels;
 
 namespace DreamLeague.Controllers
 {
@@ -110,7 +107,7 @@ namespace DreamLeague.Controllers
                             existing.Managers.Add(manager);
                         }
                     }
-                    else if(existing.Managers.Exists(x => x.ManagerId == manager.ManagerId))
+                    else if (existing.Managers.Exists(x => x.ManagerId == manager.ManagerId))
                     {
                         existing.Managers.Remove(manager);
                     }

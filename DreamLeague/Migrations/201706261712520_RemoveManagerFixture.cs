@@ -1,8 +1,7 @@
 namespace DreamLeague.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class RemoveManagerFixture : DbMigration
     {
         public override void Up()
@@ -11,7 +10,7 @@ namespace DreamLeague.Migrations
             DropIndex("Cup.CupFixtures", new[] { "Manager_ManagerId" });
             DropColumn("Cup.CupFixtures", "Manager_ManagerId");
         }
-        
+
         public override void Down()
         {
             AddColumn("Cup.CupFixtures", "Manager_ManagerId", c => c.Int());

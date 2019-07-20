@@ -1,11 +1,9 @@
 ﻿using DreamLeague.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
-using System.Text;
-using System.Web;
 using DreamLeague.ViewModels;
+using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Text;
 
 namespace DreamLeague.Services
 {

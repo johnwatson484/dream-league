@@ -1,8 +1,6 @@
 ﻿using DreamLeague.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace DreamLeague.ViewModels
 {
@@ -23,11 +21,11 @@ namespace DreamLeague.ViewModels
             ManagerCupWeeks = new List<ManagerCupWeek>();
         }
 
-        public ResultsSheet(List<ManagerGoalKeeper> goalKeepers, List<ManagerPlayer> players, List<ManagerCupWeek> managerCupWeeks):this()
+        public ResultsSheet(List<ManagerGoalKeeper> goalKeepers, List<ManagerPlayer> players, List<ManagerCupWeek> managerCupWeeks) : this()
         {
             ManagerCupWeeks = managerCupWeeks;
 
-            foreach(var goalKeeper in goalKeepers)
+            foreach (var goalKeeper in goalKeepers)
             {
                 if (!goalKeeper.Substitute)
                 {
@@ -38,7 +36,7 @@ namespace DreamLeague.ViewModels
                 {
                     ResultsSheetGoalKeeper resultsSheetGoalKeeper = GoalKeepers.Where(x => x.GoalKeeper.ManagerId == goalKeeper.ManagerId).FirstOrDefault();
 
-                    if(resultsSheetGoalKeeper!= null)
+                    if (resultsSheetGoalKeeper != null)
                     {
                         resultsSheetGoalKeeper.Substitute = goalKeeper;
                     }

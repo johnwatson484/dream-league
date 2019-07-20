@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DreamLeague.DAL;
+using DreamLeague.Models;
+using PagedList;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using DreamLeague.DAL;
-using DreamLeague.Models;
-using PagedList;
 
 namespace DreamLeague.Controllers
 {
@@ -108,7 +105,7 @@ namespace DreamLeague.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
-            ViewBag.TeamId = new SelectList(db.Teams.AsNoTracking().OrderBy(x=>x.Name), "TeamId", "Name");
+            ViewBag.TeamId = new SelectList(db.Teams.AsNoTracking().OrderBy(x => x.Name), "TeamId", "Name");
             return View();
         }
 
@@ -124,7 +121,7 @@ namespace DreamLeague.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TeamId = new SelectList(db.Teams.AsNoTracking().OrderBy(x=>x.Name), "TeamId", "Name", player.TeamId);
+            ViewBag.TeamId = new SelectList(db.Teams.AsNoTracking().OrderBy(x => x.Name), "TeamId", "Name", player.TeamId);
             return View(player);
         }
 

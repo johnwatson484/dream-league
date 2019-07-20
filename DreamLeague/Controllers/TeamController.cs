@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DreamLeague.DAL;
+using DreamLeague.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using DreamLeague.DAL;
-using DreamLeague.Models;
 
 namespace DreamLeague.Controllers
 {
@@ -31,8 +28,8 @@ namespace DreamLeague.Controllers
         {
             var teams = db.Teams.AsNoTracking()
                 .Include(t => t.League)
-                .OrderBy(x=>x.League.Rank)
-                .ThenBy(x=>x.Name);
+                .OrderBy(x => x.League.Rank)
+                .ThenBy(x => x.Name);
 
             return View(await teams.ToListAsync());
         }
@@ -134,7 +131,7 @@ namespace DreamLeague.Controllers
 
         [HttpPost]
         public JsonResult AutoComplete(string prefix)
-        {            
+        {
             return Json(db.Teams.AsNoTracking().Where(x => x.Name.StartsWith(prefix)).Select(x => new { label = x.Name, val = x.TeamId }).ToList(), JsonRequestBehavior.AllowGet);
         }
 

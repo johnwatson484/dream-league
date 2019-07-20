@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Models
 {
@@ -15,7 +12,7 @@ namespace DreamLeague.Models
         public int CupId { get; set; }
 
         public string Name { get; set; }
-        
+
         [Range(1, 2)]
         [Display(Name = "Group Legs")]
         public int GroupLegs { get; set; }
@@ -34,7 +31,7 @@ namespace DreamLeague.Models
             Managers = new List<Manager>();
         }
 
-        public Group(int cupId):this()
+        public Group(int cupId) : this()
         {
             CupId = cupId;
         }

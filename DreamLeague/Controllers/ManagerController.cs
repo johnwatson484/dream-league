@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DreamLeague.DAL;
+using DreamLeague.Models;
+using DreamLeague.Services;
+using DreamLeague.ViewModels;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using DreamLeague.DAL;
-using DreamLeague.Models;
-using DreamLeague.ViewModels;
-using DreamLeague.Services;
 
 namespace DreamLeague.Controllers
 {
@@ -53,9 +50,9 @@ namespace DreamLeague.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Manager manager = db.Managers.AsNoTracking().Include(x => x.Emails).Include(x => x.GoalKeepers.Select(t => t.Team)).Include(x => x.Players.Select(p => p.Player)).Include(x => x.Image).Where(x => x.ManagerId == id).FirstOrDefault();            
+            Manager manager = db.Managers.AsNoTracking().Include(x => x.Emails).Include(x => x.GoalKeepers.Select(t => t.Team)).Include(x => x.Players.Select(p => p.Player)).Include(x => x.Image).Where(x => x.ManagerId == id).FirstOrDefault();
 
-            if(User.IsInRole("User") && manager == null)
+            if (User.IsInRole("User") && manager == null)
             {
                 return RedirectToAction("Index", "Manage");
             }
@@ -71,7 +68,7 @@ namespace DreamLeague.Controllers
 
             ViewBag.AverageGoals = statisticsService.GetAverageGoals(id.Value);
             ViewBag.AverageConceded = statisticsService.GetAverageConceded(id.Value);
-            
+
             return View(new ManagerProfile(manager, gameWeekSummary, form));
         }
 

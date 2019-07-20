@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DreamLeague.Models
 {
-    [Table("Emails", Schema ="DreamLeague")]
+    [Table("Emails", Schema = "DreamLeague")]
     public class Email
     {
         public int EmailId { get; set; }

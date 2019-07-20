@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.IO;
 
 namespace DreamLeague.Inputs
 {
     public class CSVPlayerListReader : IPlayerListReader
     {
         private PlayerList playerList;
-        
+
         public PlayerList Read(string filePath)
         {
             playerList = new PlayerList();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace DreamLeague.ViewModels
+﻿namespace DreamLeague.ViewModels
 {
     public class Search
     {
@@ -13,13 +8,13 @@ namespace DreamLeague.ViewModels
 
         public string Action { get; set; }
 
-        public string Id { get; set; }        
+        public string Id { get; set; }
 
         public string Url
         {
             get
             {
-                if(!string.IsNullOrEmpty(Id))
+                if (!string.IsNullOrEmpty(Id))
                 {
                     return string.Format("/{0}/{1}/{2}", Controller, Action, Id);
                 }
@@ -31,7 +26,7 @@ namespace DreamLeague.ViewModels
         }
 
         public Search() { }
-        
+
         public Search(string label, string controller, string action, string id = null)
         {
             Label = label;

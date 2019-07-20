@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace DreamLeague.ViewModels
 {
@@ -26,7 +25,7 @@ namespace DreamLeague.ViewModels
                 return Scores.Select(x => x.Round).FirstOrDefault() == 1 ? true : false;
             }
         }
-        
+
         public CupWeekSummary()
         {
 
@@ -58,16 +57,16 @@ namespace DreamLeague.ViewModels
         public Score HomeScore { get; set; }
 
         public Score AwayScore { get; set; }
-        
+
         public string Winner
         {
             get
             {
-                if(HomeScore.Margin > AwayScore.Margin)
+                if (HomeScore.Margin > AwayScore.Margin)
                 {
                     return "Home";
                 }
-                if(AwayScore.Margin > HomeScore.Margin)
+                if (AwayScore.Margin > HomeScore.Margin)
                 {
                     return "Away";
                 }
@@ -80,7 +79,7 @@ namespace DreamLeague.ViewModels
             HomeScore = new Score();
             AwayScore = new Score();
         }
-        
+
         public CupScore(int cupId, int fixtureId, int round, Score homeScore, Score awayScore)
         {
             CupId = cupId;
@@ -95,12 +94,12 @@ namespace DreamLeague.ViewModels
             Score managerScore;
             Score opponentScore;
 
-            if(HomeScore.ManagerId == managerId)
+            if (HomeScore.ManagerId == managerId)
             {
                 managerScore = HomeScore;
                 opponentScore = AwayScore;
             }
-            else if(AwayScore.ManagerId == managerId)
+            else if (AwayScore.ManagerId == managerId)
             {
                 managerScore = AwayScore;
                 opponentScore = HomeScore;
@@ -114,7 +113,7 @@ namespace DreamLeague.ViewModels
             {
                 return 3;
             }
-            if(managerScore.Margin < opponentScore.Margin)
+            if (managerScore.Margin < opponentScore.Margin)
             {
                 return 0;
             }
@@ -127,7 +126,7 @@ namespace DreamLeague.ViewModels
             Score opponentScore;
 
             if (HomeScore.ManagerId == managerId)
-            {                
+            {
                 managerScore = HomeScore;
                 opponentScore = AwayScore;
             }
@@ -150,12 +149,12 @@ namespace DreamLeague.ViewModels
             Score opponentScore;
 
             if (HomeScore.ManagerId == managerId)
-            {                
+            {
                 managerScore = HomeScore;
                 opponentScore = AwayScore;
             }
             else if (AwayScore.ManagerId == managerId)
-            {                
+            {
                 managerScore = AwayScore;
                 opponentScore = HomeScore;
             }

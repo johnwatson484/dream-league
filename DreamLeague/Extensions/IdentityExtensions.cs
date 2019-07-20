@@ -1,10 +1,7 @@
 ﻿using DreamLeague.DAL;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Web;
 
 namespace DreamLeague.Extensions
 {
@@ -17,8 +14,8 @@ namespace DreamLeague.Extensions
             var managerId = identity.GetManagerId();
 
             var manager = db.Managers.AsNoTracking().Where(x => x.ManagerId.ToString() == managerId).FirstOrDefault();
-            
-            if(manager != null)
+
+            if (manager != null)
             {
                 return manager.Name;
             }

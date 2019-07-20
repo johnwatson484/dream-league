@@ -1,14 +1,11 @@
 ﻿using DreamLeague.DAL;
 using DreamLeague.Services;
 using DreamLeague.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DreamLeague.Controllers
-{   
+{
     public class HomeController : Controller
     {
         DreamLeagueContext db;
@@ -31,9 +28,9 @@ namespace DreamLeague.Controllers
 
         public ActionResult Index()
         {
-            var gameWeekId = db.GameWeeks.AsNoTracking().Where(x => x.Complete).OrderByDescending(x => x.Number).Select(x => x.GameWeekId).FirstOrDefault();            
+            var gameWeekId = db.GameWeeks.AsNoTracking().Where(x => x.Complete).OrderByDescending(x => x.Number).Select(x => x.GameWeekId).FirstOrDefault();
 
-            GameWeekSummary gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeekId, "GameWeek");            
+            GameWeekSummary gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeekId, "GameWeek");
 
             return View(gameWeekSummary);
         }
@@ -50,6 +47,6 @@ namespace DreamLeague.Controllers
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
-    
+
     }
 }

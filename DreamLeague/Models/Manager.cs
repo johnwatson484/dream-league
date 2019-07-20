@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace DreamLeague.Models
 {
@@ -23,7 +21,7 @@ namespace DreamLeague.Models
         public virtual List<ManagerPlayer> Players { get; set; }
 
         public virtual List<Email> Emails { get; set; }
-        
+
         public virtual List<Group> Groups { get; set; }
 
         public virtual List<Goal> Goals { get; set; }
@@ -33,7 +31,7 @@ namespace DreamLeague.Models
         public virtual ManagerImage Image { get; set; }
 
         [Display(Name = "Allow Image")]
-        public bool AllowImage { get; set; }        
+        public bool AllowImage { get; set; }
 
         public string EmailDetails
         {
@@ -92,11 +90,11 @@ namespace DreamLeague.Models
             int goals = GameWeekGoals(gameWeekId, cup).Count();
             int conceded = GameWeekConceded(gameWeekId, cup).Count();
 
-            if(goals > conceded)
+            if (goals > conceded)
             {
                 return "W";
             }
-            if(goals == conceded)
+            if (goals == conceded)
             {
                 return "D";
             }
@@ -105,7 +103,7 @@ namespace DreamLeague.Models
 
         public int GameWeekPoints(int gameWeekId, bool cup = false)
         {
-            switch(GameWeekResult(gameWeekId, cup))
+            switch (GameWeekResult(gameWeekId, cup))
             {
                 case "W":
                     return 3;

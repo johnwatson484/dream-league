@@ -1,9 +1,7 @@
 ﻿using DreamLeague.Inputs;
 using DreamLeague.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace DreamLeague.ViewModels
 {
@@ -16,9 +14,9 @@ namespace DreamLeague.ViewModels
             ManagerTeams = new List<ManagerTeam>();
         }
 
-        public ManagerTeamSheet(List<Manager> managers, TeamSheet teamSheet = null):this()
+        public ManagerTeamSheet(List<Manager> managers, TeamSheet teamSheet = null) : this()
         {
-            foreach(var manager in managers)
+            foreach (var manager in managers)
             {
                 TeamSheetTeam teamSheetTeam = null;
 
@@ -50,7 +48,7 @@ namespace DreamLeague.ViewModels
             TeamGoalKeeperGroups = new List<TeamGoalKeeperGroup>();
         }
 
-        public ManagerTeam(Manager manager, TeamSheetTeam teamSheetTeam = null):this()
+        public ManagerTeam(Manager manager, TeamSheetTeam teamSheetTeam = null) : this()
         {
             ManagerId = manager.ManagerId;
             ManagerName = manager.Name;
@@ -58,7 +56,7 @@ namespace DreamLeague.ViewModels
             manager.GoalKeepers = manager.GoalKeepers.OrderBy(x => x.Team.Name).ToList();
             manager.Players = manager.Players.OrderBy(x => x.Player.Position).ThenBy(x => x.Player.LastNameFirstName).ToList();
 
-            if (teamSheetTeam!= null)
+            if (teamSheetTeam != null)
             {
                 teamSheetTeam.GoalKeepers = teamSheetTeam.GoalKeepers.OrderBy(x => x.Team).ToList();
                 teamSheetTeam.Players = teamSheetTeam.Players.OrderBy(x => x.Position).ThenBy(x => x.Name).ToList();
@@ -122,7 +120,7 @@ namespace DreamLeague.ViewModels
 
         public TeamGoalKeeperGroup() { }
 
-        public TeamGoalKeeperGroup(TeamGoalKeeper teamGoalKeeperA, TeamGoalKeeper teamGoalKeeperB = null):this()
+        public TeamGoalKeeperGroup(TeamGoalKeeper teamGoalKeeperA, TeamGoalKeeper teamGoalKeeperB = null) : this()
         {
             TeamGoalKeeperA = teamGoalKeeperA;
             TeamGoalKeeperB = teamGoalKeeperB;
@@ -155,7 +153,7 @@ namespace DreamLeague.ViewModels
 
         public TeamPlayerGroup() { }
 
-        public TeamPlayerGroup(TeamPlayer teamPlayerA, TeamPlayer teamPlayerB = null):this()
+        public TeamPlayerGroup(TeamPlayer teamPlayerA, TeamPlayer teamPlayerB = null) : this()
         {
             TeamPlayerA = teamPlayerA;
             TeamPlayerB = teamPlayerB;
@@ -164,7 +162,7 @@ namespace DreamLeague.ViewModels
 
     public class TeamPlayer
     {
-        public int PlayerId { get; set; }        
+        public int PlayerId { get; set; }
 
         public string Name { get; set; }
 

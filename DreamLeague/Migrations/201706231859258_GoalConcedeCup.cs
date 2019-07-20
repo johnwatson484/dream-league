@@ -1,8 +1,7 @@
 namespace DreamLeague.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class GoalConcedeCup : DbMigration
     {
         public override void Up()
@@ -12,7 +11,7 @@ namespace DreamLeague.Migrations
             DropColumn("Results.Conceded", "Cup");
             DropColumn("Results.Goals", "Cup");
         }
-        
+
         public override void Down()
         {
             AddColumn("Results.Goals", "Cup", c => c.Boolean(nullable: false));

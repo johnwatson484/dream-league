@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Models
 {
     [Table("GameWeeks", Schema = "DreamLeague")]
     public class GameWeek
-    {        
-        public int GameWeekId { get; set; }        
+    {
+        public int GameWeekId { get; set; }
 
         [Display(Name = "Game Week")]
         [Required]
         public int Number { get; set; }
 
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]        
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Start { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -29,7 +26,7 @@ namespace DreamLeague.Models
             }
         }
 
-        public bool Complete { get; set; }       
+        public bool Complete { get; set; }
 
         public string Details
         {
@@ -59,12 +56,12 @@ namespace DreamLeague.Models
         {
         }
 
-        public GameWeek(int number, DateTime start):this()
+        public GameWeek(int number, DateTime start) : this()
         {
             Number = number;
             Start = start;
         }
-        
+
 
         public void SetComplete()
         {

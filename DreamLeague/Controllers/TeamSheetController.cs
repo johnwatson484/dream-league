@@ -2,14 +2,13 @@
 using DreamLeague.Inputs;
 using DreamLeague.Models;
 using DreamLeague.ViewModels;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.IO;
 
 namespace DreamLeague.Controllers
 {
@@ -50,7 +49,7 @@ namespace DreamLeague.Controllers
 
             return View(new ManagerTeamSheet(managers, teamSheet));
         }
-        
+
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public ActionResult EditPlayer(int managerId, int[] playerIds, int[] playerSubs)
@@ -60,24 +59,24 @@ namespace DreamLeague.Controllers
                 playerSubs = new int[0];
             }
 
-            var manager = db.Managers.Include(x => x.Players).Where(x=>x.ManagerId==managerId).FirstOrDefault();
+            var manager = db.Managers.Include(x => x.Players).Where(x => x.ManagerId == managerId).FirstOrDefault();
 
-            if(manager != null)
+            if (manager != null)
             {
-                var selectedPlayers = new HashSet<int>(playerIds.Where(x=>x != 0));
-                var currentPlayers = new HashSet<int>(manager.Players.Select(x => x.PlayerId));                
+                var selectedPlayers = new HashSet<int>(playerIds.Where(x => x != 0));
+                var currentPlayers = new HashSet<int>(manager.Players.Select(x => x.PlayerId));
 
-                foreach(var currentPlayer in currentPlayers)
+                foreach (var currentPlayer in currentPlayers)
                 {
-                    if(!selectedPlayers.Contains(currentPlayer))
+                    if (!selectedPlayers.Contains(currentPlayer))
                     {
-                        db.ManagerPlayers.Remove(manager.Players.Where(x=>x.PlayerId== currentPlayer).FirstOrDefault());
+                        db.ManagerPlayers.Remove(manager.Players.Where(x => x.PlayerId == currentPlayer).FirstOrDefault());
                     }
                 }
 
-                foreach(var selectedPlayer in selectedPlayers)
+                foreach (var selectedPlayer in selectedPlayers)
                 {
-                    if(!currentPlayers.Contains(selectedPlayer))
+                    if (!currentPlayers.Contains(selectedPlayer))
                     {
                         ManagerPlayer managerPlayer = new ManagerPlayer(selectedPlayer, managerId);
                         db.ManagerPlayers.Add(managerPlayer);

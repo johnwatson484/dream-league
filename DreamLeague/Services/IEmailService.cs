@@ -1,5 +1,5 @@
-﻿using System.Web.Mvc;
-using DreamLeague.ViewModels;
+﻿using DreamLeague.ViewModels;
+using System.Web.Mvc;
 
 namespace DreamLeague.Services
 {

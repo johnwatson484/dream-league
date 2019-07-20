@@ -38,7 +38,7 @@ namespace DreamLeague.Controllers
 
             foreach (var gameWeek in gameWeeks)
             {
-                var gameWeekWinners = gameWeekSerializer.DeSerialize(gameWeek.Number ,"GameWeek")?.Winners;
+                var gameWeekWinners = gameWeekSerializer.DeSerialize(gameWeek.Number, "GameWeek")?.Winners;
 
                 foreach (var winner in gameWeekWinners)
                 {

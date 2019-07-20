@@ -1,10 +1,9 @@
-﻿using System;
+﻿using DreamLeague.DAL;
+using DreamLeague.Models;
+using DreamLeague.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using DreamLeague.Models;
-using DreamLeague.DAL;
-using DreamLeague.ViewModels;
 
 namespace DreamLeague.Services
 {
@@ -20,9 +19,9 @@ namespace DreamLeague.Services
         public GameWeek GetCurrent()
         {
             var currentDate = DateTime.UtcNow;
-                        
+
             var gameWeek = db.GameWeeks.Where(x => x.Start <= currentDate).OrderByDescending(x => x.Start).FirstOrDefault();
-            
+
             return gameWeek;
         }
 
@@ -42,9 +41,9 @@ namespace DreamLeague.Services
             var managers = db.Managers.AsNoTracking();
             var fixtures = db.Fixtures.AsNoTracking();
 
-            foreach(var manager in managers)
+            foreach (var manager in managers)
             {
-                foreach(var fixture in fixtures)
+                foreach (var fixture in fixtures)
                 {
                     if (gameWeekId == null)
                     {
@@ -53,7 +52,7 @@ namespace DreamLeague.Services
                             managerCupWeeks.Add(new ManagerCupWeek(manager.ManagerId, fixture.GameWeekId));
                         }
                     }
-                    else if(fixture.GameWeekId == gameWeekId && (fixture.HomeManagerId == manager.ManagerId || fixture.AwayManagerId == manager.ManagerId))
+                    else if (fixture.GameWeekId == gameWeekId && (fixture.HomeManagerId == manager.ManagerId || fixture.AwayManagerId == manager.ManagerId))
                     {
                         managerCupWeeks.Add(new ManagerCupWeek(manager.ManagerId, fixture.GameWeekId));
                     }

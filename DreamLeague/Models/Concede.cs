@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Models
 {
@@ -12,7 +8,7 @@ namespace DreamLeague.Models
     {
         public int ConcedeId { get; set; }
 
-        [Display(Name ="Team")]
+        [Display(Name = "Team")]
         public int TeamId { get; set; }
 
         [Display(Name = "Game Week")]

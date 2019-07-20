@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Models
 {
@@ -14,10 +11,10 @@ namespace DreamLeague.Models
 
         public string Name { get; set; }
 
-        [Display(Name="Has Group Stage?")]
-        public bool HasGroupStage { get; set; }        
-        
-        [Range(1,2)]
+        [Display(Name = "Has Group Stage?")]
+        public bool HasGroupStage { get; set; }
+
+        [Range(1, 2)]
         [Display(Name = "Knockout Legs")]
         public int KnockoutLegs { get; set; }
 

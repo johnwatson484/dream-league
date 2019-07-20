@@ -1,8 +1,7 @@
 namespace DreamLeague.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class IdentityManagerIdNullable : DbMigration
     {
         public override void Up()
@@ -13,7 +12,7 @@ namespace DreamLeague.Migrations
             CreateIndex("dbo.AspNetUsers", "ManagerId");
             AddForeignKey("dbo.AspNetUsers", "ManagerId", "DreamLeague.Managers", "ManagerId");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUsers", "ManagerId", "DreamLeague.Managers");

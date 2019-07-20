@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace DreamLeague.ViewModels
 {
@@ -31,11 +28,11 @@ namespace DreamLeague.ViewModels
         {
             get
             {
-                if(Goals > Conceded)
+                if (Goals > Conceded)
                 {
                     return "Won";
                 }
-                else if(Conceded > Goals)
+                else if (Conceded > Goals)
                 {
                     return "Lost";
                 }
@@ -43,7 +40,7 @@ namespace DreamLeague.ViewModels
                 {
                     return "Drawn";
                 }
-                    
+
             }
         }
 
@@ -60,7 +57,7 @@ namespace DreamLeague.ViewModels
             Conceded = conceded;
             SubstituteGoalKeeper = substituteGoalKeeper;
             Scorers = scorers;
-        }       
+        }
     }
 
     public class Scorer

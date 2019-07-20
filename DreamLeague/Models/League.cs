@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Models
 {
@@ -19,6 +17,6 @@ namespace DreamLeague.Models
         [Required]
         public int Rank { get; set; }
 
-        public virtual List<Team> Teams { get; set; }        
+        public virtual List<Team> Teams { get; set; }
     }
 }

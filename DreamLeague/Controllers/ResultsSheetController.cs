@@ -1,14 +1,10 @@
 ﻿using DreamLeague.DAL;
+using DreamLeague.Models;
 using DreamLeague.Services;
 using DreamLeague.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 using System.Data.Entity;
-using DreamLeague.Models;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace DreamLeague.Controllers
 {
@@ -125,8 +121,8 @@ namespace DreamLeague.Controllers
 
             db.SaveChanges();
 
-            gameWeekSummaryService.Create(resultsSheet.GameWeekId);            
-            cupWeekSummaryService.Create(resultsSheet.GameWeekId);            
+            gameWeekSummaryService.Create(resultsSheet.GameWeekId);
+            cupWeekSummaryService.Create(resultsSheet.GameWeekId);
 
             return RedirectToAction("Index", "Result", new { gameWeekId = resultsSheet.GameWeekId });
         }

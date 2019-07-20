@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace DreamLeague.ViewModels
 {
@@ -36,9 +35,9 @@ namespace DreamLeague.ViewModels
             Name = name;
             GroupId = groupId;
 
-            if(managers != null)
+            if (managers != null)
             {
-                foreach(var manager in managers)
+                foreach (var manager in managers)
                 {
                     TableRows.Add(new TableRow(manager.ManagerId, manager.Name, 0, 0, 0, 0, 0, 0, 0));
                 }

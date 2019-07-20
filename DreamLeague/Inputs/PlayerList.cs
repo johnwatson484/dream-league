@@ -1,8 +1,5 @@
 ﻿using DreamLeague.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.Inputs
 {
@@ -73,16 +70,16 @@ namespace DreamLeague.Inputs
         {
             get
             {
-                switch(Position)
+                switch (Position)
                 {
                     case "DEF":
-                        return Models.Position.Defender;                        
+                        return Models.Position.Defender;
                     case "MID":
                         return Models.Position.Midfielder;
                     case "FWD":
                         return Models.Position.Forward;
                     default:
-                        return null;                        
+                        return null;
                 }
             }
         }

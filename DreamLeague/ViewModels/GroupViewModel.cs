@@ -1,8 +1,5 @@
 ﻿using DreamLeague.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DreamLeague.ViewModels
 {
@@ -19,7 +16,7 @@ namespace DreamLeague.ViewModels
             Managers = new List<ManagerSelection>();
         }
 
-        public GroupViewModel(Cup cup, List<Manager> managers, Group group = null):this()
+        public GroupViewModel(Cup cup, List<Manager> managers, Group group = null) : this()
         {
             if (group == null)
             {
@@ -31,12 +28,12 @@ namespace DreamLeague.ViewModels
             }
 
             Cup = cup;
-            
-            foreach(var manager in managers)
+
+            foreach (var manager in managers)
             {
                 bool selected = false;
 
-                if(Group.Managers.Exists(x=>x.ManagerId == manager.ManagerId))
+                if (Group.Managers.Exists(x => x.ManagerId == manager.ManagerId))
                 {
                     selected = true;
                 }

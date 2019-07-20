@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace DreamLeague
 {
@@ -32,7 +31,7 @@ namespace DreamLeague
                       "~/Content/bootstrap.css",
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/themes/base/autocomplete.css",
-                      "~/Content/site.css"));            
+                      "~/Content/site.css"));
         }
     }
 }

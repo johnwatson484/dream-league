@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using DreamLeague.DAL;
 using DreamLeague.ViewModels;
-using DreamLeague.DAL;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace DreamLeague.Services
 {
@@ -24,13 +22,13 @@ namespace DreamLeague.Services
             var gameWeek = db.GameWeeks.Find(gameWeekId);
             var fixtures = db.Fixtures.AsNoTracking().Include(x => x.Cup).Where(x => x.GameWeekId == gameWeekId);
 
-            if(fixtures.Count() == 0)
+            if (fixtures.Count() == 0)
             {
                 return;
             }
 
             var cups = fixtures.Select(x => x.Cup).Distinct();
-            
+
             var scores = GetScores(gameWeekId);
 
             List<CupScore> cupScores = new List<CupScore>();
@@ -55,11 +53,11 @@ namespace DreamLeague.Services
                     }
                 }
 
-                CupWeekSummary cupWeekSummary = new CupWeekSummary(gameWeek, cup.Name, cup.CupId, cupScores.Where(x=>x.CupId == cup.CupId).ToList(), groups);
+                CupWeekSummary cupWeekSummary = new CupWeekSummary(gameWeek, cup.Name, cup.CupId, cupScores.Where(x => x.CupId == cup.CupId).ToList(), groups);
 
                 gameWeekSerializer.Serialize(cupWeekSummary, gameWeekId, string.Format("CupWeek_{0}", cup.CupId));
             }
-        }       
+        }
 
         public List<Score> GetScores(int gameWeekId)
         {
@@ -211,7 +209,7 @@ namespace DreamLeague.Services
         public void Refresh()
         {
             gameWeekSerializer.DeleteAll("CupWeek");
-                        
+
             var completedGameWeeks = db.GameWeeks.AsNoTracking().Where(x => x.Complete);
             var fixtureGameWeeks = db.Fixtures.AsNoTracking().Where(x => completedGameWeeks.Any(p => p.GameWeekId == x.GameWeekId)).Select(x => x.GameWeekId).Distinct();
 

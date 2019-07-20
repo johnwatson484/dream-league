@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using DreamLeague.DAL;
+﻿using DreamLeague.DAL;
 using DreamLeague.Models;
-using DreamLeague.ViewModels;
 using DreamLeague.Services;
+using DreamLeague.ViewModels;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DreamLeague.Controllers
 {
@@ -30,7 +25,7 @@ namespace DreamLeague.Controllers
             this.db = db;
             this.cupService = cupService;
         }
-        
+
         public async Task<ActionResult> Index()
         {
             return View(await db.Cups.AsNoTracking().ToListAsync());

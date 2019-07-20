@@ -1,8 +1,7 @@
 namespace DreamLeague.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class RequiredFields : DbMigration
     {
         public override void Up()
@@ -13,7 +12,7 @@ namespace DreamLeague.Migrations
             AlterColumn("League.Players", "LastName", c => c.String(nullable: false));
             AlterColumn("DreamLeague.Meetings", "Location", c => c.String(nullable: false));
         }
-        
+
         public override void Down()
         {
             AlterColumn("DreamLeague.Meetings", "Location", c => c.String());
