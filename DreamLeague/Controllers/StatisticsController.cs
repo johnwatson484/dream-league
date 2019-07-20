@@ -29,7 +29,14 @@ namespace DreamLeague.Controllers
 
         public ActionResult _TopGoalScorer()
         {
-            var scorers = db.Players.AsNoTracking().Include(x => x.Team).Include(x => x.ManagerPlayers.Select(m => m.Manager)).OrderByDescending(x => x.Goals.Where(g => !g.Cup).Count()).ThenBy(x => x.LastName).Take(10).ToList();
+            var scorers = db.Players.AsNoTracking()
+                .Include(x => x.Team)
+                .Include(x => x.ManagerPlayers
+                .Select(m => m.Manager))
+                .OrderByDescending(x => x.Goals.Where(g => !g.Cup).Count())
+                .ThenBy(x => x.LastName)
+                .Take(10)
+                .ToList();
 
             return PartialView(scorers);
         }
@@ -46,9 +53,7 @@ namespace DreamLeague.Controllers
                 formList.Add(form);
             }
 
-            formList = formList.OrderByDescending(x => x.Value).ThenBy(x => x.Manager).ToList();
-
-            return PartialView(formList);
+            return PartialView(formList.OrderByDescending(x => x.Value).ThenBy(x => x.Manager).ToList());
         }
     }
 }

@@ -32,23 +32,23 @@ namespace DreamLeague.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var managers = db.Managers.AsNoTracking().Include(x => x.Players.Select(p => p.Player)).Include(x => x.GoalKeepers.Select(t => t.Team)).OrderBy(x => x.Name);
-
-            return View(await managers.ToListAsync());
+            return View(await db.Managers.AsNoTracking().Include(x => x.Players.Select(p => p.Player)).Include(x => x.GoalKeepers.Select(t => t.Team)).OrderBy(x => x.Name).ToListAsync());
         }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult Edit()
         {
             TeamSheet teamSheet = teamSheetService.Get();
-            var managers = db.Managers.AsNoTracking().Include(x => x.Players.Select(p => p.Player)).Include(x => x.GoalKeepers.Select(t => t.Team)).OrderBy(x => x.Name).ToList();
-
-            ManagerTeamSheet managerTeamSheet = new ManagerTeamSheet(managers, teamSheet);
+            var managers = db.Managers.AsNoTracking()
+                .Include(x => x.Players.Select(p => p.Player))
+                .Include(x => x.GoalKeepers.Select(t => t.Team))
+                .OrderBy(x => x.Name)
+                .ToList();
 
             ViewBag.LastUpload = teamSheetService.LastUpload();
             ViewBag.NoNews = true;
 
-            return View(managerTeamSheet);
+            return View(new ManagerTeamSheet(managers, teamSheet));
         }
         
         [HttpPost]

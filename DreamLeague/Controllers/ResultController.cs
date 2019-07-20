@@ -38,11 +38,9 @@ namespace DreamLeague.Controllers
                 gameWeekId = db.GameWeeks.AsNoTracking().Where(x => x.Complete).OrderByDescending(x => x.Number).Select(x => x.GameWeekId).FirstOrDefault();
             }
 
-            GameWeekSummary gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeekId.Value, "GameWeek");
-
             ViewBag.GameWeekId = new SelectList(db.GameWeeks.AsNoTracking().Where(x => x.Complete).OrderBy(x => x.Number), "GameWeekId", "Title", gameWeekId);
 
-            return View(gameWeekSummary);
+            return View(gameWeekSerializer.DeSerialize(gameWeekId.Value, "GameWeek"));
         }
 
         public ActionResult _CupResults(int gameWeekId)

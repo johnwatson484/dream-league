@@ -29,7 +29,11 @@ namespace DreamLeague.Controllers
         // GET: Team
         public async Task<ActionResult> Index()
         {
-            var teams = db.Teams.AsNoTracking().Include(t => t.League).OrderBy(x=>x.League.Rank).ThenBy(x=>x.Name);
+            var teams = db.Teams.AsNoTracking()
+                .Include(t => t.League)
+                .OrderBy(x=>x.League.Rank)
+                .ThenBy(x=>x.Name);
+
             return View(await teams.ToListAsync());
         }
 
@@ -130,10 +134,8 @@ namespace DreamLeague.Controllers
 
         [HttpPost]
         public JsonResult AutoComplete(string prefix)
-        {
-            var teams = db.Teams.AsNoTracking().Where(x => x.Name.StartsWith(prefix)).Select(x => new { label = x.Name, val = x.TeamId }).ToList();
-            
-            return Json(teams, JsonRequestBehavior.AllowGet);
+        {            
+            return Json(db.Teams.AsNoTracking().Where(x => x.Name.StartsWith(prefix)).Select(x => new { label = x.Name, val = x.TeamId }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

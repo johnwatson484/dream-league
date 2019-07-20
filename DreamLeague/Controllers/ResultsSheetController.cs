@@ -43,15 +43,12 @@ namespace DreamLeague.Controllers
         {
             var goalKeepers = db.ManagerGoalKeepers.AsNoTracking().Include(x => x.Team).Include(x => x.Manager).OrderBy(x => x.Substitute).ThenBy(x => x.Team.League.Rank).ThenBy(x => x.Team.Name).ToList();
             var players = db.ManagerPlayers.AsNoTracking().Include(x => x.Player).Include(x => x.Manager).Where(x => !x.Substitute).OrderBy(x => x.Player.Team.League.Rank).ThenBy(x => x.Player.Team.Name).ThenBy(x => x.Player.LastName).ThenBy(x => x.Player.FirstName).ToList();
-
             var managerCupWeeks = gameWeekService.ManagerCupWeeks();
-
-            ResultsSheet resultsSheet = new ResultsSheet(goalKeepers, players, managerCupWeeks);
 
             ViewBag.GameWeekId = new SelectList(db.GameWeeks.AsNoTracking().OrderBy(x => x.Start), "GameWeekId", "Details", gameWeekService.GetCurrent()?.GameWeekId);
             ViewBag.NoNews = true;
 
-            return View(resultsSheet);
+            return View(new ResultsSheet(goalKeepers, players, managerCupWeeks));
         }
 
         [HttpPost]
