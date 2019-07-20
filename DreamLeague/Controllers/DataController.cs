@@ -38,9 +38,9 @@ namespace DreamLeague.Controllers
 
             foreach (var gameWeek in gameWeeks)
             {
-                var gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeek.Number, "GameWeek");
+                var gameWeekWinners = gameWeekSerializer.DeSerialize(gameWeek.Number ,"GameWeek")?.Winners;
 
-                foreach (var winner in gameWeekSummary?.Winners)
+                foreach (var winner in gameWeekWinners)
                 {
                     winners.Add(new Winner { GameWeek = gameWeek.Number, Name = winner });
                 }
@@ -54,14 +54,7 @@ namespace DreamLeague.Controllers
         {
             var gameWeek = gameWeekService.GetLatest();
 
-            if (gameWeek != null)
-            {
-                var gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeek.Number, "GameWeek");
-
-                return gameWeekSummary?.Table?.TableRows;
-            }
-
-            return null;
+            return gameWeek != null ? gameWeekSerializer.DeSerialize(gameWeek.Number, "GameWeek")?.Table?.TableRows : null;
         }
 
         [HttpGet]
