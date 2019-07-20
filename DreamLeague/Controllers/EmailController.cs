@@ -45,9 +45,7 @@ namespace DreamLeague.Controllers
                 gameWeekId = db.GameWeeks.AsNoTracking().Where(x => x.Complete).OrderByDescending(x => x.Number).Select(x => x.GameWeekId).FirstOrDefault();
             }
 
-            GameWeekSummary gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeekId.Value, "GameWeek");
-
-            return View(gameWeekSummary);
+            return View(gameWeekSerializer.DeSerialize(gameWeekId.Value, "GameWeek"));
         }
 
         public ActionResult _EmailCup(int gameWeekId)
@@ -62,8 +60,7 @@ namespace DreamLeague.Controllers
 
                 if (fixtureGameWeekId != 0)
                 {
-                    CupWeekSummary cupWeekSummary = cupWeekSerializer.DeSerialize(gameWeekId, string.Format("CupWeek_{0}", cup.CupId));
-                    cupWeekSummaries.Add(cupWeekSummary);
+                    cupWeekSummaries.Add(cupWeekSerializer.DeSerialize(gameWeekId, string.Format("CupWeek_{0}", cup.CupId)));
                 }
             }
 
@@ -77,7 +74,7 @@ namespace DreamLeague.Controllers
             if (previous.Count > 0)
             {
                 ViewBag.Version = previous.Count + 1;
-                var previousDate = previous.FirstOrDefault().Date;
+                var previousDate = previous.FirstOrDefault()?.Date;
                 return PartialView(db.Audit.Where(x => x.GameWeekId == gameWeekId && (x.Area == "Goal" || x.Area == "Concede") && x.Date > previousDate).ToList());
             }
 
@@ -86,9 +83,7 @@ namespace DreamLeague.Controllers
 
         public ActionResult Send(int gameWeekId)
         {
-            GameWeekSummary gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeekId, "GameWeek");
-
-            emailService.Send(gameWeekSummary, this.ControllerContext);
+            emailService.Send(gameWeekSerializer.DeSerialize(gameWeekId, "GameWeek"), ControllerContext);
             auditService.Log("Email", "Game Week Email Sent", User.Identity.Name, "Game Week Email Sent", gameWeekId);
             db.SaveChanges();
 
