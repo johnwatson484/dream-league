@@ -28,9 +28,7 @@ namespace DreamLeague.Controllers
         [OutputCache(Duration = 3600, VaryByParam = "none")]
         public ActionResult _News()
         {
-            var news = newsService.Get();
-
-            return PartialView(news);
+            return PartialView(newsService.Get());
         }
     }
 }

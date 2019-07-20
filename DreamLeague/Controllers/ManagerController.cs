@@ -69,12 +69,10 @@ namespace DreamLeague.Controllers
             GameWeekSummary gameWeekSummary = gameWeekSerializer.DeSerialize(gameWeekId, "GameWeek");
             Form form = statisticsService.GetForm(id.Value, 40);
 
-            ManagerProfile profile = new ManagerProfile(manager, gameWeekSummary, form);
-
             ViewBag.AverageGoals = statisticsService.GetAverageGoals(id.Value);
             ViewBag.AverageConceded = statisticsService.GetAverageConceded(id.Value);
             
-            return View(profile);
+            return View(new ManagerProfile(manager, gameWeekSummary, form));
         }
 
         [Authorize(Roles = "Administrator")]

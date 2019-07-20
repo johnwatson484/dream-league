@@ -51,28 +51,28 @@ namespace DreamLeague.Controllers
         public ActionResult Clear()
         {
             var goals = db.Goals;
-            foreach(var goal in goals)
+            foreach (var goal in goals)
             {
                 db.Goals.Remove(goal);
             }
             db.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Results.Goals', RESEED, 0)");
 
             var conceded = db.Conceded;
-            foreach(var concede in conceded)
+            foreach (var concede in conceded)
             {
                 db.Conceded.Remove(concede);
             }
             db.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Results.Conceded', RESEED, 0)");
 
             var managerPlayers = db.ManagerPlayers;
-            foreach(var managerPlayer in managerPlayers)
+            foreach (var managerPlayer in managerPlayers)
             {
                 db.ManagerPlayers.Remove(managerPlayer);
             }
             db.Database.ExecuteSqlCommand("DBCC CHECKIDENT('DreamLeague.ManagerPlayers', RESEED, 0)");
 
             var managerGoalKeepers = db.ManagerGoalKeepers;
-            foreach(var managerGoalKeeper in managerGoalKeepers)
+            foreach (var managerGoalKeeper in managerGoalKeepers)
             {
                 db.ManagerGoalKeepers.Remove(managerGoalKeeper);
             }
@@ -100,7 +100,7 @@ namespace DreamLeague.Controllers
             db.Database.ExecuteSqlCommand("DBCC CHECKIDENT('DreamLeague.Audit', RESEED, 0)");
 
             var gameWeeks = db.GameWeeks;
-            foreach(var gameWeek in gameWeeks)
+            foreach (var gameWeek in gameWeeks)
             {
                 gameWeek.SetIncomplete();
             }
@@ -118,7 +118,7 @@ namespace DreamLeague.Controllers
         public ActionResult GameWeeks(DateTime startDate, int total)
         {
             var gameWeeks = db.GameWeeks;
-            foreach(var gameWeek in gameWeeks)
+            foreach (var gameWeek in gameWeeks)
             {
                 db.GameWeeks.Remove(gameWeek);
             }
@@ -126,7 +126,7 @@ namespace DreamLeague.Controllers
 
             DateTime currentStart = startDate;
 
-            for(int i = 0; i < total; i++)
+            for (int i = 0; i < total; i++)
             {
                 GameWeek gameWeek = new GameWeek(i + 1, currentStart);
                 db.GameWeeks.Add(gameWeek);
@@ -151,7 +151,7 @@ namespace DreamLeague.Controllers
 
             Meeting firstMeeting = new Meeting(startDate.AddHours(18).AddMinutes(30), location, lon, lat);
             db.Meetings.Add(firstMeeting);
-            
+
             DateTime currentStart = new DateTime(startDate.Year, startDate.Month, 1, 19, 30, 0);
             currentStart = currentStart.AddMonths(1);
 
@@ -161,13 +161,13 @@ namespace DreamLeague.Controllers
 
                 DateTime temp = currentStart;
 
-                while(temp.DayOfWeek != DayOfWeek.Wednesday)
+                while (temp.DayOfWeek != DayOfWeek.Wednesday)
                 {
                     temp = temp.AddDays(1);
                 }
 
                 Meeting meeting = new Meeting(temp, location, lon, lat);
-                db.Meetings.Add(meeting);                
+                db.Meetings.Add(meeting);
             }
 
             db.SaveChanges();
@@ -180,30 +180,24 @@ namespace DreamLeague.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Players(HttpPostedFileBase file)
         {
-            string result;
+            string result = "File format must be .xlsx";
 
             if (Path.GetExtension(file.FileName) == ".xlsx")
             {
-                result = playerListService.Upload(file);                
+                result = playerListService.Upload(file);
             }
-            else if(Path.GetExtension(file.FileName) == ".csv")
+            else if (Path.GetExtension(file.FileName) == ".csv")
             {
                 playerListService = new PlayerListService(db, new CSVPlayerListReader());
                 result = playerListService.Upload(file);
             }
-            else
-            {
-                result = "File format must be .xlsx";
-            }
 
-            if(result == "Success")
+            if (result == "Success")
             {
                 return RedirectToAction("Index", new { message = "Players uploaded." });
             }
-            else
-            {
-                return RedirectToAction("Index", new { warning = result });
-            }
+
+            return RedirectToAction("Index", new { warning = result });
         }
     }
 }
