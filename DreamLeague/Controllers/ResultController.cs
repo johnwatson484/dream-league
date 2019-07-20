@@ -9,9 +9,9 @@ namespace DreamLeague.Controllers
 {
     public class ResultController : Controller
     {
-        DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
-        IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
 
         public ResultController()
         {

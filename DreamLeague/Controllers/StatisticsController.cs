@@ -10,8 +10,8 @@ namespace DreamLeague.Controllers
 {
     public class StatisticsController : Controller
     {
-        DreamLeagueContext db;
-        IStatisticsService statisticsService;
+        readonly DreamLeagueContext db;
+        readonly IStatisticsService statisticsService;
 
         public StatisticsController()
         {

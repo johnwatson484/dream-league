@@ -49,7 +49,7 @@ namespace DreamLeague.Inputs
         private void AddTeam(string manager, int row, int column)
         {
             const int increment = 2;
-            row = row + 3;
+            row += 3;
 
             TeamSheetTeam teamSheetTeam = new TeamSheetTeam(manager);
 
@@ -59,7 +59,7 @@ namespace DreamLeague.Inputs
                 TeamSheetGoalKeeper teamsheetGoalKeeper = new TeamSheetGoalKeeper(goalkeeper1.ToString());
                 teamSheetTeam.GoalKeepers.Add(teamsheetGoalKeeper);
             }
-            row = row + increment;
+            row += increment;
 
             var goalkeeper2 = sheet1.Cells[row, column].Value;
             if (goalkeeper2 != null)
@@ -67,7 +67,7 @@ namespace DreamLeague.Inputs
                 TeamSheetGoalKeeper teamsheetGoalKeeper = new TeamSheetGoalKeeper(goalkeeper2.ToString(), true);
                 teamSheetTeam.GoalKeepers.Add(teamsheetGoalKeeper);
             }
-            row = row + increment;
+            row += increment;
 
             var player1 = sheet1.Cells[row, column].Value;
             if (player1 != null)
@@ -75,7 +75,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player1.ToString(), Position.Defender);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player2 = sheet1.Cells[row, column].Value;
             if (player2 != null)
@@ -83,7 +83,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player2.ToString(), Position.Defender);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player3 = sheet1.Cells[row, column].Value;
             if (player3 != null)
@@ -91,7 +91,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player3.ToString(), Position.Defender, true);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player4 = sheet1.Cells[row, column].Value;
             if (player4 != null)
@@ -99,7 +99,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player4.ToString(), Position.Midfielder);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player5 = sheet1.Cells[row, column].Value;
             if (player5 != null)
@@ -107,7 +107,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player5.ToString(), Position.Midfielder);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player6 = sheet1.Cells[row, column].Value;
             if (player6 != null)
@@ -115,7 +115,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player6.ToString(), Position.Midfielder);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player7 = sheet1.Cells[row, column].Value;
             if (player7 != null)
@@ -123,7 +123,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player7.ToString(), Position.Midfielder, true);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player8 = sheet1.Cells[row, column].Value;
             if (player8 != null)
@@ -131,7 +131,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player8.ToString(), Position.Forward);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player9 = sheet1.Cells[row, column].Value;
             if (player9 != null)
@@ -139,7 +139,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player9.ToString(), Position.Forward);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player10 = sheet1.Cells[row, column].Value;
             if (player10 != null)
@@ -147,7 +147,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player10.ToString(), Position.Forward);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player11 = sheet1.Cells[row, column].Value;
             if (player11 != null)
@@ -155,7 +155,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player11.ToString(), Position.Forward);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player12 = sheet1.Cells[row, column].Value;
             if (player12 != null)
@@ -163,7 +163,7 @@ namespace DreamLeague.Inputs
                 TeamSheetPlayer teamsheetPlayer = new TeamSheetPlayer(player12.ToString(), Position.Forward);
                 teamSheetTeam.Players.Add(teamsheetPlayer);
             }
-            row = row + increment;
+            row += increment;
 
             var player13 = sheet1.Cells[row, column].Value;
             if (player13 != null)

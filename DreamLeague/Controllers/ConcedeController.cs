@@ -15,11 +15,11 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class ConcedeController : Controller
     {
-        private DreamLeagueContext db;
-        IGameWeekSummaryService gameWeekSummaryService;
-        IGameWeekSummaryService cupWeekSummaryService;
-        IGameWeekService gameWeekService;
-        IAuditService auditService;
+        private readonly DreamLeagueContext db;
+        readonly IGameWeekSummaryService gameWeekSummaryService;
+        readonly IGameWeekSummaryService cupWeekSummaryService;
+        readonly IGameWeekService gameWeekService;
+        readonly IAuditService auditService;
 
         public ConcedeController()
         {

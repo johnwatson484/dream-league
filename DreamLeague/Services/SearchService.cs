@@ -7,7 +7,7 @@ namespace DreamLeague.Services
 {
     public class SearchService : ISearchService
     {
-        DreamLeagueContext db;
+        readonly DreamLeagueContext db;
 
         public SearchService(DreamLeagueContext db)
         {

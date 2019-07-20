@@ -7,7 +7,7 @@ namespace DreamLeague.Services
 {
     public class MeetingService : IMeetingService
     {
-        DreamLeagueContext db;
+        readonly DreamLeagueContext db;
 
         public MeetingService(DreamLeagueContext db)
         {

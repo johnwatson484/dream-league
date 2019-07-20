@@ -11,11 +11,11 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class ResultsSheetController : Controller
     {
-        DreamLeagueContext db;
-        IGameWeekService gameWeekService;
-        IGameWeekSummaryService gameWeekSummaryService;
-        IGameWeekSummaryService cupWeekSummaryService;
-        IAuditService auditService;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekService gameWeekService;
+        readonly IGameWeekSummaryService gameWeekSummaryService;
+        readonly IGameWeekSummaryService cupWeekSummaryService;
+        readonly IAuditService auditService;
 
         public ResultsSheetController()
         {

@@ -11,7 +11,7 @@ namespace DreamLeague.Controllers
 {
     public class GameWeekController : Controller
     {
-        private DreamLeagueContext db;
+        private readonly DreamLeagueContext db;
 
         public GameWeekController()
         {

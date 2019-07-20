@@ -6,7 +6,7 @@ namespace DreamLeague.Services
 {
     public class XMLGameWeekSerializer<T> : IGameWeekSerializer<T> where T : class
     {
-        static string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "XML");
+        static readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "XML");
 
         public T DeSerialize(int gameWeekId, string prefix)
         {

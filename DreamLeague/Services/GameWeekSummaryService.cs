@@ -7,8 +7,8 @@ namespace DreamLeague.Services
 {
     public class GameWeekSummaryService : IGameWeekSummaryService
     {
-        DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
 
         public GameWeekSummaryService(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer)
         {

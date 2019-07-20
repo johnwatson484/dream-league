@@ -8,9 +8,9 @@ namespace DreamLeague.Controllers
 {
     public class HomeController : Controller
     {
-        DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
-        ISearchService searchService;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly ISearchService searchService;
 
         public HomeController()
         {

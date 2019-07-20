@@ -11,10 +11,10 @@ namespace DreamLeague.Inputs
 {
     public class PlayerListService : IPlayerListService
     {
-        DreamLeagueContext db;
-        IPlayerListReader playerListReader;
-        string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
-        List<PlayerListPlayer> unmatched = new List<PlayerListPlayer>();
+        readonly DreamLeagueContext db;
+        readonly IPlayerListReader playerListReader;
+        readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
+        readonly List<PlayerListPlayer> unmatched = new List<PlayerListPlayer>();
 
         public PlayerListService(DreamLeagueContext db, IPlayerListReader playerListReader)
         {

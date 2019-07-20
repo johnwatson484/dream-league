@@ -15,11 +15,11 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class GoalController : Controller
     {
-        private DreamLeagueContext db;
-        IGameWeekService gameWeekService;
-        IGameWeekSummaryService gameWeekSummaryService;
-        IGameWeekSummaryService cupWeekSummaryService;
-        IAuditService auditService;
+        private readonly DreamLeagueContext db;
+        readonly IGameWeekService gameWeekService;
+        readonly IGameWeekSummaryService gameWeekSummaryService;
+        readonly IGameWeekSummaryService cupWeekSummaryService;
+        readonly IAuditService auditService;
 
         public GoalController()
         {

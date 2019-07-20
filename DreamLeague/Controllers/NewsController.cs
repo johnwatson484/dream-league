@@ -5,7 +5,7 @@ namespace DreamLeague.Controllers
 {
     public class NewsController : Controller
     {
-        INewsService newsService;
+        readonly INewsService newsService;
 
         public NewsController()
         {

@@ -12,7 +12,7 @@ namespace DreamLeague.Controllers
 {
     public class PlayerController : Controller
     {
-        private DreamLeagueContext db;
+        private readonly DreamLeagueContext db;
 
         public PlayerController()
         {

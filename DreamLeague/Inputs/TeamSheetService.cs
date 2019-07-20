@@ -7,8 +7,8 @@ namespace DreamLeague.Inputs
 {
     public class TeamSheetService : ITeamSheetService, IUploadFile
     {
-        ITeamSheetReader teamSheetReader;
-        string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
+        readonly ITeamSheetReader teamSheetReader;
+        readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Uploads");
 
         private const string fileMask = "TeamSheet_*";
 

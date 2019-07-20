@@ -5,7 +5,7 @@ namespace DreamLeague.Controllers
 {
     public class DownloadController : Controller
     {
-        IFileService fileService;
+        readonly IFileService fileService;
 
         public DownloadController()
         {

@@ -11,8 +11,8 @@ namespace DreamLeague.Controllers
 {
     public class CupController : Controller
     {
-        private DreamLeagueContext db;
-        ICupService cupService;
+        private readonly DreamLeagueContext db;
+        readonly ICupService cupService;
 
         public CupController()
         {

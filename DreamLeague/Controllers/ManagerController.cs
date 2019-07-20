@@ -13,10 +13,10 @@ namespace DreamLeague.Controllers
 {
     public class ManagerController : Controller
     {
-        private DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
-        IStatisticsService statisticsService;
-        IEmailService emailService;
+        private readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly IStatisticsService statisticsService;
+        readonly IEmailService emailService;
 
         public ManagerController()
         {

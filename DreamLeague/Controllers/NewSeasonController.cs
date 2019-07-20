@@ -13,11 +13,11 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class NewSeasonController : Controller
     {
-        DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
-        IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
         IPlayerListService playerListService;
-        ITeamSheetService teamSheetService;
+        readonly ITeamSheetService teamSheetService;
 
         public NewSeasonController()
         {

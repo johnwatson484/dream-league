@@ -9,7 +9,7 @@ namespace DreamLeague.Services
 {
     public class StatisticsService : IStatisticsService
     {
-        DreamLeagueContext db;
+        readonly DreamLeagueContext db;
 
         public StatisticsService(DreamLeagueContext db)
         {

@@ -14,8 +14,8 @@ namespace DreamLeague.Controllers
 {
     public class TeamSheetController : Controller
     {
-        DreamLeagueContext db;
-        ITeamSheetService teamSheetService;
+        readonly DreamLeagueContext db;
+        readonly ITeamSheetService teamSheetService;
 
         public TeamSheetController()
         {

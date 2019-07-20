@@ -6,7 +6,7 @@ namespace DreamLeague.Services
 {
     public class AuditService : IAuditService
     {
-        DreamLeagueContext db;
+        readonly DreamLeagueContext db;
 
         public AuditService(DreamLeagueContext db)
         {

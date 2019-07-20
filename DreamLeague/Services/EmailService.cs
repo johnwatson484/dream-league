@@ -11,8 +11,8 @@ namespace DreamLeague.Services
 {
     public class EmailService : IEmailService
     {
-        DreamLeagueContext db;
-        static string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content");
+        readonly DreamLeagueContext db;
+        static readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content");
 
         public EmailService(DreamLeagueContext db)
         {

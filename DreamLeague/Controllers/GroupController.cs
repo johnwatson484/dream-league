@@ -12,7 +12,7 @@ namespace DreamLeague.Controllers
 {
     public class GroupController : Controller
     {
-        private DreamLeagueContext db;
+        private readonly DreamLeagueContext db;
 
         public GroupController()
         {

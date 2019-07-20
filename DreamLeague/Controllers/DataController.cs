@@ -11,9 +11,9 @@ namespace DreamLeague.Controllers
 {
     public class DataController : ApiController
     {
-        DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
-        IGameWeekService gameWeekService;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly IGameWeekService gameWeekService;
 
         public DataController()
         {

@@ -11,11 +11,11 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class EmailController : Controller
     {
-        DreamLeagueContext db;
-        IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
-        IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
-        IEmailService emailService;
-        IAuditService auditService;
+        readonly DreamLeagueContext db;
+        readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
+        readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
+        readonly IEmailService emailService;
+        readonly IAuditService auditService;
 
         public EmailController()
         {

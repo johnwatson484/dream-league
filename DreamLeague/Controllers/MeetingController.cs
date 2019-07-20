@@ -12,8 +12,8 @@ namespace DreamLeague.Controllers
 {
     public class MeetingController : Controller
     {
-        private DreamLeagueContext db;
-        IMeetingService meetingService;
+        private readonly DreamLeagueContext db;
+        readonly IMeetingService meetingService;
 
         public MeetingController()
         {

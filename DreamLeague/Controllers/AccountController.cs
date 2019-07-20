@@ -15,7 +15,7 @@ namespace DreamLeague.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        DreamLeagueContext db;
+        readonly DreamLeagueContext db;
 
         public AccountController()
         {
