@@ -120,6 +120,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\TeamControllerTests.cs" />
+    <Compile Include="DAL.Mock\MockDreamLeagueContext.cs" />
+    <Compile Include="Data.Mock\TeamData.cs" />
+    <Compile Include="Data.Mock\PlayerData.cs" />
+    <Compile Include="Data.Mock\MeetingData.cs" />
+    <Compile Include="Data.Mock\ManagerPlayerData.cs" />
+    <Compile Include="Data.Mock\ManagerImageData.cs" />
+    <Compile Include="Data.Mock\ManagerGoalKeeperData.cs" />
+    <Compile Include="Data.Mock\ManagerData.cs" />
+    <Compile Include="Data.Mock\LeagueData.cs" />
+    <Compile Include="Data.Mock\HistoryData.cs" />
+    <Compile Include="Data.Mock\GroupData.cs" />
+    <Compile Include="Data.Mock\GoalData.cs" />
+    <Compile Include="Data.Mock\GameWeekData.cs" />
+    <Compile Include="Data.Mock\FixtureData.cs" />
+    <Compile Include="Data.Mock\CupData.cs" />
+    <Compile Include="Data.Mock\ConcedeData.cs" />
+    <Compile Include="Data.Mock\EmailData.cs" />
+    <Compile Include="Data.Mock\AuditData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +154,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
