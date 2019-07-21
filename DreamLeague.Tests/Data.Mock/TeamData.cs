@@ -11,11 +11,13 @@ namespace DreamLeague.Tests.Data.Mock
             {
                 new Team
                 {
+                    TeamId = 1,
                     Name = "Bristol City",
                     League = new League()
                 },
                 new Team
                 {
+                    TeamId = 2,
                     Name = "Bristol Rovers",
                     League = new League()
                 }

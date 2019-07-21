@@ -1,6 +1,7 @@
 ﻿using DreamLeague.Controllers;
 using DreamLeague.Models;
 using DreamLeague.Tests.DAL.Mock;
+using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,6 +30,34 @@ namespace DreamLeague.Tests.Controllers
             var model = ((ViewResult)result).Model as List<Team>;
 
             Assert.AreEqual(2, model.Count);
+        }
+
+        [Test]
+        public async Task Test_Details_Returns_Team()
+        {
+            var result = await controller.Details(1);
+
+            var model = ((ViewResult)result).Model as Team;
+
+            Assert.AreEqual("Bristol City", model.Name);
+        }
+
+        [Test]
+        public async Task Test_Create_Creates_Team()
+        {
+            var team = new Team { Name = "Rotherham United" };
+
+            await controller.Create(team);
+
+            context.MockTeams.Verify(x => x.Add(It.Is<Team>(t => t == team)));
+        }
+
+        [Test]
+        public async Task Test_Delete_Deletes_Team()
+        {
+            await controller.DeleteConfirmed(1);
+
+            context.MockTeams.Verify(x => x.Remove(It.Is<Team>(t => t.TeamId == 1)));
         }
     }
 }
