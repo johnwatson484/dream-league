@@ -63,6 +63,9 @@
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -121,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\TeamControllerTests.cs" />
+    <Compile Include="Controllers\PlayerControllerTests.cs" />
     <Compile Include="DAL.Mock\MockDreamLeagueContext.cs" />
     <Compile Include="Data.Mock\TeamData.cs" />
     <Compile Include="Data.Mock\PlayerData.cs" />

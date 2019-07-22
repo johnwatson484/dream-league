@@ -50,21 +50,16 @@ namespace DreamLeague.Controllers
                                        || s.Team.Name.ToUpper().Contains(searchString.ToUpper()));
             }
 
-            switch (searchPosition)
-            {
-                case "Defenders":
-                    players = players.Where(x => x.Position == Position.Defender);
-                    break;
-                case "Midfielders":
-                    players = players.Where(x => x.Position == Position.Midfielder);
-                    break;
-                case "Forwards":
-                    players = players.Where(x => x.Position == Position.Forward);
-                    break;
-                default:
-                    break;
-            }
+            players = FilterPosition(searchPosition, players);
+            players = SortPlayers(sortOrder, players);
 
+            int pageNumber = (page ?? 1);
+
+            return View(players.ToPagedList(pageNumber, 50));
+        }
+
+        private static IQueryable<Player> SortPlayers(string sortOrder, IQueryable<Player> players)
+        {
             switch (sortOrder)
             {
                 case "Name":
@@ -81,10 +76,27 @@ namespace DreamLeague.Controllers
                     break;
             }
 
-            int pageSize = 50;
-            int pageNumber = (page ?? 1);
+            return players;
+        }
 
-            return View(players.ToPagedList(pageNumber, pageSize));
+        private static IQueryable<Player> FilterPosition(string searchPosition, IQueryable<Player> players)
+        {
+            switch (searchPosition)
+            {
+                case "Defenders":
+                    players = players.Where(x => x.Position == Position.Defender);
+                    break;
+                case "Midfielders":
+                    players = players.Where(x => x.Position == Position.Midfielder);
+                    break;
+                case "Forwards":
+                    players = players.Where(x => x.Position == Position.Forward);
+                    break;
+                default:
+                    break;
+            }
+
+            return players;
         }
 
         // GET: Player/Details/5

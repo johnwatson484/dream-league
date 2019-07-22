@@ -9,6 +9,24 @@ namespace DreamLeague.Tests.Data.Mock
         {
             return new List<Player>
             {
+                new Player
+                {
+                    PlayerId = 1,
+                    FirstName = "Adebayo",
+                    LastName = "Akinfenwa",
+                    Position = Position.Forward,
+                    Team = new Team(),
+                    ManagerPlayers = new List<ManagerPlayer>()
+                },
+                new Player
+                {
+                    PlayerId = 2,
+                    FirstName = "Paddy",
+                    LastName = "Madden",
+                    Position = Position.Forward,
+                    Team = new Team(),
+                    ManagerPlayers = new List<ManagerPlayer>()
+                }
             };
         }
     }
