@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="Controllers\TeamControllerTests.cs" />
     <Compile Include="Controllers\PlayerControllerTests.cs" />
+    <Compile Include="Controllers\LeagueControllerTests.cs" />
     <Compile Include="DAL.Mock\MockDreamLeagueContext.cs" />
     <Compile Include="Data.Mock\TeamData.cs" />
     <Compile Include="Data.Mock\PlayerData.cs" />
