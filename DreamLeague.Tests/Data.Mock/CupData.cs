@@ -9,6 +9,16 @@ namespace DreamLeague.Tests.Data.Mock
         {
             return new List<Cup>
             {
+                new Cup
+                {
+                    CupId = 1,
+                    Name = "Cup"
+                },
+                new Cup
+                {
+                    CupId = 2,
+                    Name = "League Cup"
+                }
             };
         }
     }

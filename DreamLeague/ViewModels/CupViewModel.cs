@@ -24,9 +24,12 @@ namespace DreamLeague.ViewModels
             Groups = groupTables;
             Fixtures = fixtures;
 
-            foreach (var fixture in Fixtures)
+            if (Fixtures != null)
             {
-                fixture.SetCupViewModel(this);
+                foreach (var fixture in Fixtures)
+                {
+                    fixture.SetCupViewModel(this);
+                }
             }
         }
     }
