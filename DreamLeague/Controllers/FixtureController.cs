@@ -11,7 +11,17 @@ namespace DreamLeague.Controllers
 {
     public class FixtureController : Controller
     {
-        private readonly DreamLeagueContext db = new DreamLeagueContext();
+        private readonly DreamLeagueContext db;
+
+        public FixtureController()
+        {
+            db = new DreamLeagueContext();
+        }
+
+        public FixtureController(DreamLeagueContext db)
+        {
+            this.db = db;
+        }
 
         // GET: Fixture
         public async Task<ActionResult> Index()

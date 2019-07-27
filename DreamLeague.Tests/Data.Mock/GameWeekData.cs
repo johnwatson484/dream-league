@@ -9,6 +9,16 @@ namespace DreamLeague.Tests.Data.Mock
         {
             return new List<GameWeek>
             {
+                new GameWeek
+                {
+                    GameWeekId = 1,
+                    Number = 1
+                },
+                new GameWeek
+                {
+                    GameWeekId = 2,
+                    Number = 2
+                }
             };
         }
     }

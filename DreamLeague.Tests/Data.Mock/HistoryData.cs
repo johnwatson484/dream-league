@@ -9,6 +9,16 @@ namespace DreamLeague.Tests.Data.Mock
         {
             return new List<History>
             {
+                new History
+                {
+                    HistoryId = 1,
+                    Year = 2017
+                },
+                new History
+                {
+                    HistoryId = 2,
+                    Year = 2018
+                }
             };
         }
     }

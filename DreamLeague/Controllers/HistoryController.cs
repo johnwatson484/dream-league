@@ -11,7 +11,17 @@ namespace DreamLeague.Controllers
 {
     public class HistoryController : Controller
     {
-        private readonly DreamLeagueContext db = new DreamLeagueContext();
+        private readonly DreamLeagueContext db;
+
+        public HistoryController()
+        {
+            db = new DreamLeagueContext();
+        }
+
+        public HistoryController(DreamLeagueContext db)
+        {
+            this.db = db;
+        }
 
         // GET: History
         public async Task<ActionResult> Index()

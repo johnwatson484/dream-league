@@ -4,7 +4,6 @@ using DreamLeague.Tests.DAL.Mock;
 using Moq;
 using NUnit.Framework;
 using PagedList;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
