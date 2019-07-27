@@ -39,13 +39,13 @@ namespace DreamLeague.Tests.Controllers
 
             var model = ((ViewResult)result).Model as Team;
 
-            Assert.AreEqual("Bristol City", model.Name);
+            Assert.AreEqual("Newcastle United", model.Name);
         }
 
         [Test]
         public async Task Test_Create_Creates_Team()
         {
-            var team = new Team { Name = "Rotherham United" };
+            var team = new Team { Name = "Middlesbrough" };
 
             await controller.Create(team);
 

@@ -45,21 +45,11 @@ namespace DreamLeague.Controllers
         // GET: Manager/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Manager manager = db.Managers.AsNoTracking().Include(x => x.Emails).Include(x => x.GoalKeepers.Select(t => t.Team)).Include(x => x.Players.Select(p => p.Player)).Include(x => x.Image).Where(x => x.ManagerId == id).FirstOrDefault();
 
             if (User.IsInRole("User") && manager == null)
             {
                 return RedirectToAction("Index", "Manage");
-            }
-
-            if (manager == null)
-            {
-                return HttpNotFound();
             }
 
             var gameWeekId = db.GameWeeks.AsNoTracking().Where(x => x.Complete).OrderByDescending(x => x.Number).Select(x => x.GameWeekId).FirstOrDefault();
@@ -89,11 +79,11 @@ namespace DreamLeague.Controllers
 
                 if (!string.IsNullOrEmpty(managerViewModel.Email1.Address))
                 {
-                    manager.Emails.Add(managerViewModel.Email1);
+                    manager.AddEmail(managerViewModel.Email1);
                 }
                 if (!string.IsNullOrEmpty(managerViewModel.Email2.Address))
                 {
-                    manager.Emails.Add(managerViewModel.Email2);
+                    manager.AddEmail(managerViewModel.Email2);
                 }
 
                 db.Managers.Add(manager);

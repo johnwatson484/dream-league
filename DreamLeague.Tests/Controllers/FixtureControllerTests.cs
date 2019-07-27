@@ -45,11 +45,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_Fixture()
         {
-            var Fixture = new Fixture { CupId = 1 };
+            var fixture = new Fixture { CupId = 1 };
 
-            await controller.Create(Fixture);
+            await controller.Create(fixture);
 
-            context.MockFixtures.Verify(x => x.Add(It.Is<Fixture>(t => t == Fixture)));
+            context.MockFixtures.Verify(x => x.Add(It.Is<Fixture>(t => t == fixture)));
         }
 
         [Test]

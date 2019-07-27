@@ -121,5 +121,10 @@ namespace DreamLeague.Models
 
             return goals - conceded;
         }
+
+        public void AddEmail(Email email)
+        {
+            Emails.Add(email);
+        }
     }
 }

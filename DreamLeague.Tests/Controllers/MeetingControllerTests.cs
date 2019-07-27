@@ -49,11 +49,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_Meeting()
         {
-            var Meeting = new Meeting { Date = new DateTime(2019, 10, 1) };
+            var meeting = new Meeting { Date = new DateTime(2019, 10, 1) };
 
-            await controller.Create(Meeting);
+            await controller.Create(meeting);
 
-            context.MockMeetings.Verify(x => x.Add(It.Is<Meeting>(t => t == Meeting)));
+            context.MockMeetings.Verify(x => x.Add(It.Is<Meeting>(t => t == meeting)));
         }
 
         [Test]

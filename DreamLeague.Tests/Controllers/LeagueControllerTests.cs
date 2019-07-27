@@ -45,11 +45,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_League()
         {
-            var League = new League { Name = "National League" };
+            var league = new League { Name = "National League" };
 
-            await controller.Create(League);
+            await controller.Create(league);
 
-            context.MockLeagues.Verify(x => x.Add(It.Is<League>(t => t == League)));
+            context.MockLeagues.Verify(x => x.Add(It.Is<League>(t => t == league)));
         }
 
         [Test]

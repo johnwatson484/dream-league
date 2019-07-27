@@ -19,10 +19,8 @@ namespace DreamLeague.Extensions
             {
                 return manager.Name;
             }
-            else
-            {
-                return identity.Name;
-            }
+
+            return identity.Name;
         }
 
         public static string GetManagerId(this IIdentity identity)

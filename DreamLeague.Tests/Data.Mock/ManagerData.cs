@@ -9,6 +9,16 @@ namespace DreamLeague.Tests.Data.Mock
         {
             return new List<Manager>
             {
+                new Manager
+                {
+                    ManagerId = 1,
+                    Name = "John"
+                },
+                new Manager
+                {
+                    ManagerId = 1,
+                    Name = "Lee"
+                }
             };
         }
     }

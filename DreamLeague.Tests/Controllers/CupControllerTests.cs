@@ -52,11 +52,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_Cup()
         {
-            var Cup = new Cup { Name = "Plate" };
+            var cup = new Cup { Name = "Plate" };
 
-            await controller.Create(Cup);
+            await controller.Create(cup);
 
-            context.MockCups.Verify(x => x.Add(It.Is<Cup>(t => t == Cup)));
+            context.MockCups.Verify(x => x.Add(It.Is<Cup>(t => t == cup)));
         }
 
         [Test]

@@ -35,11 +35,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_GameWeek()
         {
-            var GameWeek = new GameWeek { Number = 3 };
+            var gameWeek = new GameWeek { Number = 3 };
 
-            await controller.Create(GameWeek);
+            await controller.Create(gameWeek);
 
-            context.MockGameWeeks.Verify(x => x.Add(It.Is<GameWeek>(t => t == GameWeek)));
+            context.MockGameWeeks.Verify(x => x.Add(It.Is<GameWeek>(t => t == gameWeek)));
         }
 
         [Test]

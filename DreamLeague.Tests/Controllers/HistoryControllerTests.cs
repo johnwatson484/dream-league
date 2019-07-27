@@ -35,11 +35,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_History()
         {
-            var History = new History { Year = 2019 };
+            var history = new History { Year = 2019 };
 
-            await controller.Create(History);
+            await controller.Create(history);
 
-            context.MockHistory.Verify(x => x.Add(It.Is<History>(t => t == History)));
+            context.MockHistory.Verify(x => x.Add(It.Is<History>(t => t == history)));
         }
 
         [Test]

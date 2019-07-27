@@ -46,11 +46,11 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public async Task Test_Create_Creates_Player()
         {
-            var Player = new Player { FirstName = "Ian", LastName = "Henderson", Position = Position.Forward };
+            var player = new Player { FirstName = "Ian", LastName = "Henderson", Position = Position.Forward };
 
-            await controller.Create(Player);
+            await controller.Create(player);
 
-            context.MockPlayers.Verify(x => x.Add(It.Is<Player>(t => t == Player)));
+            context.MockPlayers.Verify(x => x.Add(It.Is<Player>(t => t == player)));
         }
 
         [Test]

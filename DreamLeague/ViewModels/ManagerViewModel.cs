@@ -13,7 +13,12 @@ namespace DreamLeague.ViewModels
         [Display(Name = "Email 2")]
         public Email Email2 { get; set; }
 
-        public ManagerViewModel() { }
+        public ManagerViewModel()
+        {
+            Manager = new Manager();
+            Email1 = new Email();
+            Email2 = new Email();
+        }
 
         public ManagerViewModel(Manager manager) : this()
         {
