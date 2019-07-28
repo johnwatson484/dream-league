@@ -46,7 +46,7 @@ namespace DreamLeague.Tests.Controllers
         [Test]
         public void Test_Details_Returns_Manager()
         {
-            controller.ControllerContext = MockControllerContext.GetContext().Object;
+            controller.ControllerContext = new MockControllerContext().ControllerContext.Object;
 
             var result = controller.Details(1);
 

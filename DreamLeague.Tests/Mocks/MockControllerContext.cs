@@ -8,13 +8,14 @@ using System.Web.Mvc;
 
 namespace DreamLeague.Tests.Mocks
 {
-    public static class MockControllerContext
+    public class MockControllerContext
     {
-        public static Mock<ControllerContext> GetContext()
+        public Mock<ControllerContext> ControllerContext { get; set; }
+
+        public MockControllerContext()
         {
-            Mock<ControllerContext> controllerContext = new Mock<ControllerContext>();
-            controllerContext.Setup(x => x.HttpContext.User.IsInRole(It.IsAny<string>())).Returns(true);
-            return controllerContext;
+            ControllerContext = new Mock<ControllerContext>();
+            ControllerContext.Setup(x => x.HttpContext.User.IsInRole(It.IsAny<string>())).Returns(true);
         }
     }
 }
