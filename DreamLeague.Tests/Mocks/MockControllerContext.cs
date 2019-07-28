@@ -16,6 +16,7 @@ namespace DreamLeague.Tests.Mocks
         {
             ControllerContext = new Mock<ControllerContext>();
             ControllerContext.Setup(x => x.HttpContext.User.IsInRole(It.IsAny<string>())).Returns(true);
+            ControllerContext.Setup(x => x.HttpContext.User.Identity.Name).Returns("Test User");
         }
     }
 }

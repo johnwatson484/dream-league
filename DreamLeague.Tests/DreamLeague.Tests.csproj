@@ -134,6 +134,7 @@
     <Compile Include="Controllers\HistoryControllerTests.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
     <Compile Include="Controllers\ManagerControllerTests.cs" />
+    <Compile Include="Controllers\ConcedeControllerTests.cs" />
     <Compile Include="DAL.Mock\MockDreamLeagueContext.cs" />
     <Compile Include="Data.Mock\TeamData.cs" />
     <Compile Include="Data.Mock\PlayerData.cs" />
