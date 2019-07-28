@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GoalControllerTests.cs" />
     <Compile Include="Controllers\CupControllerTests.cs" />
     <Compile Include="Controllers\FixtureControllerTests.cs" />
     <Compile Include="Controllers\TeamControllerTests.cs" />

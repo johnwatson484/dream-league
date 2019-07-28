@@ -119,8 +119,8 @@ namespace DreamLeague.Tests.DAL.Mock
         private void SetMockGoals()
         {
             MockGoals = new Mock<DbSet<Goal>>().SetupData(GoalData.Data());
-            MockTeams.Setup(x => x.Find(It.IsAny<object[]>())).Returns<object[]>(ids => TeamData.Data().FirstOrDefault(d => d.TeamId == (int)ids[0]));
-            MockTeams.Setup(x => x.FindAsync(It.IsAny<object[]>())).Returns<object[]>(ids => Task.FromResult(TeamData.Data().FirstOrDefault(d => d.TeamId == (int)ids[0])));
+            MockGoals.Setup(x => x.Find(It.IsAny<object[]>())).Returns<object[]>(ids => GoalData.Data().FirstOrDefault(d => d.GoalId == (int)ids[0]));
+            MockGoals.Setup(x => x.FindAsync(It.IsAny<object[]>())).Returns<object[]>(ids => Task.FromResult(GoalData.Data().FirstOrDefault(d => d.GoalId == (int)ids[0])));
             MockContext.Setup(x => x.Goals).Returns(MockGoals.Object);
         }
 
