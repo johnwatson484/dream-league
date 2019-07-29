@@ -11,7 +11,7 @@ namespace DreamLeague.Controllers
 {
     public class DataController : ApiController
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
         readonly IGameWeekService gameWeekService;
 
@@ -22,7 +22,7 @@ namespace DreamLeague.Controllers
             this.gameWeekService = new GameWeekService(db);
         }
 
-        public DataController(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekService gameWeekService)
+        public DataController(IDreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekService gameWeekService)
         {
             this.db = db;
             this.gameWeekSerializer = gameWeekSerializer;

@@ -14,7 +14,7 @@ namespace DreamLeague.Controllers
 {
     public class TeamSheetController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly ITeamSheetService teamSheetService;
 
         public TeamSheetController()
@@ -23,7 +23,7 @@ namespace DreamLeague.Controllers
             this.teamSheetService = new TeamSheetService(new XLSXTeamSheetReader());
         }
 
-        public TeamSheetController(DreamLeagueContext db, ITeamSheetService teamSheetService)
+        public TeamSheetController(IDreamLeagueContext db, ITeamSheetService teamSheetService)
         {
             this.db = db;
             this.teamSheetService = teamSheetService;

@@ -54,6 +54,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_Player()
+        {
+            var player = new Player { FirstName = "Adebayo", LastName = "Akinfenwa" };
+
+            await controller.Edit(player);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == player)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_Player()
         {
             await controller.DeleteConfirmed(1);

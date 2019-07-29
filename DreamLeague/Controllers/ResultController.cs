@@ -9,7 +9,7 @@ namespace DreamLeague.Controllers
 {
     public class ResultController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
         readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
 
@@ -20,7 +20,7 @@ namespace DreamLeague.Controllers
             this.cupWeekSerializer = new XMLGameWeekSerializer<CupWeekSummary>();
         }
 
-        public ResultController(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer)
+        public ResultController(IDreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer)
         {
             this.db = db;
             this.gameWeekSerializer = gameWeekSerializer;

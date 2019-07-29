@@ -9,9 +9,9 @@ namespace DreamLeague.Services
 {
     public class StatisticsService : IStatisticsService
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
 
-        public StatisticsService(DreamLeagueContext db)
+        public StatisticsService(IDreamLeagueContext db)
         {
             this.db = db;
         }

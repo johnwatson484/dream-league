@@ -12,14 +12,14 @@ namespace DreamLeague.Controllers
 {
     public class GroupController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
 
         public GroupController()
         {
             this.db = new DreamLeagueContext();
         }
 
-        public GroupController(DreamLeagueContext db)
+        public GroupController(IDreamLeagueContext db)
         {
             this.db = db;
         }
@@ -117,7 +117,7 @@ namespace DreamLeague.Controllers
                 existing.GroupLegs = groupViewModel.Group.GroupLegs;
                 existing.TeamsAdvancing = groupViewModel.Group.TeamsAdvancing;
 
-                db.Entry(existing).State = EntityState.Modified;
+                db.SetModified(existing);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Cup", new { id = groupViewModel.Cup.CupId });
             }

@@ -11,14 +11,14 @@ namespace DreamLeague.Controllers
 {
     public class HistoryController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
 
         public HistoryController()
         {
             db = new DreamLeagueContext();
         }
 
-        public HistoryController(DreamLeagueContext db)
+        public HistoryController(IDreamLeagueContext db)
         {
             this.db = db;
         }
@@ -72,7 +72,7 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(history).State = EntityState.Modified;
+                db.SetModified(history);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

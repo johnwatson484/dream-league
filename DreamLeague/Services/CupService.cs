@@ -9,10 +9,10 @@ namespace DreamLeague.Services
 {
     public class CupService : ICupService
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
 
-        public CupService(DreamLeagueContext db, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer)
+        public CupService(IDreamLeagueContext db, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer)
         {
             this.db = db;
             this.cupWeekSerializer = cupWeekSerializer;

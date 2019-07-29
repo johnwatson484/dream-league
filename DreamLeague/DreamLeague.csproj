@@ -247,6 +247,7 @@
     <Compile Include="Controllers\TeamSheetController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="DAL\DreamLeagueContext.cs" />
+    <Compile Include="DAL\IDreamLeagueContext.cs" />
     <Compile Include="Extensions\ElmahHandledErrorLoggerFilter.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">

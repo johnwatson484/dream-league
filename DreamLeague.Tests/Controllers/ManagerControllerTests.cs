@@ -66,6 +66,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_Manager()
+        {
+            var manager = new ManagerViewModel { Manager = new Manager { Name = "John" } };
+
+            await controller.Edit(manager);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == manager.Manager)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_Manager()
         {
             await controller.DeleteConfirmed(1);

@@ -57,6 +57,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_Meeting()
+        {
+            var meeting = new Meeting { Date = new DateTime(2019, 8, 1) };
+
+            await controller.Edit(meeting);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == meeting)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_Meeting()
         {
             await controller.DeleteConfirmed(1);

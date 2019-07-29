@@ -11,16 +11,16 @@ namespace DreamLeague.Controllers
 {
     public class CupController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
         readonly ICupService cupService;
 
         public CupController()
         {
-            this.db = new DAL.DreamLeagueContext();
+            this.db = new DreamLeagueContext();
             this.cupService = new CupService(db, new XMLGameWeekSerializer<CupWeekSummary>());
         }
 
-        public CupController(DreamLeagueContext db, ICupService cupService)
+        public CupController(IDreamLeagueContext db, ICupService cupService)
         {
             this.db = db;
             this.cupService = cupService;
@@ -82,7 +82,7 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cup).State = EntityState.Modified;
+                db.SetModified(cup);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

@@ -4,7 +4,7 @@ using System.Data.Entity;
 
 namespace DreamLeague.DAL
 {
-    public class DreamLeagueContext : IdentityDbContext<ApplicationUser>
+    public class DreamLeagueContext : IdentityDbContext<ApplicationUser>, IDreamLeagueContext
     {
         public DreamLeagueContext()
             : base("DreamLeagueContext", throwIfV1Schema: false)
@@ -28,6 +28,11 @@ namespace DreamLeague.DAL
         public virtual DbSet<Fixture> Fixtures { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Audit> Audit { get; set; }
+
+        public virtual void SetModified(object entity)
+        {
+            this.Entry(entity).State = EntityState.Modified;
+        }
 
         public static DreamLeagueContext Create()
         {

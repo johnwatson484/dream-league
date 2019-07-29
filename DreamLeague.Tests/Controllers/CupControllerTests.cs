@@ -60,6 +60,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_Cup()
+        {
+            var cup = new Cup { Name = "Cup" };
+
+            await controller.Edit(cup);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == cup)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_Cup()
         {
             await controller.DeleteConfirmed(1);

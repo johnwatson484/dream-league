@@ -7,9 +7,9 @@ namespace DreamLeague.Services
 {
     public class SearchService : ISearchService
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
 
-        public SearchService(DreamLeagueContext db)
+        public SearchService(IDreamLeagueContext db)
         {
             this.db = db;
         }

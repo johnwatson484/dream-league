@@ -11,10 +11,10 @@ namespace DreamLeague.Services
 {
     public class EmailService : IEmailService
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         static readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content");
 
-        public EmailService(DreamLeagueContext db)
+        public EmailService(IDreamLeagueContext db)
         {
             this.db = db;
         }

@@ -13,7 +13,7 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class NewSeasonController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
         readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
         IPlayerListService playerListService;
@@ -28,7 +28,7 @@ namespace DreamLeague.Controllers
             this.teamSheetService = new TeamSheetService(new XLSXTeamSheetReader());
         }
 
-        public NewSeasonController(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer, IPlayerListService playerListService, ITeamSheetService teamSheetService)
+        public NewSeasonController(IDreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer, IPlayerListService playerListService, ITeamSheetService teamSheetService)
         {
             this.db = db;
             this.gameWeekSerializer = gameWeekSerializer;

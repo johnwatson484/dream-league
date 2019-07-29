@@ -8,14 +8,14 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "User")]
     public class ManagerImageController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
 
         public ManagerImageController()
         {
             this.db = new DreamLeagueContext();
         }
 
-        public ManagerImageController(DreamLeagueContext db)
+        public ManagerImageController(IDreamLeagueContext db)
         {
             this.db = db;
         }

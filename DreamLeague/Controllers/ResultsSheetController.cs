@@ -11,7 +11,7 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class ResultsSheetController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekService gameWeekService;
         readonly IGameWeekSummaryService gameWeekSummaryService;
         readonly IGameWeekSummaryService cupWeekSummaryService;
@@ -26,7 +26,7 @@ namespace DreamLeague.Controllers
             this.auditService = new AuditService(db);
         }
 
-        public ResultsSheetController(DreamLeagueContext db, IGameWeekService gameWeekService, IGameWeekSummaryService gameWeekSummaryService, IGameWeekSummaryService cupWeekSummaryService, IAuditService auditService)
+        public ResultsSheetController(IDreamLeagueContext db, IGameWeekService gameWeekService, IGameWeekSummaryService gameWeekSummaryService, IGameWeekSummaryService cupWeekSummaryService, IAuditService auditService)
         {
             this.db = db;
             this.gameWeekService = gameWeekService;

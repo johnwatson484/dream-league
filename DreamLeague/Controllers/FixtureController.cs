@@ -11,14 +11,14 @@ namespace DreamLeague.Controllers
 {
     public class FixtureController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
 
         public FixtureController()
         {
             db = new DreamLeagueContext();
         }
 
-        public FixtureController(DreamLeagueContext db)
+        public FixtureController(IDreamLeagueContext db)
         {
             this.db = db;
         }
@@ -108,7 +108,7 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(fixture).State = EntityState.Modified;
+                db.SetModified(fixture);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Cup", new { id = fixture.CupId });
             }

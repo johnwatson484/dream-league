@@ -53,6 +53,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_League()
+        {
+            var league = new League { Name = "Championship" };
+
+            await controller.Edit(league);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == league)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_League()
         {
             await controller.DeleteConfirmed(1);

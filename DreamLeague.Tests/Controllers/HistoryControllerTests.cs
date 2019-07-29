@@ -43,6 +43,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_History()
+        {
+            var history = new History { Year = 2017 };
+
+            await controller.Edit(history);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == history)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_History()
         {
             await controller.DeleteConfirmed(1);

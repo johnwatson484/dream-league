@@ -13,7 +13,7 @@ namespace DreamLeague.Controllers
 {
     public class ManagerController : Controller
     {
-        private readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
         readonly IStatisticsService statisticsService;
         readonly IEmailService emailService;
@@ -26,7 +26,7 @@ namespace DreamLeague.Controllers
             this.emailService = new Services.EmailService(db);
         }
 
-        public ManagerController(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IStatisticsService statisticsService, IEmailService emailService)
+        public ManagerController(IDreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IStatisticsService statisticsService, IEmailService emailService)
         {
             this.db = db;
             this.gameWeekSerializer = gameWeekSerializer;
@@ -133,7 +133,7 @@ namespace DreamLeague.Controllers
                     }
                     else
                     {
-                        db.Entry(managerViewModel.Email1).State = EntityState.Modified;
+                        db.SetModified(managerViewModel.Email1);
                     }
                 }
                 if (!string.IsNullOrEmpty(managerViewModel.Email2.Address))
@@ -145,22 +145,22 @@ namespace DreamLeague.Controllers
                     }
                     else
                     {
-                        db.Entry(managerViewModel.Email2).State = EntityState.Modified;
+                        db.SetModified(managerViewModel.Email2);
                     }
                 }
 
                 if (string.IsNullOrEmpty(managerViewModel.Email1.Address) && managerViewModel.Email1.EmailId > 0)
                 {
                     var email = new Email { EmailId = managerViewModel.Email1.EmailId };
-                    db.Entry(email).State = EntityState.Deleted;
+                    db.SetModified(email);
                 }
                 if (string.IsNullOrEmpty(managerViewModel.Email2.Address) && managerViewModel.Email2.EmailId > 0)
                 {
                     var email = new Email { EmailId = managerViewModel.Email2.EmailId };
-                    db.Entry(email).State = EntityState.Deleted;
+                    db.SetModified(email);
                 }
 
-                db.Entry(managerViewModel.Manager).State = EntityState.Modified;
+                db.SetModified(managerViewModel.Manager);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

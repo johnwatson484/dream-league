@@ -15,7 +15,7 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class ConcedeController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
         readonly IGameWeekSummaryService gameWeekSummaryService;
         readonly IGameWeekSummaryService cupWeekSummaryService;
         readonly IGameWeekService gameWeekService;
@@ -29,7 +29,7 @@ namespace DreamLeague.Controllers
             this.gameWeekService = new GameWeekService(db);
             this.auditService = new AuditService(db);
         }
-        public ConcedeController(DreamLeagueContext db, IGameWeekSummaryService gameWeekSummaryService, IGameWeekSummaryService cupWeekSummaryService, IGameWeekService gameWeekService, IAuditService auditService)
+        public ConcedeController(IDreamLeagueContext db, IGameWeekSummaryService gameWeekSummaryService, IGameWeekSummaryService cupWeekSummaryService, IGameWeekService gameWeekService, IAuditService auditService)
         {
             this.db = db;
             this.gameWeekSummaryService = gameWeekSummaryService;
@@ -125,7 +125,7 @@ namespace DreamLeague.Controllers
                     concede.Substitute = managerGoalKeeper.Substitute;
                 }
 
-                db.Entry(concede).State = EntityState.Modified;
+                db.SetModified(concede);
 
                 var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
                 auditService.Log("Concede", "Concede Updated", User.Identity.Name, string.Format("{0} conceded updated for {1} ({2})", !concede.Cup ? "Goal" : "Cup goal", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), concede.GameWeekId);

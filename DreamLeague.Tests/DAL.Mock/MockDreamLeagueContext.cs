@@ -10,7 +10,7 @@ namespace DreamLeague.Tests.DAL.Mock
 {
     public class MockDreamLeagueContext
     {
-        public Mock<DreamLeagueContext> MockContext { get; set; }
+        public Mock<IDreamLeagueContext> MockContext { get; set; }
 
         public virtual Mock<DbSet<Email>> MockEmails { get; set; }
         public virtual Mock<DbSet<GameWeek>> MockGameWeeks { get; set; }
@@ -198,7 +198,7 @@ namespace DreamLeague.Tests.DAL.Mock
 
         private void SetMockContext()
         {
-            MockContext = new Mock<DreamLeagueContext>();
+            MockContext = new Mock<IDreamLeagueContext>();
         }
     }
 }

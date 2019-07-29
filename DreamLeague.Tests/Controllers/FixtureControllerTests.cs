@@ -53,6 +53,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_Fixture()
+        {
+            var fixture = new Fixture { CupId = 1 };
+
+            await controller.Edit(fixture);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == fixture)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_Fixture()
         {
             await controller.DeleteConfirmed(1);

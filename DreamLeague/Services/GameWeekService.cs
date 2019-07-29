@@ -9,9 +9,9 @@ namespace DreamLeague.Services
 {
     public class GameWeekService : IGameWeekService
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
 
-        public GameWeekService(DreamLeagueContext db)
+        public GameWeekService(IDreamLeagueContext db)
         {
             this.db = db;
         }

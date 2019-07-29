@@ -11,14 +11,14 @@ namespace DreamLeague.Controllers
 {
     public class GameWeekController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
 
         public GameWeekController()
         {
             this.db = new DreamLeagueContext();
         }
 
-        public GameWeekController(DreamLeagueContext db)
+        public GameWeekController(IDreamLeagueContext db)
         {
             this.db = db;
         }
@@ -72,7 +72,7 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(gameWeek).State = EntityState.Modified;
+                db.SetModified(gameWeek);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

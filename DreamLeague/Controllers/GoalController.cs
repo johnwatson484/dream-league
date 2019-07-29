@@ -15,7 +15,7 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class GoalController : Controller
     {
-        private readonly DreamLeagueContext db;
+        private readonly IDreamLeagueContext db;
         readonly IGameWeekService gameWeekService;
         readonly IGameWeekSummaryService gameWeekSummaryService;
         readonly IGameWeekSummaryService cupWeekSummaryService;
@@ -30,7 +30,7 @@ namespace DreamLeague.Controllers
             this.auditService = new AuditService(db);
         }
 
-        public GoalController(DreamLeagueContext db, IGameWeekSummaryService gameWeekSummaryService, IGameWeekSummaryService cupWeekSummaryService, IGameWeekService gameWeekService,
+        public GoalController(IDreamLeagueContext db, IGameWeekSummaryService gameWeekSummaryService, IGameWeekSummaryService cupWeekSummaryService, IGameWeekService gameWeekService,
             IAuditService auditService)
         {
             this.db = db;
@@ -119,7 +119,7 @@ namespace DreamLeague.Controllers
                 var managerId = db.ManagerPlayers.AsNoTracking().Where(x => x.PlayerId == goal.PlayerId).Select(x => x.ManagerId).FirstOrDefault();
                 goal.ManagerId = managerId;
 
-                db.Entry(goal).State = EntityState.Modified;
+                db.SetModified(goal);
                 var player = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
                 auditService.Log("Goal", "Goal Updated", User.Identity.Name, string.Format("{0} updated for {1} ({2})", !goal.Cup ? "Goal" : "Cup goal", player?.FullName, player?.ManagerPlayers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), goal.GameWeekId);
 

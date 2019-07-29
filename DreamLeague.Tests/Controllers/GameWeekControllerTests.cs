@@ -43,6 +43,16 @@ namespace DreamLeague.Tests.Controllers
         }
 
         [Test]
+        public async Task Test_Edit_Edits_GameWeek()
+        {
+            var gameWeek = new GameWeek { Number = 1 };
+
+            await controller.Edit(gameWeek);
+
+            context.MockContext.Verify(x => x.SetModified(It.Is<object>(t => t == gameWeek)));
+        }
+
+        [Test]
         public async Task Test_Delete_Deletes_GameWeek()
         {
             await controller.DeleteConfirmed(1);

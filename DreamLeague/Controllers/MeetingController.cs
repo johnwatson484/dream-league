@@ -12,7 +12,7 @@ namespace DreamLeague.Controllers
 {
     public class MeetingController : Controller
     {
-        private readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IMeetingService meetingService;
 
         public MeetingController()
@@ -21,7 +21,7 @@ namespace DreamLeague.Controllers
             this.meetingService = new MeetingService(db);
         }
 
-        public MeetingController(DreamLeagueContext db, IMeetingService meetingService)
+        public MeetingController(IDreamLeagueContext db, IMeetingService meetingService)
         {
             this.db = db;
             this.meetingService = meetingService;
@@ -91,7 +91,7 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(meeting).State = EntityState.Modified;
+                db.SetModified(meeting);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

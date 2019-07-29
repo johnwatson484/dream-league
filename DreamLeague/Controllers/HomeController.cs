@@ -8,7 +8,7 @@ namespace DreamLeague.Controllers
 {
     public class HomeController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
         readonly ISearchService searchService;
 
@@ -19,7 +19,7 @@ namespace DreamLeague.Controllers
             this.searchService = new SearchService(db);
         }
 
-        public HomeController(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, ISearchService searchService)
+        public HomeController(IDreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, ISearchService searchService)
         {
             this.db = db;
             this.gameWeekSerializer = gameWeekSerializer;

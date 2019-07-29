@@ -11,7 +11,7 @@ namespace DreamLeague.Controllers
     [Authorize(Roles = "Administrator")]
     public class EmailController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IGameWeekSerializer<GameWeekSummary> gameWeekSerializer;
         readonly IGameWeekSerializer<CupWeekSummary> cupWeekSerializer;
         readonly IEmailService emailService;
@@ -26,7 +26,7 @@ namespace DreamLeague.Controllers
             this.auditService = new AuditService(db);
         }
 
-        public EmailController(DreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer, IEmailService emailService,
+        public EmailController(IDreamLeagueContext db, IGameWeekSerializer<GameWeekSummary> gameWeekSerializer, IGameWeekSerializer<CupWeekSummary> cupWeekSerializer, IEmailService emailService,
             IAuditService auditService)
         {
             this.db = db;

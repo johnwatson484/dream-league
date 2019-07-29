@@ -6,9 +6,9 @@ namespace DreamLeague.Services
 {
     public class AuditService : IAuditService
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
 
-        public AuditService(DreamLeagueContext db)
+        public AuditService(IDreamLeagueContext db)
         {
             this.db = db;
         }

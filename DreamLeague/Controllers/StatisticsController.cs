@@ -10,7 +10,7 @@ namespace DreamLeague.Controllers
 {
     public class StatisticsController : Controller
     {
-        readonly DreamLeagueContext db;
+        readonly IDreamLeagueContext db;
         readonly IStatisticsService statisticsService;
 
         public StatisticsController()
@@ -19,7 +19,7 @@ namespace DreamLeague.Controllers
             this.statisticsService = new StatisticsService(db);
         }
 
-        public StatisticsController(DreamLeagueContext db, IStatisticsService statisticsService)
+        public StatisticsController(IDreamLeagueContext db, IStatisticsService statisticsService)
         {
             this.db = db;
             this.statisticsService = statisticsService;
