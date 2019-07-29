@@ -391,6 +391,7 @@
     <Compile Include="Services\IGameWeekSerializer.cs" />
     <Compile Include="Services\IGameWeekService.cs" />
     <Compile Include="Services\GameWeekSummaryService.cs" />
+    <Compile Include="Utilities\LevenshteinDistance.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\GameWeek.cs" />
