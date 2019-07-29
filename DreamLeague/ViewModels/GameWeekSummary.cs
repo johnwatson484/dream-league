@@ -14,7 +14,7 @@ namespace DreamLeague.ViewModels
 
         public Table Table { get; set; }
 
-        public List<string> Winners
+        public virtual List<string> Winners
         {
             get
             {

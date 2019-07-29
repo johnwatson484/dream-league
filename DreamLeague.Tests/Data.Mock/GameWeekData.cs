@@ -12,12 +12,14 @@ namespace DreamLeague.Tests.Data.Mock
                 new GameWeek
                 {
                     GameWeekId = 1,
-                    Number = 1
+                    Number = 1,
+                    Complete = true
                 },
                 new GameWeek
                 {
                     GameWeekId = 2,
-                    Number = 2
+                    Number = 2,
+                    Complete = true
                 }
             };
         }
