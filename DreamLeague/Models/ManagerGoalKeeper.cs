@@ -39,13 +39,13 @@ namespace DreamLeague.Models
 
         public ManagerGoalKeeper()
         {
-            Substitute = false;
         }
 
-        public ManagerGoalKeeper(int teamId, int managerId) : this()
+        public ManagerGoalKeeper(int teamId, int managerId, bool substitute = false) : this()
         {
             TeamId = teamId;
             ManagerId = managerId;
+            Substitute = substitute;
         }
     }
 }

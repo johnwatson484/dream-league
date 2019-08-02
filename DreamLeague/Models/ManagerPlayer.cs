@@ -32,13 +32,13 @@ namespace DreamLeague.Models
 
         public ManagerPlayer()
         {
-            Substitute = false;
         }
 
-        public ManagerPlayer(int playerId, int managerId) : this()
+        public ManagerPlayer(int playerId, int managerId, bool substitute = false) : this()
         {
             PlayerId = playerId;
             ManagerId = managerId;
+            Substitute = substitute;
         }
     }
 }

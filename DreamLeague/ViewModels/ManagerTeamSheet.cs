@@ -14,16 +14,11 @@ namespace DreamLeague.ViewModels
             ManagerTeams = new List<ManagerTeam>();
         }
 
-        public ManagerTeamSheet(List<Manager> managers, TeamSheet teamSheet = null) : this()
+        public ManagerTeamSheet(List<Manager> managers, TeamSheet teamSheet) : this()
         {
             foreach (var manager in managers)
             {
-                TeamSheetTeam teamSheetTeam = null;
-
-                if (teamSheet != null)
-                {
-                    teamSheetTeam = teamSheet.Teams.Where(x => x.Manager == manager.Alias).FirstOrDefault();
-                }
+                TeamSheetTeam teamSheetTeam = teamSheet.Teams.Where(x => x.Manager == manager.Alias).FirstOrDefault();             
 
                 ManagerTeam managerTeam = new ManagerTeam(manager, teamSheetTeam);
 

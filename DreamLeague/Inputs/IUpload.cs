@@ -4,6 +4,6 @@ namespace DreamLeague.Inputs
 {
     public interface IUploadFile
     {
-        void Upload(HttpPostedFileBase file);
+        string Upload(HttpPostedFileBase file);
     }
 }

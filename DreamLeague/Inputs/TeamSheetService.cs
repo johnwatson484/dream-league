@@ -39,10 +39,10 @@ namespace DreamLeague.Inputs
                 }
                 catch
                 {
-                    return null;
+                    return new TeamSheet();
                 }
             }
-            return null;
+            return new TeamSheet();
         }
 
         public DateTime? LastUpload()
@@ -61,11 +61,13 @@ namespace DreamLeague.Inputs
             }
         }
 
-        public void Upload(HttpPostedFileBase file)
+        public string Upload(HttpPostedFileBase file)
         {
             string filePath = Path.Combine(path, string.Format("TeamSheet_{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmss")));
 
             file.SaveAs(filePath);
+
+            return filePath;
         }
 
         public void DeleteAll()

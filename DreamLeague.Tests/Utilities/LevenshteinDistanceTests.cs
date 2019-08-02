@@ -46,5 +46,11 @@ namespace DreamLeague.Tests.Utilities
         {
             Assert.AreEqual(4, LevenshteinDistance.Compute("greatgoal", "getfoals"));
         }
+
+        [Test]
+        public void Test_Compute_Returns_Distance_Case()
+        {
+            Assert.AreEqual(2, LevenshteinDistance.Compute("car", "CaR"));
+        }
     }
 }

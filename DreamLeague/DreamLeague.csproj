@@ -259,11 +259,13 @@
     <Compile Include="Inputs\IPlayerListService.cs" />
     <Compile Include="Inputs\ITeamSheetReader.cs" />
     <Compile Include="Inputs\ITeamSheetService.cs" />
+    <Compile Include="Inputs\ITeamSheetUpdater.cs" />
     <Compile Include="Inputs\IUpload.cs" />
     <Compile Include="Inputs\PlayerList.cs" />
     <Compile Include="Inputs\PlayerListService.cs" />
     <Compile Include="Inputs\TeamSheet.cs" />
     <Compile Include="Inputs\TeamSheetService.cs" />
+    <Compile Include="Inputs\TeamSheetUpdater.cs" />
     <Compile Include="Inputs\XLSXPlayerListReader.cs" />
     <Compile Include="Inputs\XLSXTeamSheetReader.cs" />
     <Compile Include="Migrations\201705131940529_InitialCreate.cs" />
@@ -485,6 +487,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\global-search.js" />
     <Content Include="Scripts\jquery.validate.date.min.js">
       <DependentUpon>jquery.validate.date.js</DependentUpon>
     </Content>
@@ -492,6 +495,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\teamsheet.js" />
     <Content Include="XML\Default.txt" />
     <None Include="bundleconfig.json" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

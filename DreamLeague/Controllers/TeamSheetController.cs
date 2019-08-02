@@ -16,17 +16,20 @@ namespace DreamLeague.Controllers
     {
         readonly IDreamLeagueContext db;
         readonly ITeamSheetService teamSheetService;
+        readonly ITeamSheetUpdater teamSheetUpdater;
 
         public TeamSheetController()
         {
             this.db = new DreamLeagueContext();
             this.teamSheetService = new TeamSheetService(new XLSXTeamSheetReader());
+            this.teamSheetUpdater = new TeamSheetUpdater(db);
         }
 
-        public TeamSheetController(IDreamLeagueContext db, ITeamSheetService teamSheetService)
+        public TeamSheetController(IDreamLeagueContext db, ITeamSheetService teamSheetService, ITeamSheetUpdater teamSheetUpdater)
         {
             this.db = db;
             this.teamSheetService = teamSheetService;
+            this.teamSheetUpdater = teamSheetUpdater;
         }
 
         public async Task<ActionResult> Index()
@@ -177,7 +180,8 @@ namespace DreamLeague.Controllers
         {
             if (Path.GetExtension(file.FileName) == ".xlsx")
             {
-                teamSheetService.Upload(file);
+                var filePath = teamSheetService.Upload(file);
+                teamSheetUpdater.Update(teamSheetService.Get(filePath));
             }
 
             return RedirectToAction("Edit");
