@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DreamLeague.Models
@@ -20,6 +21,10 @@ namespace DreamLeague.Models
         public bool Substitute { get; set; }
 
         public bool Cup { get; set; }
+
+        public DateTime Created { get; set; }
+
+        public string CreatedBy { get; set; }
 
         public virtual Team Team { get; set; }
 

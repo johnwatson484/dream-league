@@ -2,6 +2,7 @@
 using DreamLeague.Models;
 using DreamLeague.Services;
 using DreamLeague.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -52,6 +53,7 @@ namespace DreamLeague.Controllers
         public ActionResult Index(ResultsSheet resultsSheet)
         {
             var managerCupWeeks = gameWeekService.ManagerCupWeeks(resultsSheet.GameWeekId);
+            var date = DateTime.UtcNow;
 
             foreach (var goalKeeper in resultsSheet.GoalKeepers)
             {
@@ -67,6 +69,8 @@ namespace DreamLeague.Controllers
                     for (int i = 0; i < goalKeeper.Conceded; i++)
                     {
                         Concede concede = new Concede(goalKeeper.GoalKeeper.TeamId, resultsSheet.GameWeekId, goalKeeper.GoalKeeper.ManagerId, substitute);
+                        concede.Created = date;
+                        concede.CreatedBy = User.Identity.Name;
                         db.Conceded.Add(concede);
                         var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
                         auditService.Log("Concede", "Concede Added", User.Identity.Name, string.Format("Goal conceded for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), resultsSheet.GameWeekId);
@@ -80,6 +84,8 @@ namespace DreamLeague.Controllers
                         for (int i = 0; i < goalKeeper.CupConceded; i++)
                         {
                             Concede concede = new Concede(goalKeeper.Substitute.TeamId, resultsSheet.GameWeekId, goalKeeper.Substitute.ManagerId, substitute, true);
+                            concede.Created = date;
+                            concede.CreatedBy = User.Identity.Name;
                             db.Conceded.Add(concede);
                             var team = db.Teams.Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
                             auditService.Log("Concede", "Concede Added", User.Identity.Name, string.Format("Cup goal conceded for {0} ({1})", team?.Name, team?.ManagerGoalKeepers?.FirstOrDefault()?.Manager?.Name ?? "Unattached"), resultsSheet.GameWeekId);
@@ -95,6 +101,8 @@ namespace DreamLeague.Controllers
                     for (int i = 0; i < player.Goals; i++)
                     {
                         Goal goal = new Goal(player.Player.PlayerId, resultsSheet.GameWeekId, player.Player.ManagerId);
+                        goal.Created = date;
+                        goal.CreatedBy = User.Identity.Name;
                         db.Goals.Add(goal);
                         var playerT = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
                         auditService.Log("Goal", "Goal Added", User.Identity.Name, string.Format("Goal scored for {0} ({1})", playerT?.FullName, playerT?.ManagerPlayers.FirstOrDefault()?.Manager?.Name ?? "Unattached"), resultsSheet.GameWeekId);
@@ -108,6 +116,8 @@ namespace DreamLeague.Controllers
                         for (int i = 0; i < player.CupGoals; i++)
                         {
                             Goal goal = new Goal(player.Player.PlayerId, resultsSheet.GameWeekId, player.Player.ManagerId, true);
+                            goal.Created = date;
+                            goal.CreatedBy = User.Identity.Name;
                             db.Goals.Add(goal);
                             var playerT = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
                             auditService.Log("Goal", "Goal Added", User.Identity.Name, string.Format("Cup goal scored for {0} ({1})", playerT?.FullName, playerT?.ManagerPlayers.FirstOrDefault()?.Manager?.Name ?? "Unattached"), resultsSheet.GameWeekId);

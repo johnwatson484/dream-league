@@ -356,6 +356,10 @@
     <Compile Include="Migrations\201809041640163_Audit.Designer.cs">
       <DependentUpon>201809041640163_Audit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908171822013_AddGoalDates.cs" />
+    <Compile Include="Migrations\201908171822013_AddGoalDates.Designer.cs">
+      <DependentUpon>201908171822013_AddGoalDates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Winner.cs" />
     <Compile Include="Models\Audit.cs" />
@@ -707,6 +711,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809041640163_Audit.resx">
       <DependentUpon>201809041640163_Audit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908171822013_AddGoalDates.resx">
+      <DependentUpon>201908171822013_AddGoalDates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

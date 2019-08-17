@@ -3,6 +3,7 @@ using DreamLeague.Models;
 using DreamLeague.Services;
 using DreamLeague.ViewModels;
 using PagedList;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -67,6 +68,9 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
+                concede.Created = DateTime.UtcNow;
+                concede.CreatedBy = User.Identity.Name;
+
                 var managerGoalKeeper = db.ManagerGoalKeepers.AsNoTracking().Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
                 if (managerGoalKeeper != null)
                 {
@@ -118,6 +122,9 @@ namespace DreamLeague.Controllers
         {
             if (ModelState.IsValid)
             {
+                concede.Created = DateTime.UtcNow;
+                concede.CreatedBy = User.Identity.Name;
+
                 var managerGoalKeeper = db.ManagerGoalKeepers.AsNoTracking().Where(x => x.TeamId == concede.TeamId).FirstOrDefault();
                 if (managerGoalKeeper != null)
                 {

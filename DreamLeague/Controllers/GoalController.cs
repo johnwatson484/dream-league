@@ -3,6 +3,7 @@ using DreamLeague.Models;
 using DreamLeague.Services;
 using DreamLeague.ViewModels;
 using PagedList;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -73,6 +74,8 @@ namespace DreamLeague.Controllers
             {
                 var managerId = db.ManagerPlayers.AsNoTracking().Where(x => x.PlayerId == goal.PlayerId).Select(x => x.ManagerId).FirstOrDefault();
                 goal.ManagerId = managerId;
+                goal.Created = DateTime.UtcNow;
+                goal.CreatedBy = User.Identity.Name;
 
                 db.Goals.Add(goal);
 
@@ -118,6 +121,8 @@ namespace DreamLeague.Controllers
             {
                 var managerId = db.ManagerPlayers.AsNoTracking().Where(x => x.PlayerId == goal.PlayerId).Select(x => x.ManagerId).FirstOrDefault();
                 goal.ManagerId = managerId;
+                goal.Created = DateTime.UtcNow;
+                goal.CreatedBy = User.Identity.Name;
 
                 db.SetModified(goal);
                 var player = db.Players.Where(x => x.PlayerId == goal.PlayerId).FirstOrDefault();
