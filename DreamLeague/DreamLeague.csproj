@@ -374,6 +374,8 @@
     <Compile Include="Models\ManagerPlayer.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\News.cs" />
+    <Compile Include="Models\Scores\Fixture.cs" />
+    <Compile Include="Models\Scores\Goal.cs" />
     <Compile Include="Services\AuditService.cs" />
     <Compile Include="Services\CupService.cs" />
     <Compile Include="Services\CupWeekSummaryService.cs" />
@@ -389,6 +391,7 @@
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IStatisticsService.cs" />
     <Compile Include="Services\MeetingService.cs" />
+    <Compile Include="Services\ResultsService.cs" />
     <Compile Include="Services\SkySportsNewsService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\StatisticsService.cs" />

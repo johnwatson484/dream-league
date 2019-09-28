@@ -21,8 +21,9 @@ namespace DreamLeague.ViewModels
             ManagerCupWeeks = new List<ManagerCupWeek>();
         }
 
-        public ResultsSheet(List<ManagerGoalKeeper> goalKeepers, List<ManagerPlayer> players, List<ManagerCupWeek> managerCupWeeks) : this()
+        public ResultsSheet(List<ManagerGoalKeeper> goalKeepers, List<ManagerPlayer> players, List<ManagerCupWeek> managerCupWeeks, int? gameWeekId = null) : this()
         {
+            GameWeekId = gameWeekId.HasValue ? gameWeekId.Value : 0;
             ManagerCupWeeks = managerCupWeeks;
 
             foreach (var goalKeeper in goalKeepers)

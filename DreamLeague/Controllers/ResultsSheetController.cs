@@ -16,7 +16,7 @@ namespace DreamLeague.Controllers
         readonly IGameWeekService gameWeekService;
         readonly IGameWeekSummaryService gameWeekSummaryService;
         readonly IGameWeekSummaryService cupWeekSummaryService;
-        readonly IAuditService auditService;
+        readonly IAuditService auditService;       
 
         public ResultsSheetController()
         {
@@ -38,14 +38,30 @@ namespace DreamLeague.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.GameWeekId = new SelectList(db.GameWeeks.AsNoTracking().OrderBy(x => x.Start), "GameWeekId", "Details", gameWeekService.GetCurrent()?.GameWeekId);
+            ViewBag.NoNews = true;
+
+            return View(CreateResultsSheet());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reconcile(int gameWeekId)
+        {
+            var resultsSheet = CreateResultsSheet(gameWeekId);
+
+            // pass into results service
+            return Content("Ok");
+        }
+
+        private ResultsSheet CreateResultsSheet(int? gameWeekId = null)
+        {
             var goalKeepers = db.ManagerGoalKeepers.AsNoTracking().Include(x => x.Team).Include(x => x.Manager).OrderBy(x => x.Substitute).ThenBy(x => x.Team.League.Rank).ThenBy(x => x.Team.Name).ToList();
             var players = db.ManagerPlayers.AsNoTracking().Include(x => x.Player).Include(x => x.Manager).Where(x => !x.Substitute).OrderBy(x => x.Player.Team.League.Rank).ThenBy(x => x.Player.Team.Name).ThenBy(x => x.Player.LastName).ThenBy(x => x.Player.FirstName).ToList();
             var managerCupWeeks = gameWeekService.ManagerCupWeeks();
 
-            ViewBag.GameWeekId = new SelectList(db.GameWeeks.AsNoTracking().OrderBy(x => x.Start), "GameWeekId", "Details", gameWeekService.GetCurrent()?.GameWeekId);
-            ViewBag.NoNews = true;
-
-            return View(new ResultsSheet(goalKeepers, players, managerCupWeeks));
+            var resultsSheet = new ResultsSheet(goalKeepers, players, managerCupWeeks, gameWeekId);
+            return resultsSheet;
         }
 
         [HttpPost]
