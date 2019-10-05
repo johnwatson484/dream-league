@@ -71,7 +71,11 @@ namespace DreamLeague.Controllers
 
                 foreach (var currentPlayer in currentPlayers)
                 {
-                    if (!selectedPlayers.Contains(currentPlayer))
+                    var currentCount = manager.Players.Where(x => x.PlayerId == currentPlayer).Count();
+                    var selectedCount = playerIds.Where(x => x == currentPlayer).Count();
+
+                    if (!selectedPlayers.Contains(currentPlayer)
+                        || currentCount > selectedCount)
                     {
                         db.ManagerPlayers.Remove(manager.Players.Where(x => x.PlayerId == currentPlayer).FirstOrDefault());
                     }
