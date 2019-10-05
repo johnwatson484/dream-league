@@ -48,7 +48,7 @@ namespace DreamLeague.Inputs
                 foreach (var leaguePlayer in leaguePlayers.Where(x => x.Position == player.Position))
                 {
                     var distance = LevenshteinDistance.Compute(matchText, string.Format("{0}-{1}", leaguePlayer.LastName, leaguePlayer.Team.Alias).Replace(" ", string.Empty).ToUpper());
-                    if (bestDistance == -1 || distance < bestDistance)
+                    if ((bestDistance == -1 || distance < bestDistance) || (distance == bestDistance && leaguePlayer.LastName.Contains(player.Name)))
                     {
                         bestDistance = distance;
                         bestPlayerId = leaguePlayer.PlayerId;
