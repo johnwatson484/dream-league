@@ -33,7 +33,7 @@ namespace DreamLeague.Controllers
                 .Select(m => m.Manager))
                 .OrderByDescending(x => x.Goals.Where(g => !g.Cup).Count())
                 .ThenBy(x => x.LastName)
-                .Take(10)
+                .Take(db.Managers.AsNoTracking().Count())
                 .ToList();
 
             return PartialView(scorers);
