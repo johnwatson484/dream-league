@@ -9,7 +9,7 @@ namespace DreamLeague.Controllers
 
         public DownloadController()
         {
-            this.fileService = new FileService();
+            fileService = new FileService();
         }
 
         public DownloadController(IFileService fileService)
