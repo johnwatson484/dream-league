@@ -45,7 +45,19 @@ namespace DreamLeague.Controllers
         // GET: Manager/Details/5
         public ActionResult Details(int? id)
         {
-            Manager manager = db.Managers.AsNoTracking().Include(x => x.Emails).Include(x => x.GoalKeepers.Select(t => t.Team)).Include(x => x.Players.Select(p => p.Player)).Include(x => x.Image).Where(x => x.ManagerId == id).FirstOrDefault();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Manager manager = db.Managers
+                .AsNoTracking()
+                .Include(x => x.Emails)
+                .Include(x => x.GoalKeepers.Select(t => t.Team))
+                .Include(x => x.Players.Select(p => p.Player))
+                .Include(x => x.Image)
+                .Where(x => x.ManagerId == id)
+                .FirstOrDefault();
 
             if (User.IsInRole("User") && manager == null)
             {
