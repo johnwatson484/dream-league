@@ -38,7 +38,7 @@
                         @Html.ActionLink(Model[i].Team.Name, "Details", "Team", new { id = Model[i].TeamId }, null)
                     </td>
                     <td>
-                        @Html.ActionLink(Model[i].ManagerPlayers.FirstOrDefault()?.Manager?.Name ?? string.Empty, "Details", "Manager", new { id = Model[i].ManagerPlayers.FirstOrDefault()?.ManagerId }, null)
+                        @Html.ActionLink(Model[i].ManagerPlayers.FirstOrDefault()?.Manager?.Name ?? "Unattached", "Details", "Manager", new { id = Model[i].ManagerPlayers.FirstOrDefault()?.ManagerId }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model[i].Scored)
