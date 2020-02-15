@@ -40,7 +40,7 @@
                     <td>
                         @if (Model[i].ManagerPlayers.FirstOrDefault()?.Manager?.Name != null)
                         {
-                            Html.ActionLink(Model[i].ManagerPlayers.First().Manager.Name, "Details", "Manager", new { id = Model[i].ManagerPlayers.First().ManagerId }, null);
+                            @Html.ActionLink(Model[i].ManagerPlayers.First().Manager.Name, "Details", "Manager", new { id = Model[i].ManagerPlayers.First().ManagerId }, null)
                         }
                     </td>
                     <td>
